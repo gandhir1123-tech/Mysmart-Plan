@@ -3015,33 +3015,6 @@ function showToast(message) {
     } catch (e) {}
     currentMonthYearBadge.textContent = availableMonths[currentMonthIndex];
 
-// Function to download index.html directly from browser
-    window.downloadIndexHtmlFile = function() {
-      try {
-        const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-        const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'index.html';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        showToast('index.html downloaded to your Downloads folder! 🎉');
-      } catch (e) {
-        showToast('Download error: ' + e.message);
-      }
-    };
-
-    const downloadIndexHtmlBtn = document.getElementById('downloadIndexHtmlBtn');
-    if (downloadIndexHtmlBtn) {
-      downloadIndexHtmlBtn.addEventListener('click', window.downloadIndexHtmlFile);
-    }
-    const downloadIndexHtmlBannerBtn = document.getElementById('downloadIndexHtmlBannerBtn');
-    if (downloadIndexHtmlBannerBtn) {
-      downloadIndexHtmlBannerBtn.addEventListener('click', window.downloadIndexHtmlFile);
-    }
 
 // Initialize Storage Shield, Cloud Sync, and Initial render
     checkPersistentStorage();

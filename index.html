@@ -17,6 +17,11 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
     body {
       font-family: 'Inter', sans-serif;
       background-color: #f1f5f9;
@@ -30,10 +35,10 @@
     }
   </style>
 </head>
-<body class="min-h-screen bg-slate-100 flex justify-center items-center sm:py-4 px-0 sm:px-4 text-slate-800">
+<body class="min-h-screen bg-slate-100 flex justify-center items-start sm:items-center sm:py-4 px-0 sm:px-4 text-slate-800">
 
   <!-- Mobile App Shell: Anchored to viewport height on mobile, cleanly framed on desktop -->
-  <div class="w-full max-w-md bg-white sm:rounded-3xl shadow-2xl overflow-hidden h-[100dvh] sm:h-[840px] flex flex-col border border-slate-200/80 relative">
+  <div class="w-full max-w-md bg-white sm:rounded-3xl shadow-2xl overflow-hidden h-screen h-[100dvh] flex flex-col sm:h-[840px] border-0 sm:border border-slate-200/80 relative">
     
     <!-- Compact Top Header: Reduced vertical height for mobile screens -->
     <header class="bg-gradient-to-br from-indigo-700 via-indigo-800 to-slate-900 text-white px-3.5 py-2.5 shrink-0 z-20 shadow-sm">
@@ -154,25 +159,7 @@
            ========================================== -->
       <div id="view-home" class="space-y-4">
 
-        <!-- GITHUB PAGES 1-TAP DOWNLOAD BANNER -->
-        <div id="githubDownloadBanner" class="p-3 rounded-2xl bg-gradient-to-r from-indigo-900 to-indigo-800 text-white flex items-center justify-between gap-2 shadow-md">
-          <div class="flex items-center gap-2.5">
-            <span class="text-xl">🚀</span>
-            <div>
-              <p class="font-bold text-xs">Ready for GitHub Pages</p>
-              <p class="text-[10px] text-indigo-200">Tap to save index.html directly to your phone</p>
-            </div>
-          </div>
-          <button
-            id="downloadIndexHtmlBannerBtn"
-            type="button"
-            onclick="window.downloadIndexHtmlFile && window.downloadIndexHtmlFile()"
-            class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold rounded-xl shadow-xs shrink-0 cursor-pointer active:scale-95 transition"
-          >
-            ⬇️ Save index.html
-          </button>
-        </div>
-        
+                
         <!-- UPCOMING BILLS ALERT BANNER -->
         <div id="upcomingBillsBanner" class="hidden p-3 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-center justify-between gap-2 shadow-2xs">
           <div class="flex items-center gap-2.5">
@@ -944,16 +931,6 @@
             </button>
           </div>
 
-          <!-- Download index.html for GitHub Button -->
-          <button
-            id="downloadIndexHtmlBtn"
-            type="button"
-            onclick="window.downloadIndexHtmlFile && window.downloadIndexHtmlFile()"
-            class="w-full py-2 px-3 rounded-xl border border-indigo-200 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer active:scale-95"
-          >
-            <span>⬇️ Download index.html (Single File for GitHub)</span>
-          </button>
-
           <button
             id="triggerResetModalBtn"
             type="button"
@@ -969,7 +946,7 @@
     </main>
 
     <!-- Anchored Bottom App Navigation Bar: Fixed at the base -->
-    <nav class="shrink-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-2 flex items-center justify-around z-30 shadow-[0_-4px_16px_rgba(0,0,0,0.04)]">
+    <nav class="shrink-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 pt-2 pb-5 sm:pb-2 flex items-center justify-around z-30 shadow-[0_-4px_16px_rgba(0,0,0,0.04)]" style="padding-bottom: max(20px, env(safe-area-inset-bottom, 20px));">
       <button
         id="navTabHome"
         type="button"
