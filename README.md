@@ -27,15 +27,18 @@
 
 ```text
 ├── index.html     # Semantic HTML5 layout, Tailwind CSS styling, modals & UI views
-├── script.js       # Core accounting logic, transaction management, filters & storage
-└── README.md       # Project documentation & GitHub Pages deployment instructions
+├── script.js      # Core accounting logic, transaction management, filters & storage
+├── icon-512.png   # High-resolution 512x512 PWA app icon for Android & stores
+├── icon-192.png   # 192x192 mobile home-screen icon & Apple touch icon
+├── favicon.png    # 64x64 browser tab favicon
+└── README.md      # Project documentation & GitHub Pages deployment instructions
 ```
 
 ---
 
 ## 🚀 How to Run on GitHub Pages
 
-1. **Upload Files:** Upload `index.html`, `script.js`, and `README.md` to the root of your GitHub repository (e.g., `mysmartplan`).
+1. **Upload Files:** Upload all files (`index.html`, `script.js`, `README.md`, `icon-512.png`, `icon-192.png`, and `favicon.png`) to the root of your GitHub repository (e.g., `mysmartplan`).
 2. **Enable GitHub Pages:**
    * In your repository, click **Settings** (top navigation tab).
    * Click **Pages** in the left sidebar under *Code and automation*.
@@ -50,7 +53,7 @@
 4. **Install on Mobile:**
    * Open the link in Chrome (Android) or Safari (iPhone).
    * Tap the browser menu **(⋮) → Add to Home screen**.
-   * The app will launch in full-screen mode like a native mobile app!
+   * The app will launch in full-screen mode with your custom wallet logo icon!
 
 ---
 
