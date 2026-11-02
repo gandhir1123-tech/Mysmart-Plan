@@ -110,7 +110,7 @@
         <!-- Primary Net Balance Metric (Single-Line Compact Row) + Quick Funds Transfer Button -->
         <div class="flex items-center justify-between">
           <div class="flex items-baseline gap-2">
-            <span class="text-[11px] text-indigo-200 font-medium">Net Savings:</span>
+            <span class="text-[11px] text-indigo-200 font-medium">Balance:</span>
             <p id="netBalanceDisplay" class="text-xl font-extrabold tracking-tight text-white">₹0</p>
           </div>
           <div class="flex items-center gap-2">
@@ -259,30 +259,30 @@
           <section class="bg-indigo-50/60 rounded-2xl p-4 border border-indigo-100 space-y-3">
             <div class="flex items-start justify-between gap-2">
               <div>
-                <h2 class="text-xs font-semibold uppercase tracking-wider text-indigo-900">
-                  Recurring & Multi-Month Bills
-                </h2>
-                <p class="text-[11px] text-slate-500">
-                  Handles 1M, 3M, 6M & Yearly bills (e.g., Mobile Recharge)
+                <div class="flex items-center gap-2">
+                  <h2 id="recurringBillsHeading" class="text-xs font-bold uppercase tracking-wider text-indigo-900">
+                    Recurring & Household Bills
+                  </h2>
+                  <span id="billsStatusBadge" class="text-[10px] font-bold bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full">
+                    0 Done
+                  </span>
+                </div>
+                <p id="recurringBillsSubheading" class="text-[11px] text-slate-500 mt-0.5">
+                  1-Click monthly logging for rent, utilities & maintenance
                 </p>
               </div>
               <button
                 id="toggleAddBillFormBtn"
                 type="button"
-                class="text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white px-2.5 py-1 rounded-lg transition shrink-0"
+                class="text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-xl transition shrink-0 shadow-2xs cursor-pointer active:scale-95"
               >
                 + Custom Bill
               </button>
             </div>
 
-            <!-- Accounting Mode Switcher -->
-            <div class="bg-white/90 rounded-xl p-2.5 border border-indigo-100 flex flex-col gap-1.5">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] font-semibold text-slate-600">Multi-Month Accounting Mode:</span>
-                <span id="billsStatusBadge" class="text-[10px] font-semibold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full">
-                  0/5 Paid
-                </span>
-              </div>
+            <!-- Accounting Mode Switcher (Shown ONLY on Regular Expense, Hidden on Personal Account) -->
+            <div id="accountingModeSwitcherBox" class="bg-white/90 rounded-xl p-2.5 border border-indigo-100 flex flex-col gap-1.5">
+              <span class="text-[11px] font-semibold text-slate-600">Multi-Month Accounting Mode:</span>
               <div class="grid grid-cols-2 gap-1.5 bg-slate-100 p-1 rounded-lg">
                 <button
                   id="modeMonthlySetAsideBtn"
@@ -355,13 +355,16 @@
                     <!-- Populated dynamically from categories state -->
                   </select>
                 </div>
-                <div>
-                  <label for="billDueInput" class="block text-[10px] font-medium text-slate-500 mb-0.5">Due Day / Note</label>
+<div>
+                  <label for="billDueInput" class="block text-[10px] font-semibold text-slate-600 mb-0.5 flex items-center justify-between">
+                    <span>Payment Due Date</span>
+                    <span class="text-indigo-600 text-[10px]">📅 Calendar</span>
+                  </label>
                   <input
                     id="billDueInput"
-                    type="text"
-                    placeholder="e.g., 15th or Nov Due"
-                    class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    type="date"
+                    required
+                    class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
                   />
                 </div>
               </div>
@@ -955,27 +958,40 @@
         <div class="flex items-center justify-between pb-2 border-b border-slate-100">
           <div class="flex items-center gap-2">
             <span class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-base font-bold">⇄</span>
-            <div>
+<div>
               <h3 class="text-sm font-bold text-slate-800">Transfer Funds</h3>
-              <p class="text-[11px] text-slate-500">Regular Expense ➔ Personal Account</p>
+              <p id="transferSubtitle" class="text-[11px] text-slate-500">Regular Expense ➔ Personal Account</p>
             </div>
           </div>
           <button id="closeTransferModalBtn" type="button" class="text-slate-400 hover:text-slate-600 text-sm font-bold p-1 rounded-lg">✕</button>
         </div>
 
         <form id="transferFundsForm" class="space-y-3.5">
-          <!-- Flow Diagram -->
-          <div class="grid grid-cols-2 gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200/80 text-center text-xs">
-            <div class="bg-white p-2 rounded-lg border border-indigo-100 shadow-2xs">
-              <span class="text-[9px] text-slate-400 font-semibold block uppercase">From Source</span>
-              <span class="font-bold text-indigo-700 block mt-0.5">💳 Regular Expense</span>
-              <span class="text-[10px] text-rose-500 font-medium mt-0.5 block">Deducts Outflow (−)</span>
+<!-- Flow Diagram with Interactive Direction Swap -->
+          <div class="relative bg-slate-50 p-2.5 rounded-2xl border border-slate-200/80 text-center text-xs">
+            <div class="grid grid-cols-2 gap-2">
+              <div id="transferSourceCard" class="bg-white p-2.5 rounded-xl border border-indigo-100 shadow-2xs">
+                <span class="text-[9px] text-slate-400 font-semibold block uppercase">From Source</span>
+                <span id="transferSourceText" class="font-bold text-indigo-700 block mt-0.5">💳 Regular Expense</span>
+                <span id="transferSourceOutflow" class="text-[10px] text-rose-500 font-medium mt-0.5 block">Deducts Outflow (−)</span>
+              </div>
+              <div id="transferDestCard" class="bg-white p-2.5 rounded-xl border border-teal-100 shadow-2xs">
+                <span class="text-[9px] text-slate-400 font-semibold block uppercase">To Destination</span>
+                <span id="transferDestText" class="font-bold text-teal-700 block mt-0.5">👤 Personal Account</span>
+                <span id="transferDestInflow" class="text-[10px] text-emerald-600 font-medium mt-0.5 block">Credits Inflow (+)</span>
+              </div>
             </div>
-            <div class="bg-white p-2 rounded-lg border border-teal-100 shadow-2xs">
-              <span class="text-[9px] text-slate-400 font-semibold block uppercase">To Destination</span>
-              <span class="font-bold text-teal-700 block mt-0.5">👤 Personal Account</span>
-              <span class="text-[10px] text-emerald-600 font-medium mt-0.5 block">Credits Inflow (+)</span>
-            </div>
+
+            <!-- Swap Direction Button -->
+            <button
+              id="swapTransferDirectionBtn"
+              type="button"
+              onclick="window.swapTransferDirection && window.swapTransferDirection()"
+              class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white border border-slate-300 text-slate-700 hover:text-indigo-600 hover:border-indigo-400 text-sm font-bold shadow-md flex items-center justify-center transition active:scale-95 cursor-pointer"
+              title="Click to swap transfer direction"
+            >
+              ⇄
+            </button>
           </div>
 
           <div>
@@ -1020,10 +1036,11 @@
 
           <div class="pt-2">
             <button
+              id="confirmTransferBtn"
               type="submit"
-              class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white font-semibold py-2.5 rounded-xl text-xs transition shadow-sm flex items-center justify-center gap-1.5"
+              class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white font-bold py-2.5 rounded-xl text-xs transition shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
             >
-              <span>Confirm Transfer to Personal Account ➔</span>
+              <span id="confirmTransferBtnText">Confirm Transfer to Personal Account ➔</span>
             </button>
           </div>
         </form>
@@ -1538,13 +1555,20 @@
     }
 
     function getEffectiveBillAmount(bill) {
+      // In Personal Account: always the full real commitment amount (no amortized division)
+      if (bill.accountId === 'personal' || activeAccount === 'personal') {
+        return Number(bill.amount) || 0;
+      }
       if (billingMode === 'amortized' && bill.cycleMonths > 1) {
         return Math.round(bill.amount / bill.cycleMonths);
       }
-      return bill.amount;
+      return Number(bill.amount) || 0;
     }
 
     function getEffectiveBillTitle(bill) {
+      if (bill.accountId === 'personal' || activeAccount === 'personal') {
+        return bill.title;
+      }
       if (billingMode === 'amortized' && bill.cycleMonths > 1) {
         return `${bill.title} (1/${bill.cycleMonths} mo share)`;
       }
@@ -2108,26 +2132,56 @@
     }
 
     // --- 6. RENDER RECURRING BILLS ---
-    function renderRecurringBills() {
+        function renderRecurringBills() {
+      const currentMonth = availableMonths[currentMonthIndex];
+      const isPersonal = activeAccount === 'personal';
+
+      // Update Section Header dynamically based on active account
+      const headingEl = document.getElementById('recurringBillsHeading');
+      const subheadingEl = document.getElementById('recurringBillsSubheading');
+      const switcherBox = document.getElementById('accountingModeSwitcherBox');
+
+      if (isPersonal) {
+        // When switched to Personal Account: Simple "Commitments" with no accounting mode complexity
+        if (headingEl) headingEl.textContent = 'Commitments';
+        if (subheadingEl) subheadingEl.textContent = 'Create once • 1-Click to log each month';
+        if (toggleAddBillFormBtn) toggleAddBillFormBtn.textContent = '+ Add Commitment';
+        if (switcherBox) switcherBox.classList.add('hidden');
+      } else {
+        // Regular Expense: Standard Household Bills with optional multi-month accounting
+        if (headingEl) headingEl.textContent = 'Recurring & Household Bills';
+        if (subheadingEl) subheadingEl.textContent = '1-Click monthly logging for rent, utilities & maintenance';
+        if (toggleAddBillFormBtn) toggleAddBillFormBtn.textContent = '+ Custom Bill';
+        if (switcherBox) switcherBox.classList.remove('hidden');
+      }
+
       // Filter recurring bills by active account
       const activeBills = activeAccount === 'both'
         ? recurringBills
         : recurringBills.filter((b) => !b.accountId || b.accountId === activeAccount);
 
-      const paidCount = activeBills.filter((b) => b.paid).length;
-      const pendingEffectiveTotal = activeBills
-        .filter((b) => !b.paid)
-        .reduce((sum, b) => sum + getEffectiveBillAmount(b), 0);
+      // Check paid/invested status for the CURRENT selected month
+      let paidCount = 0;
+      let pendingEffectiveTotal = 0;
+
+      activeBills.forEach(bill => {
+        const isPaidThisMonth = transactions.some(t => t.recurringBillId === bill.id && (t.monthYear || getTxMonthYear(t)) === currentMonth);
+        if (isPaidThisMonth) {
+          paidCount++;
+        } else {
+          pendingEffectiveTotal += getEffectiveBillAmount(bill);
+        }
+      });
 
       billsStatusBadge.textContent = pendingEffectiveTotal > 0
-        ? `${paidCount}/${activeBills.length} Active • ${formatCurrency(pendingEffectiveTotal)} Pending`
-        : `All ${activeBills.length} Covered 🎉`;
+        ? `${paidCount}/${activeBills.length} Done • ${formatCurrency(pendingEffectiveTotal)} Pending`
+        : `All ${activeBills.length} Done 🎉`;
 
       recurringBillsList.innerHTML = '';
       if (activeBills.length === 0) {
         recurringBillsList.innerHTML = `
           <div class="text-center py-4 px-3 rounded-xl border border-dashed border-indigo-200 text-slate-400 text-xs">
-            No recurring commitments added for ${activeAccount === 'personal' ? 'Personal Account' : 'Regular Expense'}. Tap "+ Custom Bill" to add one!
+            ${isPersonal ? 'No commitments added yet for Personal Account. Tap "+ Add Commitment" to set up your 1-click monthly SIP or investment!' : 'No recurring bills added yet. Tap "+ Custom Bill" to add one!'}
           </div>
         `;
         return;
@@ -2138,56 +2192,61 @@
         const effectiveAmt = getEffectiveBillAmount(bill);
         const monthlyShare = Math.round(bill.amount / bill.cycleMonths);
         const cat = getAnyCategoryById(bill.categoryId);
+        const isPaidThisMonth = transactions.some(t => t.recurringBillId === bill.id && (t.monthYear || getTxMonthYear(t)) === currentMonth);
 
         const card = document.createElement('div');
-        card.className = `w-full flex items-center justify-between p-3 rounded-xl border transition ${
-          bill.paid
-            ? 'bg-white/95 border-emerald-200 text-slate-700'
+        card.className = `w-full flex items-center justify-between p-3 rounded-xl border transition cursor-pointer active:scale-[0.99] ${
+          isPaidThisMonth
+            ? 'bg-emerald-50/50 border-emerald-300 text-slate-700'
             : 'bg-white border-amber-200 shadow-sm hover:border-indigo-300'
         }`;
 
-        const cycleBreakdownText = bill.cycleMonths > 1
-          ? `Full: ${formatCurrency(bill.amount)} / ${bill.cycleMonths}M (${formatCurrency(monthlyShare)}/mo) • ${cat.name}`
-          : `Due ${bill.dueDay} • ${cat.name}`;
+        const cycleBreakdownText = isPersonal
+          ? (bill.cycleMonths > 1 ? `Every ${bill.cycleMonths} Months • ${cat.name}` : `Due ${bill.dueDay || 'Monthly'} • ${cat.name}`)
+          : (bill.cycleMonths > 1
+              ? `Full: ${formatCurrency(bill.amount)} / ${bill.cycleMonths}M (${formatCurrency(monthlyShare)}/mo) • ${cat.name}`
+              : `Due ${bill.dueDay || 'Monthly'} • ${cat.name}`);
+
+        const doneBadgeText = isPersonal ? 'Invested ✓' : 'Paid ✓';
 
         card.innerHTML = `
-          <button type="button" class="toggle-bill-btn flex items-center gap-3 min-w-0 flex-1 text-left">
-            <span class="w-5 h-5 rounded-md flex items-center justify-center text-xs font-bold shrink-0 ${
-              bill.paid
-                ? 'bg-emerald-500 text-white'
-                : 'border-2 border-amber-400 text-transparent'
+          <button type="button" class="toggle-bill-btn flex items-center gap-3 min-w-0 flex-1 text-left cursor-pointer">
+            <span class="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-extrabold shrink-0 shadow-2xs transition ${
+              isPaidThisMonth
+                ? 'bg-emerald-600 text-white'
+                : 'border-2 border-amber-400 text-transparent bg-white hover:border-indigo-500'
             }">✓</span>
             <div class="min-w-0 flex-1">
               <div class="flex items-center gap-1.5 flex-wrap">
-                <p class="text-xs font-semibold truncate ${bill.paid ? 'line-through text-slate-400' : 'text-slate-800'}">
+                <p class="text-xs font-bold truncate ${isPaidThisMonth ? 'line-through text-slate-400' : 'text-slate-800'}">
                   ${bill.title}
                 </p>
                 <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${badge.color}">
                   ${badge.label}
                 </span>
               </div>
-              <p class="text-[11px] text-slate-400 mt-0.5 truncate">${cycleBreakdownText}</p>
+              <p class="text-[11px] text-slate-500 mt-0.5 truncate">${cycleBreakdownText}</p>
             </div>
           </button>
 
           <div class="flex items-center gap-2 shrink-0 ml-2">
             <div class="text-right">
-              <span class="text-xs font-bold block ${bill.paid ? 'text-slate-400' : 'text-slate-800'}">
+              <span class="text-xs font-bold block ${isPaidThisMonth ? 'text-slate-400' : 'text-slate-800'}">
                 ${formatCurrency(effectiveAmt)}
               </span>
-              <span class="text-[10px] font-semibold px-1.5 py-0.2 rounded-full ${
-                bill.paid
-                  ? 'bg-emerald-50 text-emerald-700'
-                  : 'bg-amber-50 text-amber-700'
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                isPaidThisMonth
+                  ? 'bg-emerald-100 text-emerald-800'
+                  : 'bg-amber-100 text-amber-800'
               }">
-                ${bill.paid ? (bill.cycleMonths > 1 && billingMode === 'amortized' ? 'Set Aside' : 'Paid') : 'Pending'}
+                ${isPaidThisMonth ? doneBadgeText : 'Pending'}
               </span>
             </div>
             <button
               type="button"
-              class="remove-bill-btn text-slate-300 hover:text-rose-500 p-1 text-xs transition"
-              title="Delete recurring bill"
-              aria-label="Delete recurring bill"
+              class="remove-bill-btn text-slate-300 hover:text-rose-500 p-1.5 text-xs transition cursor-pointer"
+              title="Delete commitment"
+              aria-label="Delete commitment"
             >
               ✕
             </button>
@@ -2195,34 +2254,42 @@
         `;
 
         card.querySelector('.toggle-bill-btn').addEventListener('click', () => {
-          bill.paid = !bill.paid;
-          if (bill.paid) {
+          if (!isPaidThisMonth) {
+            // 1-Click Log Entry for the Current Selected Month!
             const newId = Date.now();
-            bill.linkedExpenseId = newId;
-            const today = new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit' });
+            const todayIso = getTodayIso();
             transactions.unshift({
               id: newId,
-              accountId: bill.accountId || 'regular',
+              accountId: bill.accountId || activeAccount,
               type: 'expense',
               title: getEffectiveBillTitle(bill),
               amount: getEffectiveBillAmount(bill),
               categoryId: bill.categoryId,
-              date: today,
-              isoDate: new Date().toISOString().split('T')[0]
+              paymentMode: 'Bank',
+              date: isoToDisplayDate(todayIso),
+              isoDate: todayIso,
+              monthYear: currentMonth,
+              isRecurringBillLinked: true,
+              recurringBillId: bill.id
             });
-          } else if (bill.linkedExpenseId !== null) {
-            transactions = transactions.filter((e) => e.id !== bill.linkedExpenseId);
-            bill.linkedExpenseId = null;
+            showToast(isPersonal ? `🎉 Logged ${bill.title} (₹${effectiveAmt}) for ${currentMonth}!` : `Recorded payment for ${bill.title}!`);
+          } else {
+            // Uncheck: remove transaction from this month
+            transactions = transactions.filter((t) => !(t.recurringBillId === bill.id && (t.monthYear || getTxMonthYear(t)) === currentMonth));
+            showToast(`Unchecked ${bill.title} for ${currentMonth}`);
           }
           renderDashboard();
+          saveToLocalStorage();
         });
 
-        card.querySelector('.remove-bill-btn').addEventListener('click', () => {
-          if (bill.linkedExpenseId !== null) {
-            transactions = transactions.filter((e) => e.id !== bill.linkedExpenseId);
-          }
+        card.querySelector('.remove-bill-btn').addEventListener('click', (e) => {
+          e.stopPropagation();
+          // Remove all transactions linked to this bill
+          transactions = transactions.filter((t) => t.recurringBillId !== bill.id);
           recurringBills = recurringBills.filter((b) => b.id !== bill.id);
           renderDashboard();
+          saveToLocalStorage();
+          showToast(`Deleted ${bill.title}`);
         });
 
         recurringBillsList.appendChild(card);
@@ -2916,44 +2983,42 @@
       const amount = parseFloat(billAmountInput.value);
       const cycleMonths = parseInt(billCycleSelect.value, 10) || 1;
       const categoryId = billCategorySelect.value;
-      const dueDay = billDueInput.value.trim() || '15th';
+      const dueVal = billDueInput.value || getTodayIso();
 
       if (!title || isNaN(amount) || amount <= 0) return;
 
-      const newExpenseId = Date.now();
+      // Extract day number and format ordinal (e.g. 2026-11-05 -> 5th)
+      let dueDay = '5th';
+      if (dueVal) {
+        const parts = dueVal.split('-');
+        const dayNum = parseInt(parts[2], 10);
+        const suffixes = ['th', 'st', 'nd', 'rd'];
+        const v = dayNum % 100;
+        const suffix = suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0];
+        dueDay = `${dayNum}${suffix}`;
+      }
+
       const billAccount = activeAccount === 'both' ? 'regular' : activeAccount;
       const newBill = {
-        id: 'bill-' + newExpenseId,
+        id: 'bill-' + Date.now(),
         accountId: billAccount,
         title,
         amount,
         cycleMonths,
         categoryId,
         dueDay,
-        paid: true,
-        linkedExpenseId: newExpenseId
+        dueDateIso: dueVal
       };
 
       recurringBills.unshift(newBill);
 
-      const today = new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit' });
-      transactions.unshift({
-        id: newExpenseId,
-        accountId: billAccount,
-        type: 'expense',
-        title: getEffectiveBillTitle(newBill),
-        amount: getEffectiveBillAmount(newBill),
-        categoryId: newBill.categoryId,
-        date: today,
-        isoDate: new Date().toISOString().split('T')[0]
-      });
-
       billTitleInput.value = '';
       billAmountInput.value = '';
-      billDueInput.value = '';
-      customBillPreviewText.textContent = '₹0 / mo';
+      if (billDueInput) billDueInput.value = getTodayIso();
       customBillForm.classList.add('hidden');
       renderDashboard();
+      saveToLocalStorage();
+      showToast(billAccount === 'personal' ? `Commitment added! Tap ✓ to log each month.` : `Recurring bill added! Tap ✓ to log payment.`);
     });
 
     modeMonthlySetAsideBtn.addEventListener('click', () => {
@@ -3334,8 +3399,56 @@
     const transferDateInput = document.getElementById('transferDateInput');
     const transferNoteInput = document.getElementById('transferNoteInput');
 
+    let transferDirection = 'regular_to_personal'; // 'regular_to_personal' | 'personal_to_regular'
+
+    function updateTransferModalUI() {
+      const subtitle = document.getElementById('transferSubtitle');
+      const sourceText = document.getElementById('transferSourceText');
+      const destText = document.getElementById('transferDestText');
+      const submitText = document.getElementById('confirmTransferBtnText');
+      const noteInput = document.getElementById('transferNoteInput');
+
+      if (transferDirection === 'personal_to_regular') {
+        if (subtitle) subtitle.textContent = 'Personal Account ➔ Regular Expense';
+        if (sourceText) {
+          sourceText.innerHTML = '👤 Personal Account';
+          sourceText.className = 'font-bold text-teal-700 block mt-0.5';
+        }
+        if (destText) {
+          destText.innerHTML = '💳 Regular Expense';
+          destText.className = 'font-bold text-indigo-700 block mt-0.5';
+        }
+        if (submitText) submitText.textContent = 'Confirm Transfer to Regular Expense ➔';
+        if (noteInput && !noteInput.value) noteInput.placeholder = 'e.g., Emergency Fund withdrawal, monthly savings return';
+      } else {
+        if (subtitle) subtitle.textContent = 'Regular Expense ➔ Personal Account';
+        if (sourceText) {
+          sourceText.innerHTML = '💳 Regular Expense';
+          sourceText.className = 'font-bold text-indigo-700 block mt-0.5';
+        }
+        if (destText) {
+          destText.innerHTML = '👤 Personal Account';
+          destText.className = 'font-bold text-teal-700 block mt-0.5';
+        }
+        if (submitText) submitText.textContent = 'Confirm Transfer to Personal Account ➔';
+        if (noteInput && !noteInput.value) noteInput.placeholder = 'e.g., Monthly Savings & SIP Allocation';
+      }
+    }
+
+    window.swapTransferDirection = function() {
+      transferDirection = transferDirection === 'regular_to_personal' ? 'personal_to_regular' : 'regular_to_personal';
+      updateTransferModalUI();
+    };
+
     function openTransferModal() {
       if (!transferFundsModal) return;
+      // Automatically match the currently active account
+      if (activeAccount === 'personal') {
+        transferDirection = 'personal_to_regular';
+      } else {
+        transferDirection = 'regular_to_personal';
+      }
+      updateTransferModalUI();
       if (transferDateInput) transferDateInput.value = getTodayIso();
       if (transferAmountInput) transferAmountInput.value = '';
       if (transferNoteInput) transferNoteInput.value = '';
