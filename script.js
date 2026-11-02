@@ -2765,7 +2765,7 @@ function showToast(message) {
           requestPersistStorageBtn.textContent = 'Active ✓';
           requestPersistStorageBtn.className = 'px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 text-[11px] font-bold pointer-events-none';
         } else {
-          persistStorageStatusText.textContent = 'Standard storage: Tap to lock & protect';
+          persistStorageStatusText.textContent = 'Auto-Saved on device (Add to Home screen to lock)';
           persistStorageStatusText.className = 'text-[10px] text-slate-500';
           requestPersistStorageBtn.textContent = 'Protect ✓';
           requestPersistStorageBtn.className = 'px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition cursor-pointer';
