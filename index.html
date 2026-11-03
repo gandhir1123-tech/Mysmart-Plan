@@ -217,6 +217,11 @@
 
         <!-- SUB-PANEL A: CURRENT MONTH BREAKDOWN (Doughnut Chart, Inflow Highlights & Bills) -->
         <div id="currentMonthDashboardPanel" class="space-y-4">
+          <!-- Category Budget Warning & Overspending Alerts (80% & 100%) -->
+          <div id="categoryBudgetAlertBanner" class="hidden rounded-2xl p-3 border transition shadow-sm space-y-2">
+            <!-- Populated dynamically by updateBudgetWarningAlerts() in JS -->
+          </div>
+
           
           <!-- Monthly Accounts Summary Card: Equation Breakdown -->
           
@@ -511,6 +516,17 @@
               </span>
             </div>
 
+                        <!-- Flexible Shortcut Chips: Tap to Auto-Fill Description & Category, then enter dynamic Amount -->
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">⚡ Quick Item Shortcuts</span>
+                <span class="text-[10px] text-slate-400">Tap to auto-fill</span>
+              </div>
+              <div id="quickShortcutChipsContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
+                <!-- Dynamically populated based on active account -->
+              </div>
+            </div>
+
             <div>
               <label id="txTitleLabel" for="expenseTitle" class="block text-xs font-medium text-slate-600 mb-1">
                 Expense Description
@@ -618,6 +634,7 @@
             >
               <span>+ Add to Monthly Log</span>
             </button>
+
           </form>
         </section>
 
@@ -647,6 +664,25 @@
               class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-[11px] shadow-2xs transition"
             >
               Transfer ➔
+            </button>
+          </div>
+
+                    <!-- Split Bill & Group Expense Calculator Banner -->
+          <div id="splitBillBanner" class="mb-2.5 p-2.5 rounded-xl bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-200/80 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-xs">👥</span>
+              <div>
+                <p class="font-bold text-indigo-950 text-[11px]">Split Bill & Group Expense</p>
+                <p class="text-[10px] text-indigo-700">Calculate per-person shares & log friend returns</p>
+              </div>
+            </div>
+            <button
+              id="openSplitBillModalBtn"
+              type="button"
+              onclick="window.openSplitBillModal && window.openSplitBillModal()"
+              class="px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[11px] shadow-2xs transition cursor-pointer"
+            >
+              Split Bill ➔
             </button>
           </div>
 
@@ -1049,6 +1085,193 @@
 
 
     <!-- IN-PAGE TOAST NOTIFICATION -->
+        <!-- SPLIT BILL & GROUP EXPENSE CALCULATOR MODAL -->
+    <div id="splitBillModal" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all">
+      <div class="w-full bg-white rounded-t-3xl sm:rounded-3xl p-5 border border-slate-200 shadow-2xl space-y-4 max-h-[92%] overflow-y-auto">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-base font-bold">👥</span>
+            <div>
+              <h3 class="text-sm font-bold text-slate-800">Split Bill & Group Expense</h3>
+              <p class="text-[11px] text-slate-500">Calculate individual shares & track friend payback</p>
+            </div>
+          </div>
+          <button id="closeSplitBillModalBtn" type="button" onclick="window.closeSplitBillModal && window.closeSplitBillModal()" class="text-slate-400 hover:text-slate-600 text-sm font-bold p-1 rounded-lg cursor-pointer">✕</button>
+        </div>
+
+        <form id="splitBillForm" class="space-y-3.5">
+          <!-- Total Bill Amount -->
+          <div>
+            <label for="splitBillTotalAmount" class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
+              Total Bill Amount (₹) <span class="text-rose-500">*</span>
+            </label>
+            <div class="relative">
+              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-slate-400 text-base">₹</span>
+              <input
+                id="splitBillTotalAmount"
+                type="number"
+                min="1"
+                step="any"
+                required
+                placeholder="e.g., 2400"
+                class="w-full pl-8 pr-4 py-2.5 rounded-xl border border-indigo-300 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 text-base font-bold text-slate-800 transition outline-hidden"
+              />
+            </div>
+            <!-- Quick Addition Chips -->
+            <div class="flex items-center gap-1.5 mt-2 overflow-x-auto no-scrollbar">
+              <button type="button" onclick="window.addSplitAmount && window.addSplitAmount(200)" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[10px] font-semibold text-slate-600 transition shrink-0 cursor-pointer">+₹200</button>
+              <button type="button" onclick="window.addSplitAmount && window.addSplitAmount(500)" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[10px] font-semibold text-slate-600 transition shrink-0 cursor-pointer">+₹500</button>
+              <button type="button" onclick="window.addSplitAmount && window.addSplitAmount(1000)" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[10px] font-semibold text-slate-600 transition shrink-0 cursor-pointer">+₹1,000</button>
+              <button type="button" onclick="window.addSplitAmount && window.addSplitAmount(2000)" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[10px] font-semibold text-slate-600 transition shrink-0 cursor-pointer">+₹2,000</button>
+              <button type="button" onclick="window.addSplitAmount && window.addSplitAmount(5000)" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[10px] font-semibold text-slate-600 transition shrink-0 cursor-pointer">+₹5,000</button>
+            </div>
+          </div>
+
+          <!-- Total People (You + Friends) -->
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider">
+                Total People (Including You) <span class="text-rose-500">*</span>
+              </label>
+              <span id="splitFriendsSubtext" class="text-[10px] text-indigo-600 font-semibold">You + 3 Friends</span>
+            </div>
+            <div class="flex items-center gap-1.5 mb-2">
+              <button type="button" id="splitCountBtn2" onclick="window.setSplitPeopleCount && window.setSplitPeopleCount(2)" class="split-people-btn flex-1 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition cursor-pointer">2</button>
+              <button type="button" id="splitCountBtn3" onclick="window.setSplitPeopleCount && window.setSplitPeopleCount(3)" class="split-people-btn flex-1 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition cursor-pointer">3</button>
+              <button type="button" id="splitCountBtn4" onclick="window.setSplitPeopleCount && window.setSplitPeopleCount(4)" class="split-people-btn flex-1 py-1.5 rounded-xl border-2 border-indigo-500 bg-indigo-50 text-xs font-bold text-indigo-700 transition cursor-pointer">4</button>
+              <button type="button" id="splitCountBtn5" onclick="window.setSplitPeopleCount && window.setSplitPeopleCount(5)" class="split-people-btn flex-1 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition cursor-pointer">5</button>
+              <button type="button" id="splitCountBtn6" onclick="window.setSplitPeopleCount && window.setSplitPeopleCount(6)" class="split-people-btn flex-1 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition cursor-pointer">6</button>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-slate-500 font-medium whitespace-nowrap">Or custom:</span>
+              <input
+                id="splitBillPeopleCount"
+                type="number"
+                min="2"
+                max="50"
+                value="4"
+                class="w-24 px-3 py-1.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 outline-hidden"
+              />
+              <span class="text-[11px] text-slate-400">people sharing</span>
+            </div>
+          </div>
+
+          <!-- Bill Description / Note -->
+          <div>
+            <label for="splitBillTitle" class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
+              Description / Place Name <span class="text-rose-500">*</span>
+            </label>
+            <input
+              id="splitBillTitle"
+              type="text"
+              required
+              value="Dinner with Friends"
+              placeholder="e.g., Barbeque Nation, Goa Cab, Movie Outing"
+              class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-medium text-slate-800 outline-hidden focus:border-indigo-500"
+            />
+            <!-- Quick Title Chips -->
+            <div class="flex items-center gap-1.5 mt-1.5 overflow-x-auto no-scrollbar">
+              <button type="button" onclick="window.setSplitTitle && window.setSplitTitle('Restaurant Dinner')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-600 transition shrink-0 cursor-pointer">🍽️ Dinner</button>
+              <button type="button" onclick="window.setSplitTitle && window.setSplitTitle('Team Lunch / Cafe')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-600 transition shrink-0 cursor-pointer">☕ Cafe & Tea</button>
+              <button type="button" onclick="window.setSplitTitle && window.setSplitTitle('Cab / Travel Fare')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-600 transition shrink-0 cursor-pointer">🚕 Cab / Travel</button>
+              <button type="button" onclick="window.setSplitTitle && window.setSplitTitle('Groceries / Party')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-600 transition shrink-0 cursor-pointer">🍕 Party / Food</button>
+              <button type="button" onclick="window.setSplitTitle && window.setSplitTitle('Trip / Hotel Stay')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-600 transition shrink-0 cursor-pointer">🏖️ Trip</button>
+            </div>
+          </div>
+
+          <!-- Category & Payment Method Grid -->
+          <div class="grid grid-cols-2 gap-2.5">
+            <div>
+              <label for="splitBillCategory" class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
+                Category
+              </label>
+              <select
+                id="splitBillCategory"
+                class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium text-slate-800 bg-white outline-hidden focus:border-indigo-500"
+              >
+                <!-- Populated dynamically with active categories -->
+              </select>
+            </div>
+            <div>
+              <label for="splitBillPaymentModeSelect" class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
+                Paid Via
+              </label>
+              <select
+                id="splitBillPaymentModeSelect"
+                class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-semibold text-slate-800 bg-white outline-hidden focus:border-indigo-500"
+              >
+                <option value="UPI">📱 UPI</option>
+                <option value="Cash">💵 Cash</option>
+                <option value="Card">💳 Card</option>
+                <option value="NetBanking">🏦 Bank</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Date Picker -->
+          <div>
+            <label for="splitBillDate" class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
+              Date
+            </label>
+            <input
+              id="splitBillDate"
+              type="date"
+              class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium text-slate-800 outline-hidden focus:border-indigo-500"
+            />
+          </div>
+
+          <!-- Live Split Calculation Breakdown Card -->
+          <div class="bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200/90 rounded-2xl p-3.5 space-y-2.5">
+            <div class="flex items-center justify-between pb-2 border-b border-indigo-100 text-xs">
+              <span class="text-slate-600 font-semibold">Exact Per-Person Share:</span>
+              <span id="splitPerPersonText" class="font-bold text-indigo-700 text-sm">₹600 / person</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="bg-white p-2.5 rounded-xl border border-indigo-100 shadow-2xs">
+                <span class="text-[9px] text-slate-400 font-bold uppercase block tracking-wider">👤 Your Share</span>
+                <span id="splitMyShareAmount" class="text-sm font-bold text-slate-800 block mt-0.5">₹600</span>
+                <span class="text-[10px] text-emerald-600 font-medium block mt-0.5">Logs to Regular Expense</span>
+              </div>
+              <div class="bg-white p-2.5 rounded-xl border border-amber-200 shadow-2xs">
+                <span class="text-[9px] text-amber-700 font-bold uppercase block tracking-wider">👥 Friends' Share</span>
+                <span id="splitFriendsShareAmount" class="text-sm font-bold text-amber-700 block mt-0.5">₹1,800</span>
+                <span id="splitFriendsShareCount" class="text-[10px] text-amber-600 font-medium block mt-0.5">3 friends × ₹600</span>
+              </div>
+            </div>
+
+            <div class="p-2 rounded-lg bg-amber-50/80 border border-amber-200/60 text-[10px] text-amber-800 flex items-start gap-1.5">
+              <span class="text-xs shrink-0">💡</span>
+              <span>With 1 tap, your share is logged as an expense, and each friend gets their own independent return card so you can settle one-by-one as they pay you back.</span>
+            </div>
+          </div>
+
+          <!-- Individual Friends List with Optional Names for Day-Wise Payback -->
+          <div class="bg-white p-3 rounded-2xl border border-slate-200/90 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">👥 Friends' Shares (Tap-to-Settle Day by Day)</span>
+              <span id="splitFriendsHeaderCount" class="text-[10px] text-indigo-600 font-bold bg-indigo-50 px-2 py-0.5 rounded-full">3 Friends</span>
+            </div>
+            <p class="text-[10px] text-slate-500">
+              Each friend below gets an individual card in your ledger. When Rahul pays on UPI today, tap his card to settle. When Priya pays next week, tap hers! (Names are optional).
+            </p>
+            <div id="splitFriendsNamesList" class="space-y-1.5 max-h-40 overflow-y-auto pr-1">
+              <!-- Dynamically populated rows: Friend 1 [Input Name] -> ₹600 -->
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            id="confirmSplitBillBtn"
+            type="submit"
+            class="w-full bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white font-semibold py-3 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            <span>Confirm & Log Split (₹600 Mine + ₹1,800 Returnable) ➔</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
     <div id="appToast" class="hidden fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-slate-900/90 backdrop-blur-sm text-white text-xs font-semibold px-4 py-2 rounded-full shadow-lg border border-white/20 transition-all pointer-events-none">
       <span id="appToastText">Auto-saved to device</span>
     </div>
@@ -1684,6 +1907,7 @@
         txSubmitBtn.innerHTML = '<span>+ Record Income</span>';
       }
       populateCategorySelects();
+      renderQuickShortcutChips();
     }
 
     // Populate Category <select> dropdowns based on chosen account & transaction type
@@ -1785,8 +2009,11 @@
       getActiveCategories().forEach((cat) => {
         const catTotal = totalsByCategory[cat.id] || 0;
         const catBudget = cat.budget || 1;
-        const budgetPct = Math.min(Math.round((catTotal / catBudget) * 100), 100);
+        const rawPct = Math.round((catTotal / catBudget) * 100);
+        const budgetPct = Math.min(rawPct, 100);
         const isOver = catTotal > catBudget;
+        const isNear = !isOver && rawPct >= 80;
+        const barColor = isOver ? '#ef4444' : isNear ? '#f59e0b' : cat.color;
 
         const itemEl = document.createElement('button');
         itemEl.type = 'button';
@@ -1802,7 +2029,7 @@
             </span>
           </div>
           <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-            <div class="h-full rounded-full transition-all duration-300" style="width: ${budgetPct}%; background-color: ${isOver ? '#f43f5e' : cat.color}"></div>
+            <div class="h-full rounded-full transition-all duration-300" style="width: ${budgetPct}%; background-color: ${barColor}"></div>
           </div>
         `;
         itemEl.addEventListener('click', () => {
@@ -2394,7 +2621,16 @@
         const rawPct = Math.round((spent / limit) * 100);
         const barWidth = Math.min(rawPct, 100);
         const remaining = limit - spent;
+        const isOver = spent > limit;
+        const isNear = !isOver && rawPct >= 80;
+        const barColor = isOver ? '#ef4444' : isNear ? '#f59e0b' : cat.color;
         const isEditingThis = editingCategoryId === cat.id;
+
+        const budgetWarningPill = isOver
+          ? `<span class="inline-flex items-center gap-1 text-[10px] font-bold text-rose-700 bg-rose-100 border border-rose-300 px-2 py-0.5 rounded-full">🚨 Over Budget (${rawPct}%)</span>`
+          : isNear
+          ? `<span class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-800 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-full">⚠️ Near Limit (${rawPct}%)</span>`
+          : '';
 
         const card = document.createElement('button');
         card.type = 'button';
@@ -2411,7 +2647,7 @@
               <div class="min-w-0">
                 <div class="flex items-center gap-1.5">
                   <p class="text-sm font-bold text-slate-800 truncate">${cat.name}</p>
-                  <span class="text-[10px] font-medium text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">Tap to edit</span>
+                  <span class="text-[10px] font-medium text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">Tap to edit</span> ${budgetWarningPill}
                 </div>
                 <p class="text-xs text-slate-400 mt-0.5">
                   Monthly Budget: <span class="font-semibold text-slate-600">${formatCurrency(limit)}</span>
@@ -2427,7 +2663,7 @@
           </div>
 
           <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-            <div class="h-full rounded-full transition-all duration-300" style="width: ${barWidth}%; background-color: ${spent > limit ? '#f43f5e' : cat.color}"></div>
+            <div class="h-full rounded-full transition-all duration-300" style="width: ${barWidth}%; background-color: ${barColor}"></div>
           </div>
           <div class="flex justify-between text-[10px] text-slate-400 mt-1 font-medium">
             <span>${rawPct}% of category budget</span>
@@ -2444,6 +2680,454 @@
     }
 
     // --- 9. MAIN RENDER FUNCTION ---
+    
+    // ==========================================
+    // FLEXIBLE SHORTCUT CHIPS (TAP TO AUTO-FILL)
+    // ==========================================
+    const regularShortcuts = [
+      { icon: '☕', label: 'Tea / Coffee', title: 'Tea', categoryId: 'cat-other', paymentMode: 'UPI' },
+      { icon: '🍛', label: 'Lunch / Snacks', title: 'Lunch', categoryId: 'cat-other', paymentMode: 'UPI' },
+      { icon: '⛽', label: 'Petrol', title: 'Petrol', categoryId: 'cat-trans', paymentMode: 'UPI' },
+      { icon: '🥛', label: 'Milk / Daily', title: 'Milk', categoryId: 'cat-groc', paymentMode: 'UPI' },
+      { icon: '🛺', label: 'Auto / Metro', title: 'Auto Fare', categoryId: 'cat-trans', paymentMode: 'Cash' },
+      { icon: '🛒', label: 'Groceries', title: 'Groceries', categoryId: 'cat-groc', paymentMode: 'UPI' }
+    ];
+
+    const personalShortcuts = [
+      { icon: '📈', label: 'Mutual Fund SIP', title: 'SIP Investment', categoryId: 'cat-per-sip', paymentMode: 'Bank' },
+      { icon: '🛡️', label: 'Emergency Fund', title: 'Emergency Fund Deposit', categoryId: 'cat-per-emg', paymentMode: 'Bank' },
+      { icon: '🛍️', label: 'Gadget / Tech', title: 'Personal Tech', categoryId: 'cat-per-shop', paymentMode: 'UPI' },
+      { icon: '🧘', label: 'Health / Meds', title: 'Healthcare', categoryId: 'cat-per-self', paymentMode: 'UPI' },
+      { icon: '🎁', label: 'Gift / Book', title: 'Personal Treat', categoryId: 'cat-per-disc', paymentMode: 'UPI' }
+    ];
+
+    function renderQuickShortcutChips() {
+      const container = document.getElementById('quickShortcutChipsContainer');
+      if (!container) return;
+      const isPersonal = activeAccount === 'personal';
+      const list = isPersonal ? personalShortcuts : regularShortcuts;
+
+      container.innerHTML = list.map((item, idx) => `
+        <button
+          type="button"
+          onclick="window.applyShortcutChip && window.applyShortcutChip(${idx})"
+          class="shortcut-chip shrink-0 py-1.5 px-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs font-semibold hover:bg-slate-50 transition flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-2xs"
+        >
+          <span>${item.icon}</span>
+          <span>${item.label}</span>
+        </button>
+      `).join('');
+    }
+
+    window.applyShortcutChip = function(index) {
+      const isPersonal = activeAccount === 'personal';
+      const list = isPersonal ? personalShortcuts : regularShortcuts;
+      const item = list[index];
+      if (!item) return;
+
+      const titleInput = document.getElementById('expenseTitle');
+      const catSelect = document.getElementById('expenseCategory');
+      const amountInput = document.getElementById('expenseAmount');
+
+      if (titleInput) titleInput.value = item.title;
+      if (catSelect) {
+        if (Array.from(catSelect.options).some(o => o.value === item.categoryId)) {
+          catSelect.value = item.categoryId;
+        }
+      }
+      if (item.paymentMode && window.selectPaymentMode) {
+        window.selectPaymentMode(item.paymentMode);
+      }
+
+      // Highlight selected chip
+      const container = document.getElementById('quickShortcutChipsContainer');
+      if (container) {
+        container.querySelectorAll('.shortcut-chip').forEach((btn, idx) => {
+          if (idx === index) {
+            btn.className = 'shortcut-chip shrink-0 py-1.5 px-2.5 rounded-xl border-2 border-indigo-600 bg-indigo-50 text-indigo-700 text-xs font-bold transition flex items-center gap-1.5 shadow-2xs cursor-pointer';
+          } else {
+            btn.className = 'shortcut-chip shrink-0 py-1.5 px-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs font-semibold hover:bg-slate-50 transition flex items-center gap-1.5 cursor-pointer';
+          }
+        });
+      }
+
+      // Automatically focus into Amount input so user can enter any dynamic amount
+      if (amountInput) {
+        amountInput.focus();
+        amountInput.select();
+      }
+      showToast(`Selected "${item.title}"! Enter amount paid.`);
+    };
+
+
+    // ==========================================
+    // PHASE 1: SPLIT BILL & GROUP EXPENSE CALCULATOR
+    // ==========================================
+    const splitBillModal = document.getElementById('splitBillModal');
+    const splitBillForm = document.getElementById('splitBillForm');
+    const splitBillTotalAmount = document.getElementById('splitBillTotalAmount');
+    const splitBillPeopleCount = document.getElementById('splitBillPeopleCount');
+    const splitBillTitle = document.getElementById('splitBillTitle');
+    const splitBillCategory = document.getElementById('splitBillCategory');
+    const splitBillPaymentModeSelect = document.getElementById('splitBillPaymentModeSelect');
+    const splitBillDate = document.getElementById('splitBillDate');
+    const splitPerPersonText = document.getElementById('splitPerPersonText');
+    const splitMyShareAmount = document.getElementById('splitMyShareAmount');
+    const splitFriendsShareAmount = document.getElementById('splitFriendsShareAmount');
+    const splitFriendsShareCount = document.getElementById('splitFriendsShareCount');
+    const splitFriendsSubtext = document.getElementById('splitFriendsSubtext');
+    const confirmSplitBillBtn = document.getElementById('confirmSplitBillBtn');
+
+    window.openSplitBillModal = function() {
+      if (!splitBillModal) return;
+      // Friend splits belong to Regular Expense account
+      if (activeAccount === 'personal') {
+        selectAccount('regular');
+      }
+
+      // Populate Categories
+      if (splitBillCategory) {
+        splitBillCategory.innerHTML = '';
+        const cats = getActiveCategories();
+        let selectedIndex = 0;
+        cats.forEach((cat, idx) => {
+          const opt = document.createElement('option');
+          opt.value = cat.id;
+          opt.textContent = `${cat.icon} ${cat.name}`;
+          if (cat.name.toLowerCase().includes('food') || cat.name.toLowerCase().includes('dining') || cat.name.toLowerCase().includes('restaurant')) {
+            selectedIndex = idx;
+          }
+          splitBillCategory.appendChild(opt);
+        });
+        if (cats.length > 0) {
+          splitBillCategory.selectedIndex = selectedIndex;
+        }
+      }
+
+      if (splitBillDate && !splitBillDate.value) {
+        splitBillDate.value = getTodayIso();
+      }
+
+      window.updateSplitCalculation();
+      splitBillModal.classList.remove('hidden');
+      setTimeout(() => {
+        if (splitBillTotalAmount) splitBillTotalAmount.focus();
+      }, 50);
+    };
+
+    window.closeSplitBillModal = function() {
+      if (splitBillModal) splitBillModal.classList.add('hidden');
+    };
+
+    window.setSplitPeopleCount = function(count) {
+      const num = Math.max(2, parseInt(count, 10) || 2);
+      if (splitBillPeopleCount) splitBillPeopleCount.value = num;
+
+      // Update button styling
+      document.querySelectorAll('.split-people-btn').forEach((btn) => {
+        btn.classList.remove('border-2', 'border-indigo-500', 'bg-indigo-50', 'text-indigo-700');
+        btn.classList.add('border-slate-200', 'text-slate-700');
+      });
+      const activeBtn = document.getElementById(`splitCountBtn${num}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('border-slate-200', 'text-slate-700');
+        activeBtn.classList.add('border-2', 'border-indigo-500', 'bg-indigo-50', 'text-indigo-700');
+      }
+
+      window.updateSplitCalculation();
+    };
+
+    window.addSplitAmount = function(amt) {
+      if (!splitBillTotalAmount) return;
+      const current = parseFloat(splitBillTotalAmount.value) || 0;
+      splitBillTotalAmount.value = Math.round((current + amt) * 100) / 100;
+      window.updateSplitCalculation();
+    };
+
+    window.setSplitTitle = function(title) {
+      if (splitBillTitle) {
+        splitBillTitle.value = title;
+      }
+    };
+
+    window.updateSplitCalculation = function() {
+      const total = parseFloat(splitBillTotalAmount ? splitBillTotalAmount.value : 0) || 0;
+      const people = Math.max(2, parseInt(splitBillPeopleCount ? splitBillPeopleCount.value : 4, 10) || 4);
+      const friendsCount = people - 1;
+
+      if (splitFriendsSubtext) {
+        splitFriendsSubtext.textContent = `You + ${friendsCount} Friend${friendsCount > 1 ? 's' : ''}`;
+      }
+      const headerCountEl = document.getElementById('splitFriendsHeaderCount');
+      if (headerCountEl) {
+        headerCountEl.textContent = `${friendsCount} Friend${friendsCount > 1 ? 's' : ''}`;
+      }
+
+      // Preserve existing names if already typed
+      const existingNames = [];
+      document.querySelectorAll('.split-friend-name-input').forEach(inp => {
+        existingNames.push(inp.value);
+      });
+
+      const perPerson = total > 0 ? Math.round((total / people) * 100) / 100 : 0;
+      const myShare = perPerson;
+      const friendsShare = total > 0 ? Math.round((total - myShare) * 100) / 100 : 0;
+
+      if (total <= 0) {
+        if (splitPerPersonText) splitPerPersonText.textContent = '₹0 / person';
+        if (splitMyShareAmount) splitMyShareAmount.textContent = '₹0';
+        if (splitFriendsShareAmount) splitFriendsShareAmount.textContent = '₹0';
+        if (splitFriendsShareCount) splitFriendsShareCount.textContent = `${friendsCount} friend${friendsCount > 1 ? 's' : ''} × ₹0`;
+        if (confirmSplitBillBtn) confirmSplitBillBtn.innerHTML = '<span>Enter bill amount to split ➔</span>';
+      } else {
+        if (splitPerPersonText) splitPerPersonText.textContent = `${formatCurrency(perPerson)} / person`;
+        if (splitMyShareAmount) splitMyShareAmount.textContent = formatCurrency(myShare);
+        if (splitFriendsShareAmount) splitFriendsShareAmount.textContent = formatCurrency(friendsShare);
+        if (splitFriendsShareCount) splitFriendsShareCount.textContent = `${friendsCount} friend${friendsCount > 1 ? 's' : ''} × ${formatCurrency(perPerson)}`;
+
+        if (confirmSplitBillBtn) {
+          confirmSplitBillBtn.innerHTML = `<span>Confirm & Log Split (${formatCurrency(myShare)} Mine + ${friendsCount} Friends × ${formatCurrency(perPerson)}) ➔</span>`;
+        }
+      }
+
+      // Render Individual Friends List Inputs
+      const listContainer = document.getElementById('splitFriendsNamesList');
+      if (listContainer) {
+        listContainer.innerHTML = '';
+        let allocatedFriends = 0;
+        for (let i = 0; i < friendsCount; i++) {
+          let indShare = 0;
+          if (total > 0) {
+            if (i === friendsCount - 1) {
+              indShare = Math.max(0, Math.round((friendsShare - allocatedFriends) * 100) / 100);
+            } else {
+              indShare = perPerson;
+              allocatedFriends += indShare;
+            }
+          }
+          const prevVal = existingNames[i] !== undefined ? existingNames[i] : '';
+          const row = document.createElement('div');
+          row.className = 'flex items-center gap-2 bg-slate-50 p-2 rounded-xl border border-slate-200/80 text-xs';
+          row.innerHTML = `
+            <span class="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-[10px] flex items-center justify-center shrink-0">#${i + 1}</span>
+            <input
+              type="text"
+              class="split-friend-name-input flex-1 px-2.5 py-1 rounded-lg border border-slate-300 text-xs text-slate-800 placeholder-slate-400 bg-white outline-hidden focus:border-indigo-500"
+              placeholder="Friend ${i + 1} name (e.g. Rahul)"
+              value="${prevVal}"
+              data-index="${i}"
+            />
+            <span class="font-bold text-amber-700 whitespace-nowrap text-xs">${formatCurrency(indShare)}</span>
+          `;
+          listContainer.appendChild(row);
+        }
+      }
+    };
+
+    if (splitBillTotalAmount) {
+      splitBillTotalAmount.addEventListener('input', window.updateSplitCalculation);
+    }
+    if (splitBillPeopleCount) {
+      splitBillPeopleCount.addEventListener('input', () => {
+        const num = parseInt(splitBillPeopleCount.value, 10) || 2;
+        // sync buttons
+        document.querySelectorAll('.split-people-btn').forEach((btn) => {
+          btn.classList.remove('border-2', 'border-indigo-500', 'bg-indigo-50', 'text-indigo-700');
+          btn.classList.add('border-slate-200', 'text-slate-700');
+        });
+        const activeBtn = document.getElementById(`splitCountBtn${num}`);
+        if (activeBtn) {
+          activeBtn.classList.remove('border-slate-200', 'text-slate-700');
+          activeBtn.classList.add('border-2', 'border-indigo-500', 'bg-indigo-50', 'text-indigo-700');
+        }
+        window.updateSplitCalculation();
+      });
+    }
+
+    if (splitBillForm) {
+      splitBillForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const total = parseFloat(splitBillTotalAmount.value);
+        const people = Math.max(2, parseInt(splitBillPeopleCount.value, 10) || 4);
+        const title = (splitBillTitle.value || 'Group Bill').trim();
+        const categoryId = splitBillCategory.value;
+        const paymentMode = splitBillPaymentModeSelect.value || 'UPI';
+        const chosenIso = (splitBillDate && splitBillDate.value) ? splitBillDate.value : getTodayIso();
+        const displayDate = isoToDisplayDate(chosenIso);
+        const txMonthYear = getTxMonthYear({ isoDate: chosenIso, date: displayDate });
+
+        if (isNaN(total) || total <= 0) {
+          showToast('Please enter a valid bill amount');
+          return;
+        }
+
+        const perPerson = Math.round((total / people) * 100) / 100;
+        const myShare = perPerson;
+        const friendsShare = Math.round((total - myShare) * 100) / 100;
+        const friendsCount = people - 1;
+
+        // 1. Log My Share into Regular Expense
+        transactions.unshift({
+          id: Date.now(),
+          accountId: 'regular',
+          type: 'expense',
+          title: `${title} (My Share)`,
+          amount: myShare,
+          categoryId,
+          paymentMode,
+          date: displayDate,
+          isoDate: chosenIso,
+          monthYear: txMonthYear,
+          isReimbursable: false,
+          reimbursementStatus: 'none',
+          notes: `Total bill ${formatCurrency(total)} split among ${people} people.`
+        });
+
+        // 2. Automatically log each individual Friend's Share with their own name & card
+        const friendInputs = document.querySelectorAll('.split-friend-name-input');
+        let allocatedFriends = 0;
+        for (let i = 0; i < friendsCount; i++) {
+          let indShare = 0;
+          if (i === friendsCount - 1) {
+            indShare = Math.max(0, Math.round((friendsShare - allocatedFriends) * 100) / 100);
+          } else {
+            indShare = perPerson;
+            allocatedFriends += indShare;
+          }
+
+          const friendNameTyped = (friendInputs[i] && friendInputs[i].value.trim()) ? friendInputs[i].value.trim() : `Friend ${i + 1}`;
+
+          transactions.unshift({
+            id: Date.now() + i + 1,
+            accountId: 'regular',
+            type: 'expense',
+            title: `${title} (${friendNameTyped})`,
+            amount: indShare,
+            categoryId,
+            paymentMode,
+            date: displayDate,
+            isoDate: chosenIso,
+            monthYear: txMonthYear,
+            isReimbursable: true,
+            reimbursableSource: 'friend',
+            reimbursementStatus: 'pending',
+            notes: `Pending payback: ${friendNameTyped}'s share for ${title} (${formatCurrency(indShare)}).`
+          });
+        }
+
+        saveToLocalStorage();
+        renderDashboard();
+        window.closeSplitBillModal();
+        showToast(`Split bill logged! ${formatCurrency(myShare)} logged as your share + ${friendsCount} individual friend cards tracked!`);
+      });
+    }
+
+    // ==========================================
+    // PHASE 1: 80% & 100% CATEGORY BUDGET WARNING ALERTS
+    // ==========================================
+    function updateBudgetWarningAlerts(totalsByCategory) {
+      const banner = document.getElementById('categoryBudgetAlertBanner');
+      if (!banner) return;
+
+      const cats = getActiveCategories();
+      const over100 = [];
+      const over80 = [];
+
+      cats.forEach((cat) => {
+        const spent = totalsByCategory[cat.id] || 0;
+        const budget = cat.budget || 0;
+        if (budget <= 0 || spent <= 0) return;
+        const pct = Math.round((spent / budget) * 100);
+        if (pct >= 100) {
+          over100.push({ cat, spent, budget, pct, overAmount: spent - budget });
+        } else if (pct >= 80) {
+          over80.push({ cat, spent, budget, pct, remaining: budget - spent });
+        }
+      });
+
+      if (over100.length === 0 && over80.length === 0) {
+        banner.classList.add('hidden');
+        banner.innerHTML = '';
+        return;
+      }
+
+      banner.classList.remove('hidden');
+
+      let html = '';
+
+      // Red Alert: 100%+ Breached
+      if (over100.length > 0) {
+        html += `
+          <div class="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1.5 font-bold text-xs text-rose-800">
+                <span class="text-base">🚨</span>
+                <span>Budget Exceeded (${over100.length} Categor${over100.length > 1 ? 'ies' : 'y'})</span>
+              </div>
+              <span class="text-[10px] font-bold bg-rose-200/80 text-rose-800 px-2 py-0.5 rounded-full">100%+ Limit Crossed</span>
+            </div>
+            <div class="space-y-1.5">
+              ${over100.map(item => `
+                <div class="flex items-center justify-between bg-white/95 p-2 rounded-lg border border-rose-100 text-xs">
+                  <div class="flex items-center gap-2 min-w-0">
+                    <span class="text-sm shrink-0">${item.cat.icon}</span>
+                    <div class="min-w-0">
+                      <p class="font-bold text-slate-800 truncate">${item.cat.name}</p>
+                      <p class="text-[10px] text-rose-600 font-medium">
+                        ${formatCurrency(item.spent)} of ${formatCurrency(item.budget)} (${item.pct}%)
+                      </p>
+                    </div>
+                  </div>
+                  <div class="text-right shrink-0 ml-2">
+                    <span class="text-[10px] font-bold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-md inline-block">
+                      +${formatCurrency(item.overAmount)} Over
+                    </span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // Amber Alert: 80%–99% Warning
+      if (over80.length > 0) {
+        html += `
+          <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1.5 font-bold text-xs text-amber-900">
+                <span class="text-base">⚠️</span>
+                <span>80% Budget Warning (${over80.length} Categor${over80.length > 1 ? 'ies' : 'y'})</span>
+              </div>
+              <span class="text-[10px] font-bold bg-amber-200/80 text-amber-800 px-2 py-0.5 rounded-full">Near Monthly Limit</span>
+            </div>
+            <div class="space-y-1.5">
+              ${over80.map(item => `
+                <div class="flex items-center justify-between bg-white/95 p-2 rounded-lg border border-amber-100 text-xs">
+                  <div class="flex items-center gap-2 min-w-0">
+                    <span class="text-sm shrink-0">${item.cat.icon}</span>
+                    <div class="min-w-0">
+                      <p class="font-bold text-slate-800 truncate">${item.cat.name}</p>
+                      <p class="text-[10px] text-amber-700 font-medium">
+                        ${formatCurrency(item.spent)} of ${formatCurrency(item.budget)} (${item.pct}%)
+                      </p>
+                    </div>
+                  </div>
+                  <div class="text-right shrink-0 ml-2">
+                    <span class="text-[10px] font-bold text-amber-800 bg-amber-100/60 border border-amber-200 px-2 py-0.5 rounded-md inline-block">
+                      ${formatCurrency(item.remaining)} left
+                    </span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      banner.innerHTML = html;
+    }
+
     function renderDashboard() {
       populateCategorySelects();
 
@@ -2485,6 +3169,17 @@
 
       // Render View Components
       updateCategoryBreakdown(totalExpenses, totalsByCategory);
+      updateBudgetWarningAlerts(totalsByCategory);
+
+      // Toggle Split Bill Banner (Regular Expense only)
+      const splitBillBannerEl = document.getElementById('splitBillBanner');
+      if (splitBillBannerEl) {
+        if (activeAccount === 'personal') {
+          splitBillBannerEl.classList.add('hidden');
+        } else {
+          splitBillBannerEl.classList.remove('hidden');
+        }
+      }
       renderRecurringBills();
       renderFilterBar();
       renderCategoriesManager(totalsByCategory);

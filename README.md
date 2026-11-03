@@ -1,62 +1,36 @@
 # MySmart Plan 📱💰
 
-**MySmart Plan** is a mobile-first personal and daily maintenance accounting web app designed for clean personal finance tracking and shared household or friend budgeting.
-
----
+**MySmart Plan** is a mobile-first personal finance and daily maintenance accounting web app designed for clean personal tracking, group splitting, and multi-account financial peace of mind.
 
 ## 🌟 Key Features
 
-* **Strict Two-Account Separation:**
-  * **Regular Expense:** Daily living, groceries, utilities, and returnable colleague/friend claims.
-  * **Personal Account:** Long-term wealth, SIP investments, emergency funds, and personal gadgets.
-* **Linked Funds Transfer (`⇄ Transfer`):** Move funds between Regular and Personal accounts without distorting monthly net income or expense totals.
-* **Day-Wise Ledger Cards:** Transactions are grouped chronologically by date under a clear **"Day Spent: ₹X"** header.
-* **Recurring & Multi-Month Bills:** Tracks monthly, quarterly, semi-annual, and yearly recurring expenses with amortized budgeting.
-* **Native Phone Calendar Alarms (`.ics`):** Export bill reminders directly into Google Calendar or Apple Calendar with automated alarms 1 day before due dates.
-* **100% Offline-First & Private:** All data is saved inside your browser's persistent memory (`localStorage`). No servers, no tracking, and zero subscription fees.
-* **Storage Protection Shield:** Leverages `navigator.storage.persist()` to lock storage and prevent automatic OS cache cleanups.
-* **Backup, Sync & Auto-Snapshots:**
-  * `💾 Backup (JSON)` and `📥 Restore / Sync` for easy data migration between devices.
-  * Rolling 1-tap undo recovery snapshots.
-  * Optional free real-time multi-device cloud sync via Firebase REST.
-* **Deployed Protection Mode:** Built-in lock switch to disable the "Reset Demo" button once deployed with real accounting data.
+* **Split Bill & Group Expense Calculator (👥 Split Bill)**:
+  * Enter any restaurant, cab, grocery, or trip bill (e.g., ₹2,400 with 4 friends).
+  * Auto-calculates exact per-person shares (₹600 each).
+  * 1-Tap Logging: records your ₹600 share as regular expense and automatically routes the remaining ₹1,800 to your **Returnable / Friend Split** pending claims tracker.
+* **80% & 100% Category Budget Warning Alerts (🚨 / ⚠️)**:
+  * Real-time dynamic warning banner on the Home Dashboard when any category spending reaches 80% (amber alert) or exceeds 100% (red breach alert).
+  * Visual alert pills and dynamic progress bar color changes on category health bars and Categories Manager.
+* **Strict Two-Account Separation**:
+  * **Regular Expense:** Daily living, groceries, utilities, and returnable friend/office claims.
+  * **Personal Account:** Long-term wealth, SIP investments, commitments, emergency funds, and personal goals.
+* **Linked Funds Transfer (`⇄ Transfer`)**:
+  * Seamlessly move funds between Regular and Personal accounts without distorting monthly net income or expense totals.
+* **Flexible Shortcut Chips**:
+  * Quick-tap shortcut chips (Chai, Auto, Lunch, Groceries, SIP) auto-fill description and category while keeping amount flexible for fast entry.
+* **Day-Wise Ledger Cards**:
+  * Transactions grouped chronologically by date under clean **"Day Spent: ₹X"** headers.
+* **Returnable Claims & Settle Tracking**:
+  * Separates out-of-pocket office and friend expenses from real personal burn, with 1-tap settlement.
+* **Payment Mode Tracking**:
+  * Track payment methods (UPI, Cash, Card, Bank) with filter pills, badges, and CSV export.
+* **Print-Ready PDF Monthly Statement**:
+  * Generates clean, printer-friendly A4 monthly statements with KPI cards, account equations, and category summaries.
+* **100% Offline & Private**:
+  * All financial data stays strictly on your device using localStorage with JSON backup & restore.
 
----
+## 🚀 Getting Started
 
-## 📁 Repository Structure
-
-```text
-├── index.html     # Semantic HTML5 layout, Tailwind CSS styling, modals & UI views
-├── script.js      # Core accounting logic, transaction management, filters & storage
-├── icon-512.png   # High-resolution 512x512 PWA app icon for Android & stores
-├── icon-192.png   # 192x192 mobile home-screen icon & Apple touch icon
-├── favicon.png    # 64x64 browser tab favicon
-└── README.md      # Project documentation & GitHub Pages deployment instructions
-```
-
----
-
-## 🚀 How to Run on GitHub Pages
-
-1. **Upload Files:** Upload all files (`index.html`, `script.js`, `README.md`, `icon-512.png`, `icon-192.png`, and `favicon.png`) to the root of your GitHub repository (e.g., `mysmartplan`).
-2. **Enable GitHub Pages:**
-   * In your repository, click **Settings** (top navigation tab).
-   * Click **Pages** in the left sidebar under *Code and automation*.
-   * Under **Build and deployment > Branch**, select `main` (or `master`) and folder `/ (root)`, then click **Save**.
-3. **Open Your App:**
-   * Wait 60 seconds for GitHub Actions to complete deployment.
-   * Access your live app at:
-     ```text
-     https://<your-username>.github.io/<repository-name>/
-     ```
-   * Example: `https://gandhir1123-tech.github.io/mysmartplan/`
-4. **Install on Mobile:**
-   * Open the link in Chrome (Android) or Safari (iPhone).
-   * Tap the browser menu **(⋮) → Add to Home screen**.
-   * The app will launch in full-screen mode with your custom wallet logo icon!
-
----
-
-## 🔒 Privacy & Data Ownership
-
-All transaction data, category customizations, and monthly budgets remain strictly on your local device. No financial records are ever sent to external third parties.
+1. Download or clone this repository.
+2. Open `index.html` in any modern web browser on your phone, tablet, or desktop.
+3. Add to Home Screen (PWA) for a native app experience.
