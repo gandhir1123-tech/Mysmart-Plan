@@ -150,6 +150,15 @@
           </div>
         </div>
 
+        <!-- Pending Returnable Dues (Friend Split + Office) Banner in Header -->
+        <div id="headerPendingBanner" class="hidden bg-amber-400/15 hover:bg-amber-400/25 border border-amber-400/30 rounded-lg px-2.5 py-1.5 flex items-center justify-between text-[11px] text-amber-200 cursor-pointer transition" title="Tap to view pending friend & office returns">
+          <div class="flex items-center gap-1.5">
+            <span>⏳</span>
+            <span class="font-medium">Pending to Receive:</span>
+          </div>
+          <span id="headerPendingAmount" class="font-bold text-amber-300">₹0</span>
+        </div>
+
         <!-- Compact Expense Budget & Category Sync Bar -->
         <div class="pt-1.5 border-t border-white/10 space-y-1">
           <div class="flex items-center justify-between text-[10px]">
@@ -698,8 +707,8 @@
             <span id="pendingReturnsAmount" class="font-extrabold text-amber-900 text-xs bg-white px-2.5 py-1 rounded-lg border border-amber-200 shrink-0">₹0</span>
           </div>
 
-          <!-- Type Filters (All, Income, Expenses) -->
-          <div class="flex items-center gap-1.5 mb-2 overflow-x-auto no-scrollbar">
+          <!-- Type Filters (All, Income, Expenses, Pending) -->
+          <div class="flex items-center gap-1.5 mb-2.5 overflow-x-auto no-scrollbar">
             <button id="filterTypeAllBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-600 text-white shadow-sm shrink-0">
               All Activity
             </button>
@@ -709,81 +718,85 @@
             <button id="filterTypeExpenseBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold bg-white text-rose-700 border border-rose-200 hover:border-rose-400 shrink-0">
               ↑ Expenses Only
             </button>
-          </div>
-
-          <!-- Date-Wise Quick Timeline Filter Pills -->
-          <!-- Customise Date Filter Row -->
-          <div class="flex items-center gap-1.5 mb-2.5 flex-wrap">
-            <button
-              id="dateFilterAllBtn"
-              type="button"
-              onclick="window.clearDateFilter && window.clearDateFilter()"
-              class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-white shadow-2xs shrink-0 transition cursor-pointer"
-            >
-              All Days
+            <button id="filterTypePendingBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold bg-white text-amber-800 border border-amber-300 hover:border-amber-500 shrink-0 flex items-center gap-1 cursor-pointer">
+              <span>⏳</span>
+              <span id="filterTypePendingText">Pending (0)</span>
             </button>
-            <div id="customDateFilterBox" class="flex items-center gap-1.5 flex-1 min-w-[200px] bg-white border border-slate-200 rounded-xl px-2.5 py-1 shadow-2xs transition">
-              <span class="text-xs text-indigo-600 font-bold shrink-0">📅 Custom Date:</span>
-              <input
-                type="date"
-                id="customDateFilterInput"
-                aria-label="Filter by custom date"
-                class="w-full text-xs font-semibold text-slate-700 bg-transparent focus:outline-none cursor-pointer"
-              />
-              <button
-                id="clearCustomDateBtn"
-                type="button"
-                onclick="window.clearDateFilter && window.clearDateFilter()"
-                class="hidden text-slate-400 hover:text-slate-600 text-sm font-bold px-1 cursor-pointer"
-                title="Clear date filter"
-              >&times;</button>
-            </div>
           </div>
 
           <!-- Hidden container to preserve categoryFilterBar ID for scripts/checks -->
           <div id="categoryFilterBar" class="hidden"></div>
 
-          <!-- Filter Controls & Statement Export Row -->
-          <div class="flex items-center gap-1.5 mb-2 overflow-x-auto no-scrollbar">
-            <select
-              id="ledgerCategorySelect"
-              aria-label="Filter by category"
-              class="px-2.5 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 shrink-0"
-            >
-              <option value="All">All Categories</option>
-              <!-- Populated dynamically -->
-            </select>
+          <!-- Streamlined Mobile Filter Toolbar (Date, Category, Sort & Export) -->
+          <div class="bg-slate-50 p-2.5 rounded-2xl border border-slate-200/90 mb-2.5 space-y-2 text-xs shadow-2xs">
+            <!-- Row 1: Date Filter Controls -->
+            <div class="flex items-center gap-1.5">
+              <button
+                id="dateFilterAllBtn"
+                type="button"
+                onclick="window.clearDateFilter && window.clearDateFilter()"
+                class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-white shadow-2xs shrink-0 transition cursor-pointer"
+              >
+                All Days
+              </button>
+              <div id="customDateFilterBox" class="flex items-center gap-1.5 flex-1 bg-white border border-slate-200 rounded-xl px-2.5 py-1 shadow-2xs transition">
+                <span class="text-[11px] text-indigo-600 font-bold shrink-0">📅 Custom:</span>
+                <input
+                  type="date"
+                  id="customDateFilterInput"
+                  aria-label="Filter by custom date"
+                  class="w-full text-xs font-semibold text-slate-700 bg-transparent focus:outline-none cursor-pointer"
+                />
+                <button
+                  id="clearCustomDateBtn"
+                  type="button"
+                  onclick="window.clearDateFilter && window.clearDateFilter()"
+                  class="hidden text-slate-400 hover:text-slate-600 text-sm font-bold px-1 cursor-pointer"
+                  title="Clear date filter"
+                >&times;</button>
+              </div>
+            </div>
 
-            <select
-              id="sortExpenseSelect"
-              aria-label="Sort transactions"
-              class="px-2.5 py-1.5 rounded-xl border border-slate-200 text-xs font-medium text-slate-600 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 shrink-0"
-            >
-              <option value="newest">Newest Date</option>
-              <option value="oldest">Oldest Date</option>
-              <option value="highest">Highest ₹</option>
-              <option value="lowest">Lowest ₹</option>
-            </select>
+            <!-- Row 2: Category, Sorting & Export Actions -->
+            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+              <select
+                id="ledgerCategorySelect"
+                aria-label="Filter by category"
+                class="flex-1 min-w-[120px] px-2.5 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 shrink-0"
+              >
+                <option value="All">All Categories</option>
+              </select>
 
-            <!-- Statement Actions: Print/PDF and CSV -->
-            <button
-              id="printPdfStatementBtn"
-              type="button"
-              onclick="window.printPdfMonthlyStatement && window.printPdfMonthlyStatement()"
-              class="px-2.5 py-1.5 rounded-xl border border-indigo-200 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold transition shrink-0 flex items-center gap-1 shadow-2xs cursor-pointer active:scale-95"
-              title="Print or Save Monthly Statement as PDF"
-            >
-              <span>📄 PDF</span>
-            </button>
-            <button
-              id="exportMonthlyCsvBtn"
-              type="button"
-              onclick="window.exportMonthlyStatementCsv && window.exportMonthlyStatementCsv()"
-              class="px-2.5 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 bg-slate-50 hover:bg-slate-100 transition shrink-0 flex items-center gap-1 cursor-pointer"
-              title="Download Statement as CSV for Excel"
-            >
-              <span>📊 CSV</span>
-            </button>
+              <select
+                id="sortExpenseSelect"
+                aria-label="Sort transactions"
+                class="px-2 py-1.5 rounded-xl border border-slate-200 text-xs font-medium text-slate-600 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 shrink-0"
+              >
+                <option value="newest">Newest Date</option>
+                <option value="oldest">Oldest Date</option>
+                <option value="highest">Highest ₹</option>
+                <option value="lowest">Lowest ₹</option>
+              </select>
+
+              <button
+                id="printPdfStatementBtn"
+                type="button"
+                onclick="window.printPdfMonthlyStatement && window.printPdfMonthlyStatement()"
+                class="px-2.5 py-1.5 rounded-xl border border-indigo-200 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold transition shrink-0 flex items-center gap-1 shadow-2xs cursor-pointer active:scale-95"
+                title="Print or Save Monthly Statement as PDF"
+              >
+                <span>📄 PDF</span>
+              </button>
+              <button
+                id="exportMonthlyCsvBtn"
+                type="button"
+                onclick="window.exportMonthlyStatementCsv && window.exportMonthlyStatementCsv()"
+                class="px-2.5 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 bg-white hover:bg-slate-100 transition shrink-0 flex items-center gap-1 cursor-pointer"
+                title="Download Statement as CSV for Excel"
+              >
+                <span>📊 CSV</span>
+              </button>
+            </div>
           </div>
 
           <!-- One Full-Width Search Bar Underneath All Categories -->
@@ -3193,6 +3206,8 @@
         if (activeAccount === 'personal') {
           // Strictly disable/hide office reimbursement details when viewing Personal Account
           pendingReturnsBanner.classList.add('hidden');
+          const headerPendingBanner = document.getElementById('headerPendingBanner');
+          if (headerPendingBanner) headerPendingBanner.classList.add('hidden');
         } else {
           // Filter pending claims for Regular Expense account
           const pendingClaims = transactions.filter((t) => t.accountId === 'regular' && t.type === 'expense' && t.isReimbursable && t.reimbursementStatus === 'pending');
@@ -3204,6 +3219,27 @@
           } else {
             pendingReturnsBanner.classList.add('hidden');
           }
+
+          // Update Filter Pill Count
+          if (filterTypePendingText) {
+            filterTypePendingText.textContent = `Pending (${pendingClaims.length})`;
+          }
+
+          // Update Top Header Pending to Receive Banner
+          const headerPendingBanner = document.getElementById('headerPendingBanner');
+          const headerPendingAmount = document.getElementById('headerPendingAmount');
+          if (headerPendingBanner && headerPendingAmount) {
+            if (pendingClaims.length > 0) {
+              headerPendingBanner.classList.remove('hidden');
+              headerPendingAmount.textContent = `${formatCurrency(pendingTotal)} Due`;
+              headerPendingBanner.onclick = () => {
+                switchTab('expenses');
+                if (filterTypePendingBtn) filterTypePendingBtn.click();
+              };
+            } else {
+              headerPendingBanner.classList.add('hidden');
+            }
+          }
         }
       }
 
@@ -3211,7 +3247,11 @@
       let visibleTransactions = getActiveTransactions().filter((item) => {
         const cat = getAnyCategoryById(item.categoryId);
         const matchesCategory = selectedCategory === 'All' || item.categoryId === selectedCategory;
-        const matchesType = filterLedgerType === 'all' || item.type === filterLedgerType;
+        const matchesType = filterLedgerType === 'all'
+          ? true
+          : (filterLedgerType === 'pending'
+              ? (item.isReimbursable && item.reimbursementStatus === 'pending')
+              : item.type === filterLedgerType);
         const q = searchQuery.toLowerCase();
         const matchesSearch = !searchQuery ||
                               (item.title && item.title.toLowerCase().includes(q)) ||
@@ -3373,14 +3413,22 @@
 
           let claimBadgeHtml = '';
           if (isPendingClaim) {
+            const isFriend = item.reimbursableSource === 'friend';
             claimBadgeHtml = `
-              <button type="button" data-id="${item.id}" class="settle-claim-btn text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 hover:bg-emerald-100 hover:text-emerald-800 transition flex items-center gap-1" title="Tap when money is returned">
-                <span>${rMeta.icon} ${rMeta.pendingLabel}</span> • <span class="underline">Pending (Tap when Returned)</span>
-              </button>
+              <div class="flex items-center gap-1 flex-wrap">
+                <button type="button" data-id="${item.id}" class="settle-claim-btn text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 hover:bg-emerald-100 hover:text-emerald-800 transition flex items-center gap-1 cursor-pointer" title="Tap when money is returned">
+                  <span>${rMeta.icon} ${rMeta.pendingLabel}</span> • <span class="underline">Pending (Tap to Settle)</span>
+                </button>
+                ${isFriend ? `
+                  <button type="button" data-id="${item.id}" class="whatsapp-remind-btn text-[9px] font-bold px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white transition flex items-center gap-1 shadow-2xs cursor-pointer" title="Send WhatsApp payback reminder">
+                    <span>💬 Remind</span>
+                  </button>
+                ` : ''}
+              </div>
             `;
           } else if (isSettled) {
             claimBadgeHtml = `
-              <button type="button" data-id="${item.id}" class="settle-claim-btn text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 hover:bg-amber-100 transition flex items-center gap-1" title="Money returned: ₹0 net personal expense">
+              <button type="button" data-id="${item.id}" class="settle-claim-btn text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 hover:bg-amber-100 transition flex items-center gap-1 cursor-pointer" title="Money returned: ₹0 net personal expense">
                 <span>${rMeta.icon} ${rMeta.settledLabel} (Net ₹0)</span> ✓
               </button>
             `;
@@ -3422,6 +3470,14 @@
               </div>
               <button
                 data-id="${item.id}"
+                class="repeat-btn text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 p-1.5 rounded-lg text-xs transition cursor-pointer"
+                title="Re-log / Repeat this entry for today"
+                aria-label="Repeat entry"
+              >
+                ⎘
+              </button>
+              <button
+                data-id="${item.id}"
                 class="edit-btn text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 p-1.5 rounded-lg text-xs transition cursor-pointer"
                 title="Edit entry"
                 aria-label="Edit entry"
@@ -3455,6 +3511,59 @@
             tx.reimbursementStatus = tx.reimbursementStatus === 'settled' ? 'pending' : 'settled';
             renderDashboard();
           }
+        });
+      });
+
+      // Repeat / Re-Log Entry Listener
+      document.querySelectorAll('.repeat-btn').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const id = Number(btn.getAttribute('data-id'));
+          const tx = transactions.find((t) => t.id === id);
+          if (!tx) return;
+
+          if (tx.accountId && tx.accountId !== activeAccount) {
+            selectAccount(tx.accountId);
+          }
+          setLogType(tx.type || 'expense');
+          if (expenseTitle) expenseTitle.value = tx.title;
+          if (expenseAmount) expenseAmount.value = tx.amount;
+          if (expenseCategory) expenseCategory.value = tx.categoryId;
+          if (window.selectPaymentMode) window.selectPaymentMode(tx.paymentMode || 'UPI');
+          if (expenseDateInput) expenseDateInput.value = getTodayIso();
+
+          const reimbCb = document.getElementById('isReimbursableCheckbox');
+          if (reimbCb) reimbCb.checked = !!tx.isReimbursable;
+          const reimbSrc = document.getElementById('reimbursableSourceSelect');
+          if (reimbSrc && tx.reimbursableSource) reimbSrc.value = tx.reimbursableSource;
+
+          const formEl = document.getElementById('expenseForm');
+          if (formEl) {
+            formEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+          if (expenseAmount) {
+            setTimeout(() => expenseAmount.focus(), 300);
+          }
+          showToast(`Pre-filled "${tx.title}" (${formatCurrency(tx.amount)}) for today. Tap "+ Add" to log!`);
+        });
+      });
+
+      // WhatsApp Payback Reminder Listener
+      document.querySelectorAll('.whatsapp-remind-btn').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const id = Number(btn.getAttribute('data-id'));
+          const tx = transactions.find((t) => t.id === id);
+          if (!tx) return;
+          let friendName = 'Friend';
+          const match = tx.title.match(/\((.*?)\)/);
+          if (match && match[1]) {
+            friendName = match[1].replace(/'s Share/i, '').replace(/Friend Split - /i, '').trim();
+          }
+          const cleanTitle = tx.title.replace(/\(.*?\)/, '').trim() || 'group bill';
+          const msg = `Hey ${friendName}, gentle reminder: your share for "${cleanTitle}" is ${formatCurrency(tx.amount)}. Please UPI/GPay me when you get a chance! Thanks 🙏`;
+          const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+          window.open(url, '_blank');
         });
       });
 
@@ -3504,33 +3613,65 @@
     logTypeExpenseBtn.addEventListener('click', () => setLogType('expense'));
     logTypeIncomeBtn.addEventListener('click', () => setLogType('income'));
 
-    // Ledger Type Filters (All, Income, Expense)
-    filterTypeAllBtn.addEventListener('click', () => {
-      filterLedgerType = 'all';
-      selectedCategory = 'All';
-      filterTypeAllBtn.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-indigo-600 text-white shadow-sm shrink-0';
-      filterTypeIncomeBtn.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-emerald-700 border border-emerald-200 hover:border-emerald-400 shrink-0';
-      filterTypeExpenseBtn.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-rose-700 border border-rose-200 hover:border-rose-400 shrink-0';
-      renderDashboard();
-    });
+    // Ledger Type Filters (All, Income, Expense, Pending)
+    const filterTypePendingBtn = document.getElementById('filterTypePendingBtn');
+    const filterTypePendingText = document.getElementById('filterTypePendingText');
 
-    filterTypeIncomeBtn.addEventListener('click', () => {
-      filterLedgerType = 'income';
-      selectedCategory = 'All'; // Reset category filter so income transactions are never accidentally hidden by expense category filters
-      filterTypeIncomeBtn.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-emerald-600 text-white shadow-sm shrink-0';
-      filterTypeAllBtn.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-slate-700 border border-slate-200 hover:border-slate-400 shrink-0';
-      filterTypeExpenseBtn.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-rose-700 border border-rose-200 hover:border-rose-400 shrink-0';
-      renderDashboard();
-    });
+    function syncTypeFilterButtons() {
+      const allClass = filterLedgerType === 'all'
+        ? 'px-3 py-1 rounded-full text-xs font-semibold bg-indigo-600 text-white shadow-sm shrink-0'
+        : 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-slate-700 border border-slate-200 hover:border-slate-400 shrink-0';
+      const incClass = filterLedgerType === 'income'
+        ? 'px-3 py-1 rounded-full text-xs font-semibold bg-emerald-600 text-white shadow-sm shrink-0'
+        : 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-emerald-700 border border-emerald-200 hover:border-emerald-400 shrink-0';
+      const expClass = filterLedgerType === 'expense'
+        ? 'px-3 py-1 rounded-full text-xs font-semibold bg-rose-600 text-white shadow-sm shrink-0'
+        : 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-rose-700 border border-rose-200 hover:border-rose-400 shrink-0';
+      const pendClass = filterLedgerType === 'pending'
+        ? 'px-3 py-1 rounded-full text-xs font-semibold bg-amber-600 text-white shadow-sm border border-amber-600 shrink-0 flex items-center gap-1 cursor-pointer'
+        : 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-amber-800 border border-amber-300 hover:border-amber-500 shrink-0 flex items-center gap-1 cursor-pointer';
 
-    filterTypeExpenseBtn.addEventListener('click', () => {
-      filterLedgerType = 'expense';
-      selectedCategory = 'All';
-      filterTypeExpenseBtn.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-rose-600 text-white shadow-sm shrink-0';
-      filterTypeAllBtn.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-slate-700 border border-slate-200 hover:border-slate-400 shrink-0';
-      filterTypeIncomeBtn.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-emerald-700 border border-emerald-200 hover:border-emerald-400 shrink-0';
-      renderDashboard();
-    });
+      if (filterTypeAllBtn) filterTypeAllBtn.className = allClass;
+      if (filterTypeIncomeBtn) filterTypeIncomeBtn.className = incClass;
+      if (filterTypeExpenseBtn) filterTypeExpenseBtn.className = expClass;
+      if (filterTypePendingBtn) filterTypePendingBtn.className = pendClass;
+    }
+
+    if (filterTypeAllBtn) {
+      filterTypeAllBtn.addEventListener('click', () => {
+        filterLedgerType = 'all';
+        selectedCategory = 'All';
+        syncTypeFilterButtons();
+        renderDashboard();
+      });
+    }
+
+    if (filterTypeIncomeBtn) {
+      filterTypeIncomeBtn.addEventListener('click', () => {
+        filterLedgerType = 'income';
+        selectedCategory = 'All';
+        syncTypeFilterButtons();
+        renderDashboard();
+      });
+    }
+
+    if (filterTypeExpenseBtn) {
+      filterTypeExpenseBtn.addEventListener('click', () => {
+        filterLedgerType = 'expense';
+        selectedCategory = 'All';
+        syncTypeFilterButtons();
+        renderDashboard();
+      });
+    }
+
+    if (filterTypePendingBtn) {
+      filterTypePendingBtn.addEventListener('click', () => {
+        filterLedgerType = 'pending';
+        selectedCategory = 'All';
+        syncTypeFilterButtons();
+        renderDashboard();
+      });
+    }
 
     // --- DATE CUSTOMIZATION HELPERS ---
     const expenseDateInput = document.getElementById('expenseDateInput');
@@ -4527,6 +4668,224 @@ function showToast(message) {
       URL.revokeObjectURL(url);
       showToast('Monthly Statement exported as CSV!');
     };
+
+    // ==========================================
+    // PRINT-READY PDF MONTHLY STATEMENT GENERATOR
+    // ==========================================
+    window.printPdfMonthlyStatement = function() {
+      const currentMonth = availableMonths[currentMonthIndex];
+      const txs = transactions.filter(t => (t.monthYear || getTxMonthYear(t)) === currentMonth && (activeAccount === 'both' || t.accountId === activeAccount));
+
+      if (txs.length === 0) {
+        showToast('No transactions recorded for ' + currentMonth);
+        return;
+      }
+
+      const container = document.getElementById('printStatementContainer');
+      if (!container) return;
+
+      const totalIncome = txs.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
+      const totalExpense = txs.filter(t => t.type === 'expense' && !(t.isReimbursable && t.reimbursementStatus === 'settled')).reduce((s, t) => s + t.amount, 0);
+      const netBalance = totalIncome - totalExpense;
+
+      // Group Splits & Returnable Claims
+      const groupSplits = txs.filter(t => t.isReimbursable);
+      const pendingSplitsTotal = groupSplits.filter(t => t.reimbursementStatus === 'pending').reduce((s, t) => s + t.amount, 0);
+      const settledSplitsTotal = groupSplits.filter(t => t.reimbursementStatus === 'settled').reduce((s, t) => s + t.amount, 0);
+
+      // Category breakdown
+      const catTotals = {};
+      txs.filter(t => t.type === 'expense' && !(t.isReimbursable && t.reimbursementStatus === 'settled')).forEach(t => {
+        catTotals[t.categoryId] = (catTotals[t.categoryId] || 0) + t.amount;
+      });
+
+      const nowFormatted = new Date().toLocaleDateString('en-IN', {
+        day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
+
+      let html = `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #0f172a; line-height: 1.4;">
+          <!-- Header -->
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #4f46e5; padding-bottom: 12px; margin-bottom: 16px;">
+            <div>
+              <h1 style="font-size: 20px; font-weight: 800; color: #312e81; margin: 0;">MySmart Plan — Financial Statement</h1>
+              <p style="font-size: 12px; color: #64748b; margin: 4px 0 0 0;">
+                Account: <strong>${activeAccount === 'personal' ? 'Personal Account' : 'Regular Expense Account'}</strong> | Statement Period: <strong>${currentMonth}</strong>
+              </p>
+            </div>
+            <div style="text-align: right; font-size: 11px; color: #64748b;">
+              <p style="margin: 0;">Generated: <strong>${nowFormatted}</strong></p>
+              <p style="margin: 2px 0 0 0;">Confidential Personal Record</p>
+            </div>
+          </div>
+
+          <!-- KPI Summary Cards -->
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px;">
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 10px; text-align: center;">
+              <span style="font-size: 10px; color: #166534; font-weight: 700; text-transform: uppercase;">Total Inflow</span>
+              <div style="font-size: 16px; font-weight: 800; color: #15803d; margin-top: 4px;">${formatCurrency(totalIncome)}</div>
+            </div>
+            <div style="background: #fff1f2; border: 1px solid #fecdd3; border-radius: 8px; padding: 10px; text-align: center;">
+              <span style="font-size: 10px; color: #9f1239; font-weight: 700; text-transform: uppercase;">Real Living Expenses</span>
+              <div style="font-size: 16px; font-weight: 800; color: #be123c; margin-top: 4px;">${formatCurrency(totalExpense)}</div>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; text-align: center;">
+              <span style="font-size: 10px; color: #334155; font-weight: 700; text-transform: uppercase;">Net Balance</span>
+              <div style="font-size: 16px; font-weight: 800; color: ${netBalance >= 0 ? '#1e293b' : '#dc2626'}; margin-top: 4px;">${formatCurrency(netBalance)}</div>
+            </div>
+            <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 10px; text-align: center;">
+              <span style="font-size: 10px; color: #92400e; font-weight: 700; text-transform: uppercase;">Pending Returns</span>
+              <div style="font-size: 16px; font-weight: 800; color: #b45309; margin-top: 4px;">${formatCurrency(pendingSplitsTotal)}</div>
+            </div>
+          </div>
+      `;
+
+      // Itemized Group Splits & Returnable Claims Table
+      if (groupSplits.length > 0) {
+        html += `
+          <div style="margin-bottom: 20px;">
+            <h3 style="font-size: 13px; font-weight: 700; color: #1e1b4b; text-transform: uppercase; margin: 0 0 8px 0; border-left: 3px solid #f59e0b; padding-left: 8px;">
+              👥 Group Splits & Returnable Claims (${groupSplits.length} Records)
+            </h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 11px; text-align: left;">
+              <thead>
+                <tr style="background: #f8fafc; border-bottom: 1px solid #cbd5e1;">
+                  <th style="padding: 6px 8px;">Date</th>
+                  <th style="padding: 6px 8px;">Description & Person</th>
+                  <th style="padding: 6px 8px;">Type</th>
+                  <th style="padding: 6px 8px;">Payment</th>
+                  <th style="padding: 6px 8px; text-align: right;">Amount</th>
+                  <th style="padding: 6px 8px; text-align: center;">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${groupSplits.map(s => {
+                  const isSettled = s.reimbursementStatus === 'settled';
+                  return `
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                      <td style="padding: 6px 8px; color: #64748b;">${s.date}</td>
+                      <td style="padding: 6px 8px; font-weight: 600; color: #1e293b;">${s.title}</td>
+                      <td style="padding: 6px 8px; color: #64748b;">${s.reimbursableSource === 'friend' ? 'Friend Split' : 'Office Claim'}</td>
+                      <td style="padding: 6px 8px; color: #64748b;">${s.paymentMode || 'UPI'}</td>
+                      <td style="padding: 6px 8px; font-weight: 700; text-align: right; color: ${isSettled ? '#64748b' : '#b45309'};">
+                        ${formatCurrency(s.amount)}
+                      </td>
+                      <td style="padding: 6px 8px; text-align: center;">
+                        <span style="display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 700; ${isSettled ? 'background: #dcfce7; color: #15803d;' : 'background: #fef3c7; color: #92400e;'}">
+                          ${isSettled ? '✓ SETTLED' : '⏳ PENDING'}
+                        </span>
+                      </td>
+                    </tr>
+                  `;
+                }).join('')}
+                <tr style="background: #fffbeb; font-weight: 700; border-top: 2px solid #fde68a;">
+                  <td colspan="4" style="padding: 6px 8px;">Total Group Outlay: ${formatCurrency(pendingSplitsTotal + settledSplitsTotal)}</td>
+                  <td style="padding: 6px 8px; text-align: right; color: #b45309;">Pending: ${formatCurrency(pendingSplitsTotal)}</td>
+                  <td style="padding: 6px 8px; text-align: center; color: #15803d;">Settled: ${formatCurrency(settledSplitsTotal)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      // Category Spending Summary Table
+      html += `
+        <div style="margin-bottom: 20px;">
+          <h3 style="font-size: 13px; font-weight: 700; color: #1e1b4b; text-transform: uppercase; margin: 0 0 8px 0; border-left: 3px solid #4f46e5; padding-left: 8px;">
+            🏷️ Category Spending Summary
+          </h3>
+          <table style="width: 100%; border-collapse: collapse; font-size: 11px; text-align: left;">
+            <thead>
+              <tr style="background: #f8fafc; border-bottom: 1px solid #cbd5e1;">
+                <th style="padding: 6px 8px;">Category</th>
+                <th style="padding: 6px 8px; text-align: right;">Budget</th>
+                <th style="padding: 6px 8px; text-align: right;">Actual Spent</th>
+                <th style="padding: 6px 8px; text-align: right;">Utilization</th>
+                <th style="padding: 6px 8px; text-align: right;">Variance</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${getActiveCategories().map(c => {
+                const spent = catTotals[c.id] || 0;
+                const b = c.budget || 0;
+                const pct = b > 0 ? Math.round((spent / b) * 100) : 0;
+                const diff = b - spent;
+                return `
+                  <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding: 6px 8px; font-weight: 600;">${c.icon} ${c.name}</td>
+                    <td style="padding: 6px 8px; text-align: right; color: #64748b;">${formatCurrency(b)}</td>
+                    <td style="padding: 6px 8px; text-align: right; font-weight: 700; color: ${spent > b ? '#e11d48' : '#1e293b'};">${formatCurrency(spent)}</td>
+                    <td style="padding: 6px 8px; text-align: right; font-weight: 600; color: ${pct > 100 ? '#e11d48' : (pct >= 80 ? '#d97706' : '#15803d')};">${pct}%</td>
+                    <td style="padding: 6px 8px; text-align: right; font-weight: 600; color: ${diff >= 0 ? '#15803d' : '#e11d48'};">
+                      ${diff >= 0 ? formatCurrency(diff) + ' left' : formatCurrency(Math.abs(diff)) + ' over'}
+                    </td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      // Chronological Transactions Ledger Table
+      html += `
+        <div>
+          <h3 style="font-size: 13px; font-weight: 700; color: #1e1b4b; text-transform: uppercase; margin: 0 0 8px 0; border-left: 3px solid #059669; padding-left: 8px;">
+            🧾 Complete Transaction History (${txs.length} Entries)
+          </h3>
+          <table style="width: 100%; border-collapse: collapse; font-size: 10.5px; text-align: left;">
+            <thead>
+              <tr style="background: #f8fafc; border-bottom: 1px solid #cbd5e1;">
+                <th style="padding: 5px 6px;">Date</th>
+                <th style="padding: 5px 6px;">Title</th>
+                <th style="padding: 5px 6px;">Category</th>
+                <th style="padding: 5px 6px;">Mode</th>
+                <th style="padding: 5px 6px;">Type</th>
+                <th style="padding: 5px 6px; text-align: right;">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${txs.map(t => {
+                const cat = getAnyCategoryById(t.categoryId);
+                const isInc = t.type === 'income';
+                const isSettled = t.isReimbursable && t.reimbursementStatus === 'settled';
+                return `
+                  <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 5px 6px; color: #64748b;">${t.date}</td>
+                    <td style="padding: 5px 6px; font-weight: 600; color: #1e293b; ${isSettled ? 'text-decoration: line-through; color: #94a3b8;' : ''}">${t.title}</td>
+                    <td style="padding: 5px 6px; color: #64748b;">${cat ? cat.name : 'General'}</td>
+                    <td style="padding: 5px 6px; color: #64748b;">${t.paymentMode || 'UPI'}</td>
+                    <td style="padding: 5px 6px;">
+                      <span style="font-size: 8.5px; font-weight: 700; padding: 1px 4px; border-radius: 3px; ${isInc ? 'background: #dcfce7; color: #15803d;' : 'background: #ffe4e6; color: #be123c;'}">
+                        ${isInc ? 'INCOME' : (t.isReimbursable ? 'RETURNABLE' : 'EXPENSE')}
+                      </span>
+                    </td>
+                    <td style="padding: 5px 6px; text-align: right; font-weight: 700; color: ${isInc ? '#15803d' : (isSettled ? '#94a3b8' : '#be123c')};">
+                      ${isInc ? '+' : '-'}${formatCurrency(t.amount)}
+                    </td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Footer Note -->
+        <div style="margin-top: 24px; padding-top: 8px; border-top: 1px solid #e2e8f0; font-size: 9.5px; color: #94a3b8; text-align: center;">
+          Generated by MySmart Plan Personal Accounting App • 100% Private & Device-Stored Data
+        </div>
+      </div>
+      `;
+
+      container.innerHTML = html;
+      container.classList.remove('hidden');
+
+      setTimeout(() => {
+        window.print();
+      }, 100);
+    };
+
 
     // Restore / Sync Modal Listeners
     if (triggerRestoreModalBtn) {
