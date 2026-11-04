@@ -57,6 +57,57 @@
         margin: 12mm;
       }
     }
+  
+    /* True AMOLED Dark Mode Theme */
+    html.dark {
+      color-scheme: dark;
+    }
+    html.dark body {
+      background-color: #07090e !important;
+      color: #f1f5f9 !important;
+    }
+    html.dark .bg-white {
+      background-color: #111827 !important;
+      color: #f8fafc !important;
+    }
+    html.dark .bg-slate-50 {
+      background-color: #0d131f !important;
+    }
+    html.dark .bg-slate-100 {
+      background-color: #1a2234 !important;
+    }
+    html.dark .border-slate-200, 
+    html.dark .border-slate-200\/80, 
+    html.dark .border-slate-200\/90,
+    html.dark .border-slate-200\/70 {
+      border-color: #1f293d !important;
+    }
+    html.dark .text-slate-800, html.dark .text-slate-900 {
+      color: #f8fafc !important;
+    }
+    html.dark .text-slate-700 {
+      color: #e2e8f0 !important;
+    }
+    html.dark .text-slate-600 {
+      color: #cbd5e1 !important;
+    }
+    html.dark .text-slate-500, html.dark .text-slate-400 {
+      color: #94a3b8 !important;
+    }
+    html.dark input, html.dark select, html.dark textarea {
+      background-color: #161f30 !important;
+      color: #f8fafc !important;
+      border-color: #2b3952 !important;
+    }
+    html.dark nav {
+      background-color: rgba(17, 24, 39, 0.96) !important;
+      border-color: #1f293d !important;
+    }
+    html.dark #customDateFilterBox {
+      background-color: #161f30 !important;
+      border-color: #2b3952 !important;
+    }
+
   </style>
 </head>
 <body class="min-h-screen bg-slate-100 flex justify-center items-start sm:items-center sm:py-4 px-0 sm:px-4 text-slate-800">
@@ -72,20 +123,26 @@
             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAABQ5ElEQVR42u29ebxlVXUu+o251t6nr4am6AqQngKEggJBRcomGhMxMZpSE6KJsb0x3tjF9K8kmveSm5jcGM17l3QaTVQqhlw1amKDKIgKFCBUAVVA0RdVVHfqdLtZc4z3x+zGnGsfEtPcd/94+DvWafZee+81xhzNN74xBvCf8Z8IbbpWKlwvNURo1EOqf+dXXXyvv0b9btTf9b//2/63UeqNm5e/j//e//5DL7pZxFz9DRi8gJrwuw6Az8zKkV84gDP3zNozFho5fWe/NsfXfGoF07UNuzfCgBXA6DfF7mcIwJz+Jl5wYpMy6Q8j/nckBgBDGCBJf2MLwPrHkQFzY+85YB4QARsAgEENBsG/PtzrC7vrGndZ1P6PhtM9MP7BtTGojXtMVDbjHlsbgBv/tzp8ToNBY3uzA+w66ajqiXXH9Ha9//njD1dEEi+/SapNm4Atr4b6RP8bKMBmEXP1FhBeTdYZAOm8/D5cuq/Pr3i8h8v6Vs7pmWr1sAIaLwBr3QcHe6mI/x7+o7H6nfqXUDzHAuK/j7dEXY/8z6K+z57vv4xpP5+k/bj4BfW6aF8/u7Hh9XnE6yO9jjBQEVAx0GUedDvYsXocd6yZls+/8pLqa790Ke2PynCtVOF+/3+mACJCtAUGryZbA3j7Lll34yy/4dGevHwB1dn9DtD0AQwADFggsE64AgIBIpQLiwAWf3PU91wIpFSaQjhRSTBCiIUCiQAEEmFxrynKVAgV11aPEX/7wuODZJjSY/3tFXHCF5HWZ5CWchEAGIExMABVQBfAuOG9a1biny44mT/+6Z+pv07k1HXTJqm2bPm3KwL9O6RfgcgaAK+7RzbcMuD3PjnAK2cr07VLAPosJLAAiFiMgMjdBICEICL+JhDIf09R8Eg3mZFuOofTpoTA5J8nSaCShEFBEP7mixJgdAvxfWiBOGFHCxLfi7SVTQBBeC33OIH6nCB3+uE/M3tHFv6eKZu4zygQsP9/BglVVTUGTNXAkeO45dQ19kPffE/9md7QuQZcCwb94G6B/j2n/g8eWzzxLw+N/frjC3jLbG0M5gUk0pDAiMBkp4XVh2S4myXkT4fEE08STpG2BOWJF3UtyU02CBKuo91J/ACUP98/T4rXIxEIyP9dkmKUFsdHJVG5AKVgBFF/i9fh/PnBOrTeH/znA0Dsjgw3IDaVmZ4Ejpnibz7nVH7/J9/UuZ4BbLpWqi0/oFv4gRQgvEAN4KX3NG+7ZYAP7jPVkfYgC7EwQAYCCjc3+kVlXknSCY7CCQIPp1mbY85PR36dUijhxPrnqZOfuYDCvLcVILgofxTjY7ywIP7fMm6gdMqRn25SlkNkdAwA7wIlU4TCdbnrMzMEdVWt7AInruIPf/qd5jfXHU1z2Cw1rk5B+H+YAmy8XuobXkDNV7bPHvmO4eSfPlTVr+7NAdRwQ4JavCBFdDCkfCW7ky7R5FN+ojlYhlLwkoIn/3PpRjK/ilxZ4o3HSF/bOtHxlHoTniljpoilUunrSfL9kgtT1HvJ/uYVJnwuApZXGK98YNjGgjrjxhw7zfe+aoP5hf/+M3S9bJIK/8q4gH4Q4V99/+C5H1+qPvYQmdP5INvo2yX30+UH11F9OLXERZDHRcCmT7WIT+W8ZVEWgIqTQt6twN/MFJCNCAQRInMXixJjdBDI0lacqKS5QEVdX8rfjzr1kqwFRSXIFTaLS6LLQDpsLE1DVb1mBva5Z+IXrvslukYgFeRfjgv+ZQW4Xmq8gJp37hz++Kd65uN7BmYlLdqGYGqJgimidimjYu8TuUjrGMVJb59+xAg6CThzB5wsQn4yCYTRp5aywE8y4VDr8eqExuw7WLKQvUghYGpZCSkUr5W2QrkQnaGIcjWS/pzub3guc8OGZmYMXX4af+hrv169t9+Icf5qeSUw/9LJpxdQ8/Z7eq+6dsn8/Z55s5IW2QqoZg5Rsj9xPCJoY/97Tr5ewt+Z0sln7RIoKRPra7nvRV/Pehfgf0/6miIu1vB/pyCwEIP49+by8/SehMV/hZ/d48WmzyjxPXuL54El2GU+c3y/SO+Hi0OgP9sI3EEKpcgVB4BUpkvA3CHbfPN+854rPmD/7/EOMd6PKpmtH8ACBLP/c3cvvfDLTecrTy4SjBWIkGkBIuEmRp/sP7Q2k0L+prWtAEmeIQS/n7sSqNNe3CCmPMfWPjxYESQ/nq4heUpZxggiI/14adkya6UAopbb0e8dT/Mv1GtjhDJAgUqFdSEAw6EMp1ZVnWefxB/6yubqvXiLdHANDf/VFmCziLnhBdT89iPyzC/a7pYn+0TUCFiMcXk05QLLTil5TZbipEt26tPpV3+3KSZIJpayaxGn10nXUa8lpYsJpzicaq9cDMBS67QSq9Mcv9TjJJxkyV/fn24J/7K2CKNQz+L+ZY+VDGMoLUFL+Cq2Ygc1dxYP8vCmHeY9L726eSddQ8ONm6X+V1kAESEC6OHZ2ZU/tGvqeztRn24W2IqgCth7FsFmgRxlJziaS0HLlGtrkXy8ZEgacZkOqbycU9qEEkHUp95nHi5XDz6f1GtJFjjmAtLxhQJyngYeBquChT757h1EoKf1PKSsRUDpGkggFKmfSQWZKJTAvYbIcGj46NWmuvIiPP+vfoluGIUamhEaYSoiftX9k9c8UNen07xthFGFN7Cc/2qfxkL4mSVw/jpcSwQjLEOZIpLyuSo6L09XdlIlPo9siBVKy0Ej/LaCp2OsIPF0j7Jk8RTLiGsoF0jeSkiZfkbF95mOlTxrQpERjLAORgFfwoa6Rmj/LMvXvs+fvHarHL1lCwSbxSyrAJs8vPvDdzY/tX2s85N8GEMI1dq0aeHKCDOvFSQzpywgS8nURZOZzCfZoBTizS7yx9sUFFIWIEor+CTrgzdO6WB0AzZ/fbaSC9EuI1wbAj5puYmQVWh3ot979jlHHKIgWFaoaVCCmPaVaSWPDhSV5TMVi338gFn7u39p/7Q2xNieW32jHL/Z8n7I9SKr7ljkDy/OsZiGqywSl/yEks1Pq46mM7dQPi8qi/PlZKWtNFpY8fQLKApLMp9PXimCZdH+XguUtM+2FF9XMsFTzDCi0EvLVFgLUr47nHrjqjrRcpbPF6uALPV34VypRVleGmFhRmEpAScRoVoG3OzaV/3kT3xQXootZDdtkkiBSIHBuSB6Ndn3vGz4W3smOkfRIW5EUGdmbLkqXLjRCplrnwik01g8Nq+OFTBviS+ILvAgQrYR/2+djlHRejghotA+jTWU2MCICl6IxIMp9m7bEAEksI1g6JXHkKv9V8Z/bNZ1hDYMQKG4hFRRLE96AI7yOAIqJU+xVA0xs4eNfG+b/WMRuYDej4GLssnnh5vF4GrIu3di7V/tt/cdHFZjZmhJhGjZ8itr/1Vg+lpprAJ71GmRCPyUSBta4E9MLWN6J9ldCx86N40q7y9TRC6UBMXnQo7ejYq6o98l9yUg9BsAS85hd8cFq8ctJsdr9AeC/YcF/QUCQKgnPSnEFtnf0+TlUiijyNPgBfEwJOVuhmK7Y3V16brhW7/5oe412Cg1bqCmjqcfxF89MPyV2U49gQVuRKjOCzJFYJSlJMlEJ4VQJ9fqx0r6ntuQrXDC+TNULpaCi1p8JlyPNUhhnUbgBlk2ICisTl42LmFcA4IhgWVg0CdgIEBHcPxRwGUXAi9bT7jkFGDNTI3JcUJvQNh7SHDbLuDvvgN8+U6gtwRMjAONzaUuAGiEFpC0LVr5niMWIDogdliHIVC/B3lst/kVEfkYEYaAEG3eLObqq4m/sEeOffP9dufuAU1RI4AYKku56eSilS7FaJvbeXiKzFNxhXT1TxVaQnk4pl+M0QUYXXmTXHBUpEYxbVy2pLs8uSRYBEPO3TQNYPsAhgLUwJnHCl50LuFHLyI8+wzgyGnkfmFE1v3dHYL3foxx4x2CsRUmVHxbJsB9Qm/q0c77Q6VVuIC9WQpLJwGBtRNTVXX5uXjll3+Prtu4WWrC/7i1g7dePHzOt5fecVs9/uHBIW4IVEtm4qUd1LXgX8kCMJKQJVAB1CTfrxE28SQJUtcPwsv8ebACWI6ylfL3djqmSrS8fDoVg0ovhMEQkL6zZNUEcP5awUvPJ7z0fMLFpwKT3ST0xrrXMOSEkkDY5MLqijFsCO/6C8FHP0+YmPaWQCsAqaKQ0gopgvEsVoEoN6wAuWg1xFp0zGlr7Nce2lK/uGExNZ7YYEWE1n6jeU2/AYwIjSZkBCG3gZRE5AiYvEvByL+JqBQe4dNBV7IE4bpFgMg59Clljbzl/zQjKFcC4bZJp4LdE/z5sBHIkkv5pqaBDeuAl15g8CMXAM88kVAZJfTG2W0CUBlfOIJC88L/k6v1DxpCRcBH3lqh2xH80RbB2IzjSZLXOhLKPqRjHPkr+0MiGMVdlBZzSRWrDJoG+w/R837pw4snf+gX6eEaVxP/2k/LqYtiLsUiBExVi8igonbJUg6JHADhAv3TaZgielBk3PjCCygygkjRvJLA1ImWvNoYjKNwQv6Ei0i4PCmcC5wkCB0YDAnoOQ05YiVw2dmCKy8i/NB5hDOOTaaZRTBo/PPJfUWOqieMZE7duwMhjwQSoRGBbRh/8AbC9+4T3PR9wviUe34I7kMeEK4uZbCghJ5ZbCkIq7E8LmSIm56Mjd1+f/dKQP60BoCvPWVfuDBW1bTEDQQ1KV9c0rooE7b2+wqnF2nltE7gqewbgzmR0eXdGNUrxRoBC+enQHLIWXKFDYUd4wEQFmAYSKsEHHuUYOPFwMvXAxvPJqw9IhHNhzadUCJ3OhmJ9pVIIOTfjHc3pKHeIBCvBFZQV4I/eavB5e8VDLVQySs9+Yor5UqecRpHsqEV75Fj7ogKQsM+sPspemlN9NHaADg4kBcNa4BYKJhhKsiY6WIajBCVARSoXAaL5mVdaZWONT+wrdEixbUDG2K5SD3GFRomdefJWi/0vmtaOO044MXnAi893wVxa2bSnewNXc4eTzmFGEJy4m8gdYQX42C2Ez4QdYEy04C5HnDhqcCrrgA+8UVgzFsBIlUPoEQkFcnJKlLUSPK0VlIwmQ6a4QHjwAF70W6WmdqKmKP/yZ4rDQAGtapVrdyfMgpX/ruixu/TshAM6vw/BWOaXDEieGtF5ZqxI+2IPeb9BOONZmOBYU/cSe8Cz1wL/NC5wI+sJ1x2GjAzHpo/BAt9Lyxt2hX4kgE3kn4SCErLTyNy/DLFE18Efc3lwCe+6O+FehFBAr1EcR4p4wbkJNd04pGlyp6hTCRDDPvm+N/8fZxfv//e3kl2aE6FGJD1xksoQ9bAyzU3kHITDj6lDPpVAUuoE4gOCEUVg3IiaHgPKGnkKJBBpKyDlNdsLMA9Z97rCcGFzyC85JnAlRcQNpwCjNXuxg0sMN/zAqKMm5nYYVLwMwNpl7PyfaYcVBT6UnCnjIA/5HN9wYYzgZNPIDz8JNDt6LaCZEIyTgNkBAcyp9NTDh1GeRowD3jMPPDwYF1918HxE4YkUxiKt3EFIYPzzpW8WUPaBRBWYI2ubVsF7sSqnGTgDSnEUDI8O1mG4Ns0taryx6qxAHufPjbB2HA6cOV6wg+fb/DME4BO5Z6wNAAOL6VTjvLglMIu7m/bCuTCjvIlH7oJJQVA/ndDgG2AI2YI55/EePghgGrEjMhQKGdToZGaBBMo9SFQVzcoYyPH1FKaBtg/a06p0QxOlboL9JghZFBEk6Rq+lSQP3R94Gn5fiOACSopXiGILNM1zfbhxJg1PlUaNIKm54o7E9PAZeuAH1sPvOgcg7OPAzoGYC/0xYHKqr3ehjRTuADUJK/AtYQ/IhuFjIB9iJTbJ99vmMxAcAEAcMJqX6DCCNoX8r4DUoyn2FcQzbz4dBEZHT0VioSsBQY9e1L94Kw1lpJpzy+aM3gFUGlcmWPr+roODCUKTscIUjJsREbEHTnRw/i7PmgA9AA0jJlVwBUXEX7kPGDjOsJZxwIdAoYMLA0E8yqIgwYPueB4SHFgRLHaJVeMwt3Hx5M++YUlIO/YQzxHvkcymPouAStmKC+mZWiiyxxyTkCe80tWU0aOtSgzFpSDB+aYugfqcqNSvBauTq3iihaWiO+ODWbdareQgCKw6g3gUUwiSX4+Y7a4ztpBI2iWADSCFasIl50veNl6wovOJZy+BugaoNcAc0sOozfku3jVW4gwasjLS+GX/r44+VlcMMLXx5SU8ipeUIDwfCJgvAusnCZ0auDwInDPbsG9uyyIDJgJzE7gqSJIrQLYcoUh3UBLmfkKqap70N5ZaerGwmbmOQQbrdRO+5rE2k2Qb5sHMIrtI4p9k4JKyRg1BgQjgmEDND33++kZwSXnAVdeSHjxeYTTjiZ0K2BxIDi06C5ZeZ9Kxr8E62haKYA/SVyadnEgTwifVEbnHyuZIGQE5i/K1IsA1guyUwOT44SxDtAbCp46SLh1G/C9e4Cv38K4a2eDhWGF7oQBD1V9OQscVJ9h9qZVtA9RxSJOFDRIKiH7x9hGqD5rho55+JCiJEHX7YtiUKuTJ5x2zQiijLodr2NFMYkUPSoQHeAEKAz0l1ye3pkALjsbePmFwAvPcSd9ogYW+4JDC+5tVMYJ3AQd47ZPliKligRKbcI5CR8+8BKEANRF3emel4WehNIFa1MZoNsFpsbcLZ+dJ9x/P3DHDsE3txJuu7vB3v3iwIjKwNQ16orAnj/QrdxLNNZdj6Dq/yMjU0msUBQRadYMm/JHA6Duixm0avvK90uL/Kn5eKqnr6j8pRavophTcO9InIlvGsJwyf3t9OMYV15IePmFhPNOAMYqB8rMLxEOi8QaPLzHIZtH5VISJCI4SymX9yhbMvmpxhEFHxUpPZ8LAgb7ZlSQoFMTxseBbofQ6wOPPSm49wHgO98Hbr69wQOPMaytgQ7B1BWqjoW1Fhga8NCAOw26NWMgNbDgh19MEuoKYKuAoKyf0Ef/wkVns04BkR9uRSKsB31uSEqKlWL3Krp3vDBTi/SYYN8CK1CIoCjqV5j+wRboLxE6lcXzziH89HMMXnQOYfUU0OsL5nvAnDfvocElmnfKUFb1ffLxUmDyomL0mGKqSp2gOEQppoaIOP/sH1tV7pSPdQkshH0HBQ9sB753O+Pm2wX3PgzMzXoaUIdQdY2b/tAX8JIBTRicfvwQz76gg5dcSjj7pAoTXYO5HrBtF/C5GwVf/i7QXwDGJ4GmUQzmkgocg73kCjRqGVnRwZ8ZJ6f67JV0yrdnU3QvUtK/aPQkD84thpSs2qIJRGxKKw0E/QGAecHKI4BNLyRs2lDhzOOBMQPHoJnNI2jW1kshbxoHl7J0ikQfj0gdpeezbpiRFBTGugMS5Nuwcw1jXWByzAAELCwCOx8Ctt4t+M5Wi+/vJOx+EsCSBToAjdcwYwLuM9AzsEw46sgGF51F+KHLDF5wcYVzTjWYHBNF0XQ3+LJzCG98mcFt9wLv/BPGjd8DutM+OEQaSZKzo5ICSLQM2nUxSDS3gFE/Pid7A1UZCosfleNLEQOMJCgytajhJY9gOBScchRw1Y8SfuISwllHA0t9F8HP2eQ5CPnoFily4qgEGfYq3rSnsqyItKporWY5SdaARcDsD0oFjI8TprvAcEjYvUewfYfgu1sFt93NeOARYHCY3RudMDAVg8cB9A3ksEU1w7hgHeGFlxJeeCmw4ewujjkibxlqGvfaxqS+w6CpG84mfO2PDa7abPF3XyKMzSQqWZwelAEWo4JBQSuq9XlwPbAY0qgGjhGFHw3PapQvB38SGYFKnr8I7AC44ATgDc8hnHwEcMtOxnfvBY5fRTjpSGDFJNCpATJO24dDwmDotNiQZoIF0505ZCd8LgiXqrYeTDxRqtXbeN8IhoBOlzDecS926DCw/S7BnXcLbv0+8P17gIN7LcAGGK9AXQYmncAxJ+BOg7UnGjznQsLzNxAuv7DCuacbGNUTZtkJkUhgDKGqKAE4lFcQhg2jNsDfXF3hyX2MG28FxibFYQg0Is1r+f4g7AKv9p+/nhuYJWRTOoqqmq7KcdH7x5JV6SgCPKU7SGXjCsADTxB++VOEfk8cn84SOmOEVZOCIyaBE1cwzj6JcMmZButOAo5e7W7K/CIwHPr8XigHYyTdRLTycvd4llwJxCtCVQPdMad4gwHhiT2CO7cLvnML4/ZtjIcfI2CJHcI0XoEmDWQgQI8hfYuVRxMu3ABccZFg48VdbDjXYOW0JB6AMAbDAP2Ke82KVJ2/qA5RCjxrA1gmdGvCn/yywWU/26Bp2B0Glph/xJkCKGcaKfCncBMAUE8Y7iTmrppwxVRg/aq5swRsCjxAFP/dCMEAGFqCXXQVuQF74N4yIBVABsMlwVPzwFMNcN/A4KvfFKArWLNKcNEZgiufa/Cs84BVM05Ii0sCIYl1ANElWvVvQM+Y/ZdQDN46Hffz7Cxw252C797KuGObYMcuYOGgPyYdgDoCmTBAj4HZBtUK4JxzajzvQmDjxTUuu8DgxGMVYANGf+hBMuOp6yqATf3elGH7oRecFAQgcG6osYL1pxOuvJzw2S8KOiv8pLWYhEr8NxeytNPGkNlYQT0/kB7xKCRQsnk5LkgqyB6SuoKFkQ19cggeYWlJgD5hclJw9kmM846vcNwKgJoG/T5wuG/w8B7GjkcFj+xpgEU/GmvcAT17DxG+fAPw5RsEJ68FfuS5wJVXAKeudanjYi/5xHDXYvFIpW11BxgbN6hrYHFRsHMXcMfdwK1bLbbdx3hyjxdwLcAYgHEC+gIsEqQrOOE4xrPON3jRswnP3WBw9qmE8U46cr1BqOOLd1Xkq4qSd/yWgYfGEyNjKMeAiATMgsoYvOIK4LNfkNh9HXj7orBfKhikFMbOcAKCRNwcxHp1p5qUOLkK2ZCmwDSVmOenwk0O2+agUQXAWsLSvOCcEwRvfDbhZecCZ6ypYIwe9ZhGP84uEHY+XmPrTuAb32fcfC/hoUc9+3bSoGsYDz9m8P/8leATn7V40bMr/PDzgAvPAVasABaWCEt9XwChcMoJVSVoLLBvH+He+xl3bSfcegewY2eD4YI/dR0BdQUC40z9QDB5hODC8w02Pouw8ZIK559NOPYId2oZQG8AHF7yRRmTn1irTJGUDAGREXxhCYYjI42ESqXxSkIEXHAmoTPlUkKjTn9reKFSgjioqoiAhRm07q+X3rirP/7nwyXLEDLEesSasgRWEqkzfMpA4eKkOBUE/T4wXgG/9RLCLz0fmOyk6NayQtJ8gcQQPMky3ZbDC8ANdwr+7puCf/yOYP9jFuh00BkHmqGFLFYACc46nfHDVxhcciFw0kkUkbelHvDgw4Ktdwpuu4Ox/T7B/n0GEJeLU2UhXAF9AvpDYAI44xmEyy6ssPFZhGetNzj9JGDCD7fsDQTDoZeVCaa9BJzajR4jySGCUayBkeXiUPkEgPExwkOPMTa8ZgmHF8OkUgGRLWhnOQ5AusDhlJAZ02Z6jL9cD9gMQ1ZgYpFBRrKCIyqmSJ6hsMOOJo9+DzhmGrj25wnPO8WnfY1LcQw5QEeF4FEh2aOO7C3hiing5c8hvPw5hMf2Ap/+CuFTX2Vs3QZH3JwidGrBfQ8A920HOpOCZ64Drng246mnGLfeQbj/IQs7Z5wT7QDoCjC0wOIAQsDRx1e45JmEy86vcdlFhHPPIhy50sUsvaFgfgk47DkIlSEn+DDAhLXLSR9kVJXwaYbu5cLnXAl0EQkCDK1LT2PfJIUgUrzQkRd8Yo1bRtayCUAtQ0uxsdMLX4MFbcpVYgqLagY1EDRDwVETwJf+C2H98a6CVxsHZSa7ViLo5BE+5/uMfwCzeGsBrF0DvPcqg//6GuAbtwk++UXgizc32L/blQrNlIFlwdZbGVu/63OsjgHGKlQrDcAGRIyZ8QYnHyd41vkdXHGJwcXnVzjpWICowqABen1g3yF3o4LCklfYwB3gEUIsT3YLl1mu7YvylEyfeonNKMkVWJ/JUKzycYKCs74xDRGPqHgpbKB+9vGd07fsKkeh5py7zPS3gB/FOGmAv35LED7QqdTQI1L06BDpiop2RnhGY1yU3hu6IMgY4CWXEl5yaYWHnhR84VuCLf8kuPlOxvBQA3QBM1WjWxMaS7BsXC9+wzjx+AbvekONV19Z4fhJZ8329YA9B52p7FQuXjBGlTAkp35DljnE1OYNZLgMUoWRtOxJlW8p5RBB4BxdgM8gmGCt891ZpE+c5iPGtJB9siGjp6h6UKieJJ4Um0/yLGfztAYyqlqAMFAToT8veOvzgZee5axsp0rc9owEt1znlFDGrwuIXGQA+RLv3JJzN8ceBfziJoM3vxL4/g7B575u8KVvWdyxA+jtN45hMU6ojIV0BY/uFvzy7wqu+TvGizYwXnipwUXPJBxzJKHfEHo9wWCQ9+YRISNoQgsyZG5qUpeMooqNsgLUNgT6NcGJLqYJJFYUnCWALmsKia5atODORGilZDEA1CxgjdTlo9JG9aDnII/x0O4RK4HfeElqi2p9Tn8SiChjxpI2opqFLpTdPA6sIOPufH8oWOg5t/HMswgXr6vxvjfV2LZT8KUbgS/eJNi6rUFzwDoAZ6KCVBXuuRe45xbBR67p47TTDV50eY2XXG6w/jzC6iNcbr2wKLCNgqLjkE6KxE5phXcaj6ACoaXltD5iFZoxFBRCvNkxxrlYy841kq+GUdYJggwLoIKwSCMGVgFATWxSJU9GWYGyAERZ315FhOEC48cvJpy4yjU7VCQj1ZwU8OEJyhDd+zICs+DsFKXaPOD77eEEdpjdz+efDVx8HuG/vh64e0eFr3yL8M83MW6/T9AcdHl+tZJgUOOBh4EHdgqu+UQfJ53AuPySGi++osJlGyocswZoGFhYEPQG7ramVnAp+vvV8Of4+UKtgrLegSzwVxaGAmjlbYwh16FH5DuoyEHWHAmMKsVTUqVSyiVTqGgkqQ35moLkAw9Gz+xPGUDouA0f+GXnUARfWkreapKlTENL5JKjsEewnT3Ik/lcT/8SAeYWAWudL19/DuFZF1R495tqbN8p+NrNgi9+g7F1m2B4mICOoJp2VuSRx4C/va/B337G4qRTK1zxLMKLLidccH6Fo452mXhvyVcxQb5wU/bvR2A2IpNt8hhlR9Co4CJYAvKfM/IejLOsNiqYnhnDUQVbx7vwRxLKwREwItTbnpJdFQENi4McynbsbERMe5jz0AqmZiqsX+sQKyo6X0SzYkeAHy0SprS5ebzM9606SAgeK/e7+QWHzhkjOPsM4IJzDd56lcH2nYKv38z46o2CrXdZDA8w0AHMKoO6IjzymMUn72N88pMWxxxPeM6lY3jxCytccqHBmmNcO/fSIqPfdwKtTIrqZITfb4/8SnpgigwgBHwhSBSDCG5xLNdzypdFkv83mvJVBK0eD0izB90Nr886gtbe8pQeqqgbMpap+Cncn4fAsUcKjlkRBqFRFvBRq9ChWDcjSJisCJi6yMNZYNjObkpGbziBxo85mF8ADs85y3DOGcD6cw3edhXhvgcMvn6TwVe/ZXHnNkF/nwA1w8wIqoqw5yDhun8Y4rrPWxxzgsGlF1hsfG6NZ13SwXHHORZ9vwcXQPq0gUAOnJXRmICOiUOqST5iZ0oBYKza+oPF+pIs+R4cM4IKJeWIGYUCelnX+xftHEld9JiVBFCoBQ/JKhB8zzyzL8qoAC8IuzD9AfMWlhatjQsGUxAkSyJsjlKaSP4QFPw9yoIy0jHDvPv5jFOB89Z18ObXdbDrIcZXv8n4528McOe2BsODBugYVNNARYw9TwzxuR1DfO5awZFrKzzn2eN43nNrrL+wwtrjDYwhLC4K+gPxJWeKrqnEYRLRReL3JnQOqVmcpKgilh2SSkwx1Qtt52n+YA4Dh5E6kawaMAIWGBDq1d1qRsooX7GCpbAAombxEZR7oMS8oVHCV7/LBBlKs6Uy6JiAFeItRZugKCwsxgeUU+ZVESbE2ca45y0tAfMLzjKccrLBL7zR4PU/VeHBh8bwnVsZ//Q1wdbvDzDYPwAqAc0Y1LXB/oOMz1/Xx+f/oY9VRzW4+KIOXvD8SVy0ocLRxxjUNWHQFwz6AhsGWqS50256mMLGjHECD5NIghIbcrUxiHPTg0aS4CWlfLqVnPQig4AN6G5WVSmsFxpZJEkbuPLmz2Vm9/thjSKuIycNYmbV0lz6e/d8lmImFJeR/qiAkBItW/z3opWCsnKwFGVvFp1wSsYYZnIxAwAsLAnsvIvAzzytwvnrKvz0TwL37qzwzRsNbryxjzu3EfoHBKgFNMWoa4NDc4SvfnEJX/2yxYqjDJ55tuCK54/hssvGsOaECuNdg17PxQzGzxiy/o0aH/gxu9etPAJphKIVYG/9OhRQ1Sbm9VnxSBT9WzQXQo+yD7GA8y/1rQ/LLvKTKYlygbfm3JdzbfUUMEqCp1ETaUXi01F03siInrxgFVgL0QdZOhNIgk8UMS4VK9GA43O0tWQFloQOosVFweE59/MZpxk889wpvO2Nk3hwF+PGmxt85foe7rxzEb2nyO1+m6jQ6TAOH7K46WtD3PT1PiaPqnDuuTUuvXQMFz6ri5NOrlBXzqpa5RIqSu3g0uomSrwGgk/b4Nm0FSE0vmtyCFHsbEgjZZGGSOqxvHXXrcjzQpRC8DICBvYXsEWiroMNyutfMiJaz1i8I6L8tnKI/3069albhxTtG9FCsGINpfZuyhSGoPn/edpEPtXr9wW9RQsyhJNOJLzh9C5e++ouHnhoCt/5Th/f/naDW29vsPDkEjBBqFZ2IEJYXLC45Zs93HL9IjqrOjjxGR3UFTmX4M1fKCfD8wiiEE1KkE1VOSE3QzTNAAtLBpXvfiHjq7F6r55qJtUE4jRNJfX91YOhbSJ5Ezkw0Z7b5zMEW7CBWIohV4XwZZm29WK0b/Y4nRV4IbMkRC6/phas7vId5RZUPCCUB5CtWm4KaoMfXvQxQ2WA006ucMZpU/iZ1woW5gVf+do4PvrRBezeY1y8YAjVNMHUHVhr8OCOgWrz0kRMIFslojde6eqpWBAadMcqdKoKwsbVBUhPkk54Ay2DCcQAkgn12pX1yieeTO1M+aiR5OelGL4sOk1kWna44bIzC5A3X5ZMpiwIhBRWwaeGLZRwNI4gy7SBQZ98ajeWEKVuHCnYlELA0pIrUo1NGdx3v8U3bmAcmjVA5SBrAdAsVUCf3Zixrqr8yIjdMTpPNMXR9YojpkK/b90NGnMd0cwJ2FEjQXKDXE4L8Qe+nqrQjRM9yCSwQHcJ8wipqcxB4kj2xFR9WoCnDPJUQKcGiqvHeaq26FNOuf8PZr9NkW8HmSOaQTVen+XrGnFSIN5gCExOOFv9335vHn/714cB2wGmCVVlYecagAmnrBvH8y7rYsN5wEnHuwqp6AJQqC2QtCZKaHRRfBYg4uD27fc3+Pw/z2Hr1gVUEzW6Y5VnGiNbWtUCCLMeeEL9yEE5YEjRmIpSsGSdPXkHkP69PvajhDBKIfJTXnSS+Z48FnHtVy2BppSPW5gCZRz/0UMfQl2Boj8MubIU7JqyYskCdDqEg7PAb/zGEr79lUWYVYSqAwwHBvaQxcWXdvHet8/gZT/UxfT0f8yKZlHxNgC8/a0r8Znr5vBbv3MAcwuEsXE3eUyvCKKyRBnHzPig8thpmnnwcChBUjG3J82ikZFZgB/rbtE6PcvMlB5t4iWvwUfhIQmbC5/Okg8KTdegrGfAvRZl833CiedY14USfjClRTEnovyEugMsLhHe/vaD2H77EPVRFcQCw8MW00d08bsfnMZbX+8CPjdHUFKG0SqTUItcEu8Fh4zHAUD6Pg2tsxJv/ZkV2HDeOF7xuqdwaLaHqk4gWIuKITlZ1BigPnElHSOP6q0YI4YSq0hNWmPNkdFkssmrnJ/6KESh4vdUzDakXFlUEBiUICmAFK+jlGUExIwA03LCFaBcFunBTHr5Yxz26Dj9v/6b89h+Wx/1kY73bxeAU07vYstfzmDDeQbMjGHjqGRVlYNlT8cOE4/5Q20SZUkoYWh5r32st2efxWXru/jQB1bi9W+ehZmuPdU+r5ZF0CieAHeSzeJAFsopk/mY1zS+hVp9/vkgRtZfmVBICZNycy8pIGZpf4mGgSOQRHG0SmjhYg6UKfdlWf9dYoe6Zcl+F6hn7Gvt+v0z56evscDEFOGaP+vh218Zoj6iA24AuyA45cxxfOWzq7DhPIPB0BnqulLQOBGebkufqGh9NKBFERDSqW/dITzylMVLXjKNjc+bQW/OKV0+Fkbyg+2/txYw02M0I7FvX8G8knf+iOoNlNYwaGoHXplZlxEC1V8poo/C8f/mpi8IWHxtPNXIrbj82rKo16O4XS4qGSel0WMO0uuTUhCKgI21QD1OuOsuxsf+sgez0rrT2BCmJglb/mIKp51IGAwZnYpGTvx21xE0NuH/4efwi5YLUKluaGyJ751dw4hlx8B61Y+vArh2fQKq8JPiQlJewF2v7hDSYGhNb1J9gbrdu7Xfx7o5gPqNlXh+y/dzO9fPlYIU6CMxyudYECKFFJJ/fclRQ5QzfihzCxgx9CnzzFTMBYCbRvZnfzaP4dwQ1Srf6zjH+OB/X4kN51YYDhmdevkaiGVB7bjcaIYAW0Z33MR0VFsmUayv8h6GL+vb1YkcZX3dWV10JskFgiUpI3PriTBaG1+CHrWAQFodvgoUsmhN3Y5R99MpgIzIBJTPZxX9a7/vTrNkLmGURclz/gIybgmcstpAzvNPeR8LMD5J2L69wXdvWgKtIIAN7CKw/vIxvP3nJmCt+H6/0cIXAerK4IZvzeNjHz+IrXfOo7GMdWevxFWvXYWf+LFpkGE0QyhLIMtjGqLBO8/Eqgmdih2dzUjWGkcaCIpDt4Aa4qeWlRuvy1QvKwVLNieQVK1+uZPdygKKEm8K9CgJXKSAdlXaV6aOyyhZK9/PQKqc0lu0lWYzfWc6Btd/rQ+7QKiO6LibYoF3vmkCndrNM6pNm/kUgt6qIvwfv70HH7j6UUeiMDVgDLbfPsRnP7UXr9i0Cn/15ydjYsLE5hmW4lYr/69/b8P9YgnTqgExviqbSsK6cShMFam375YHKgBN0HhGXGKs8zk9+FlKCnnmv3PshLGMEkTQh0b+vRSqHSXg8nVH1RMKiHcUGtju0sm5i6YiHDrE+M4tACa6ADPsgHH0iYIrX1R7Dr+MDPKYCXVN+IM/ehIf2Hw/qolxkKndcAoCaLyBIYt/2PIIiAh//+lTsDjglslntN0A+/nBzL7lPC70THlyYFXr/cORH8AGZqEnfTztDABkSxzyBY2IK194hBlmzgNBqwYvsI/Gkzn3ARyrx4SIPl6P0CyTLSyXQbDOFAplSQohyV3oFNJHyp2asPdJxqOPNq4MDAEWG1x6YRdHriaPwLUbB5gFdU14+JE+3n/1I6i6HYg0aIYMsRbcDGGHAzRDi86KMVx37T5c9/k5TI4ZDIeSp86cW82QFVkVGLLko2NDq76IqCVZiOP9IQxzzrHmRLaa7SvFCjLJRrWmRtCkCMLqTaGdDkbt5UTsZPWc1uOVgkRFYPKmTlI2EDU/DyB1asgjUlSdcoYAtpWdcJqcaypg927BcL6BocZdwBpcfMFY/Lyjov4wa+gL/ziLhdkeqA6dzBYiDSBDQKy7v5ZA1MPHPvGYKx3o6+jIf2TQXJbt0wOEc1NYlvfrux7nRw35eXagbOCDZCddb+xQDWvQ+X2iemmTzgr80UIGEsbPLJmZY2g4N89/IxRcZhOMLFAcVRgqaiXRPzCKJhBKsQ8R8OSeBhgwqOvdY9XFqSdViobdzvODUuzYMQBR11fz1Czf2GPAEI8W7to1RH/ouIwleJasV44MhpjJckLI9MJ4UsQQUYOjyQD1RE2VqA+ajX8XGjEyhnLfyYqMJHqiVk7vZp3O+ccE4EViXl8AP6q+byUPhJ4uA8gqkYwslYwTwVV/QcT/pBwx5RVTDHpL1rUJSxUpWVNjsdcm0rjK6WKAqxu4nwwkjk0L8VmoRTh8va4qjHeAuYHu7aTCUqo6CRMsk1cKgbBbYyqBowmMCP5S76G5cK2cxY2aC6CnZMkyoL5IVhzRwyj0gKWQp3M4xZ4Jk0HAUbja3/vfs4sbLMsI8Iie3u9rV1CAJw4l9ErniZZWuxOQAoRcd/PYRO1myYQ0arCEw4cHqjlERtfDAVxwwXg8xRQCtYjVu5ydTA3CAKee6rgGzG3afDxg4fNE0CzdI30qCHmsFil7SKSQumdNX69hKzuCsnXlKFp2IpZeRKnQubsidUY4NyF6pVZrGjgXdX9mHfmLKhr5lLGoCUCdnnJ2gpTNGgo8IkqRcnh/a9YYoGvAtkFFDAwtHn2C4zi5Uf+F4U9X/ugqnLB2Co8/Po+6W8FaVlOl2Y+bNBBM4efesBYDzskqsRfUWyQd9yRL4KDqYI3iOHnko8f1CjoAMN/byTsrUkDJiJ30aelQDvokGjml059pqqScncULivzpkxEnWGH2GkJmVVvglBvb4AtZlYbjcxHrAaKuYSNsTLEG4CxNqiE0Vny24RSyaYATTqgwPkmQsA+Watx1rzxt53CAelevrvDHf3wiIAZNH6hqg8oYVFWNTt0BIBj25vFf3nEirnzJKszPsyLvKp6EtoRFg3CYPJYOcxjVkyjjocYZl1awwIi4YdEkepefYiPp1eWsZ8/nfWesOtNiFC+U/c6yLF8P4CTMYHqtEqYWqBMm5b9nVegJguYym0gCLwtBlgXWSlYrCAz5fk+w6ugKa09gYODn8UwC3/p2g4OHfEv5MkWeqiI0DeNVrzwCf/Ops3HUURWankXTt2h6Sxj2GnRMF+9535n4vT84CYcWONaNMtPPKMgv+T2FH5IddtNTYdkSMzidYhagPu8EWnv/voKaNupL+zpR3AGUQYmGEHSpllRFj2KhJ5FAiixARkHESBmDMn/BrVmmLEiEIopGNrDoXT/Umimsp3SF6JlZ0J0CLrqswv23CDBJqMaAJ3cO8Ll/7ONnrxr3UPDySmAt46dfuxpXXH4Btmw5hNtun8dwuITTT1uJTZuOxvoLxnBo0d0Tnam0y9pStM+nQg/pARFi03Qh30MYwtVwEwwY9b45zFFoHKQRXcFlRUlNDzFqWVEYvpi7ABRwLmW5f2YFNMSb+f7gA53rSALWtYK8PsCK5iVZ44heNZezgPQZNhIGPyWso7coeN4LJ/C5v+mjP7Awfs7Q7//RIbzmVcei00nQMTKaOflhF84SrF3bxbvetQbAmmy+5ewip7bwEUhoyebSqVj4++I8Yzgk1B1G3Dooimms5goEaNhM1ui2KkZYhkuGfH9QCFSogGQjqhfYLIW5j/V3qEie9WN9vMA6U5BU9pUUyTMji+Ktcg860g+uwCr3pHkAVpl+6xHAeC0IekuMk06p8MKXjUMOuykdZsJi222L+D9/f86b+jIGoJYlcNNPGYMhozdgzC0yFpZ8a11r0Je06PMoyrrkuYNVDdy7vY/hkucDjFiQqQsicfDGKcfQycypAjVy1FXRaUojomqGFLX/ksZU1OlHwrfSgm+tTx110Jb+howPwJrYYVNt3ykGKWGTF7AKBoPycfnlW+KJsDAP/NhPT2DViQJecqesmjb4nQ8ewGevW0K3a9AMJVbpRnHAiFzVrqpce1pdu3+DCxx1y7MmWGqTWskQ+gPgi587CDJWzXbkbFRcq6cegNmxW3YRpTpAefJJVVJIvQtNnIxEioK50gIwIjQrKlBM0Xb+veSCUBlCCBqFSZ1kadUPAkEkYwEp68DKEkkheDsCX+j1GKtWG7z5fatAVEEaj+JhAVdd9QA+fe08Ol0DU3keII/cIpXvQC6kXQ75jEHfMkMX+gPBkUcbXPepfdh68yFMThpww0p+ORcgO8RiYFZPYRrlSPXW3EG1UC+bQIU43WtUJS9F3ZSd1pZ/E1EC1Hg/RkT6AbDRxSVSlDBt9gvAKTzfSl5bYFVU4VRn4KhgTomMAeYPMzY8exw/9Y4V4AULaQRU1egPGD/12ofxnvc+gQMHGJ2O6xYWdspgG+dWGut+HjZwK3EaN8iyaaT1ZW1gDLl/rXWTxYeN+xxVbXD0sRW+/LnD+MMPPIaxCUDYqv4OPTkUyBm+zm7XZsR2kaQh1F6rDhTgB2Uz6UcjdSV8m0frrS+kSD8r7IwilEjOO4w8As5HxerGET2rS9QEzWAByTdt2rhkQZ0cA8wfsnjFa6dgGPjkh/ZCKqDu1mBr8YcfegTX/f0evOMXT8CPvWIFTjt1DCYjijw9RbzxoLBFyu+HTfq+3yRL/uRui2s+vBd//pHdbm5y7ae0E6s+B0poY9GIAwbqrQ/KQwbOJFKIAzgwSUfs3lEpSaoWppFqJREz0rQLogerOn8ANazOADgJM8vjRdr4P0sxWKroIOYRo+WlHNBN2dg2obwrK2YI5CL6+VnBj/3MNFYcKfj47z2GhdkhYARVt4tduwZ493sewm9tBtavn8T556/ASSfWmJgwICOww2BQxXdMS5wbbjlN/g0VxcYSqsqA2U0sbRrgwR2LuPmmOTz5+ABjExWqqoKw6z4OyFQ2LSTkAkXbX335WTj3gW8jkkH0hmud+5OedKWJB5pKEXv52zTt0j1kGIA3s9xKG1PkHtEuKRDB7PHIMH9Wq+el2CsjuhAThjMVO+EMpeHPcWO4b5YRAg7tY1z2whmccOpp+Pxf7MXtN+xFf8AwdQdVZbEw3+CmGw/hphsPKO485+VGNGgvSi59fQ2gq4oytRNw1cHkdBfseZmkJqenvkZSC6eSEoR3UO8+KHt1OZg08BNRPxrZvhYoYiHF0mt9k4/VxRhKCGEYehRTxoK4ISXbh9qnf8TjQ1t4hIcVLlGsFknTykSP5dAzenyPn4T5R6plxLuJ4QLj1FM6eOf/tRafuXYVvrTlAJon5zBcOgygAaFyA6XCVKmw6iUeGj8xgGKbauEoCES16vvrAqaGgRtubRsBkcnGUFIxg5rUkM4M8COgfmA3PVVuKs+HDZB6szkNDGoeIKsaQaRmRzKIxMg9jwlkpI8P6KFlPSegaABhDYcqckfw60xpB2CxUDNXgtYIs7whl/UET6cEdeX2/BAIj+8X3PY9xo5HgdnFaRz7wmnU/QF6T85iac8hDA72MJwboOn3wZZBfrR46jqqMqdMYbVAvLfkUjvxTF/qwloD9rv2ol5FRU5zACibEkJqAXU6yPXl5+DcB28ane+Xkz1Frx0pVIYjHCtZMCdSnm5qC78MHKH7AssAMEcYLefXlqKy2O5RTJs6sgZqyde7koKEw3i1bpcw3nVjcO+8n3DLvYKdjwKLPcLUhGCyy6hJ0FlZ48jjjkanczQqYRi2IGtRE6NTw3ULGUGnFnRr8tRsRl0JxjqEbi2oKzcMoqpClzIwPenKyf/tPffiqT2L6LoV6KoXkNQeitTkpvZVtNbL1HWFWs+Q1Rh0ZPwy2rt5uAxUnM/MU0BpAT05Xt/G9UcrhbQsAZeZhGrmEN2CJqJyacV0Qj7vlSK8TRHYAoC6InT8YoinDgjueoBw14OC3fvcjZ+eIhy50gmr03H8wU4FVNaiE343XqHbrTHeJXRroKoEnQro1m7HYG0Ede1/ruGUonaP6VROYeoKGBsD+ksMU9lgG6KCG8q7DdM8rrRXmIpxdYbcfoxseJloQ5hRqakcfpeBGcziZtrp/H9EzToPCmXZ6D5TolZ3kCRfr1jFVnMEWE0N03OVtZfltKhJvB+zfnhjt2MwNuYGQ97zMHDr3YT7HhIsNcDkmBtn36lNFKYTfhCqVwT/fe0fU5PAkKBDbph5bQiVMCpy02xrcitzQwMuQY2Ms0DTJ/T61lG+i93EeuZwa8hHy7Wn/+pQMSqHTMbRcKJmyhRkF6P8Kfv6s1U+OeL9PKIgxInfl35WLCIVLGq6t1W/j6lkS0kksmVE2j0BiY1DsV4egrpOB6iM4NA8YdudwG3bgMf3OV87NUE4ctItjOzUSeB1x51U/btuUAilDEEROv6Ud2rXS9CpnCUI7qE2zgV0KnfyjXGvaQgY71JWiUXWwUzLrKPJhZ8o/4x6MEA/jCaNWsWSTQyjERvJ9H8D68CKunKuIGcGy0jSBxf064xBzLkLiVlF2byp3QyrEinneEKLCaQ3lgjBkGCs60bMP/ioYOt2wvb7GQuLhO4EMDPhT3LtPmM47Z1aoqDDVx0E3JEo1G7thFzXTqDdSlDXgm7lrhlMfR2/3LSwyvhtKuS6eCpDbh0P6zTCpPJ1MY5ecw8pCwYRdw7U3ZrHUhUij4qzljEgIz6GGj9VbjHyoXngqFXu9IOWQfh4uRRP4QM6/2fdXJJKxeHEJyxBsY9CGZpz5gwylpLb/tHtulM2Nw/cth24/W7GI3scHlKNE6ZXAmPhBHfECbKjFaCwBBWc79b+PLgAHxsEgdcmWYK6csKujH9M5XiB5DesuNPvFOrQvgYL8+wqft7+x2hAj5mVNFksW06gADxDQA02alaR2h2s+uJJNU+UkyeqCpibFTz8GHDMkWn6VhnMlQMOsvZuoN3unT2OMupz7AcYCQZJxBsyypR1rqKqCN0xQtMIdj0i2HafYMfDhNnDzoFWYy7YcgILQncWoutPfd2RzMeHx3Yq1wgSovioMBUVJ52SO/Cn3gnazxPwWYLbpeSwCEPAxCRh7+4lLM4NMD5uEouZ8lMfkM3WcCjJ2cEEoK6qEYOmFfEjTTr3w5E4R8wMAegBt90NXHYR2s0hugjUIjO6xzcl308xgmxWKCr4BEXmEAK+yJBFKhEb4wQyOw88eJ/g7h1OaWUgbkXdVDDhLgIPwutqc187wXe7TvjBn8eIPViCWv/dbSNx/t4pYCdYBBNOvjtIlXHuyBivEMENGGd7x8eB++6cBUsDY8ZcR5LeLyCicgPVCQw9BjhxDMbGgHrvQXmorh3vjajYFDZCMQglMcTlEjfdInjjaxzIURZyRnXdjOIGiGrsCCQOm5EgXRqZxxMaV1DxgH//deXAtiefAu66D7jnAcHcrFsuYMYJnUkHmcYcvBvSMHaBWoe8EOFTNWeKg2LUld8irtxAdAvRp4tLJysV4NVBwD7IM+QGRhrn8ysDVOQUpjKu5j/oCbbeNAsD49lGJhuTTuV8ft3noIZ/kR//s2YNqDbED9UE9EBUggUilAUPpHl2YSqnBcwYcO99wG13AeufCfTm08bvHMCRrFXMMka2e49sDYsZgCSGTzZejlzJVHwkXQOH5wUPPArcvZPw8OOAHQCoCWbSuK4Yf0q73iwHk97tBCXwJt8Hft14siX7ua7CaXcCdgpAybwbZSVigOdOdwj4DCmTT+IVw7kCCDA9XeGO783ivm3zGBuv/BbxUIr3Qz1MOv/hIFN2eClMChVjKvQXeVe9asXYgxXbIZHpZKvIPVPdKUGCU7Ndwh5cqdwQS/zNPzDWX0Ax+MiBGsm6dXITnyN8JSlDSrPPOhgUv7GT0O267WFPPAXcvUtwz4PAoYM+rukwjE+hap9eBVPcjZG6B2SqFPV3akn+2wu1DACjAlRaGcLJR1xIVVcO9asKE19VBEMU9ydWvgZRecsgIuh2gb/7q0cxbIbojo05Znoo1wZuuuTdQK0itCKiGENYNdN9on7d8/HoZ78te0F0AgmnxaWaPRtWxSFbUpHqABaopgQ330y44duEjc8RHDjgzBmrEe4leidZMCixOyjrIFIjY6xK/awnbxhykfrcEnDvY4K7dgEPPCYYLrrTXk2Rm6YJR8PqegGHHFunad2QqwfhVsmfJ4VBVJpapW6dLLrPTX3tT7rxwq9NCPzIr6cLft8/JmwVN66+ccSRFb72jwdx09cPYHK8dnOdM5heIYBlGuhlF6y5n/9kxiYZRx5Xb6uffy7NrXmD3SEGJ4gViS2xappkPmZ8FGU8IVJ//BHGGacRZqaBQd8JqFGCtFnHrsSFkVK2j/uuY1tYBGudInUMIDWwbw64+xHgzgeBffsdEYI6hGomUa9qCvm3Q+CiGa/Lk0uZEgQYuGMUBmC8O/C+P0T+UfhVOvnh58qnebVJ+X043Vm6p+MB4+775IzB3icG+KPf3gFTJRJoSP80qp3jQIoZjOTKHeejou7YoHfBs6fuqi0DR8/w7U/NmRdgQAyByVZTlLsCFBuIvIuIm0c7gr2PA7//R4TfuZpAngoVI3fkww4Cszc7+a1hD4TGEzkNuRRrcQDs2Avc/giwYzfQX3QUeDNJEbkMdfzaAGM10AkIG4ky5y4dS4JTwZuK5GsTInlKJz6Y9/A7IynFi0heEqo79U4JDCGefBcDhIVU7uTXHlKfmDQwRnD1u+7Bk7uXMDVR+7q/yU66qxhSooBLe+RNGAvjwqnazKzCQ+9734pdtQA48yh8/cHdePci++qiFOkgl1vFA0hEcbQsRMBWUE0Dt9zI+OAHDd79PgOqgeGiWuMeU0MZwfjJXUTjX7fy/vHAkmD7HuDOx4DHDnguhQGqCSjI2t3srnH4esf73W4Qir/B4aR2vFmOgq6VhYhugpQShGIOqWKNtxb+NSqTgj/9FZQg7QUQ7+t9RdB4hnAjmJquYBvGL7/1Lnz35v2Ymui43osRLeg59j+iVV039rBwbSbMzDR/3VTU1ADwrtfXX//qu/kxULWWrGURMuWERVJl1dY6OYW4BCX45j83WJiv8a731VixknD4kESTbll3/VDewwfH6BV2AmyE8PBh4JZHBffuAeaXPADVAUzHAz5+v29NboBixwRz74Xib37HIKVi/udgqmtfnNGuoW4pATKMPsK3UbgUBZ3+zc0+GVIK4QM/n+7Bu6sjjquw6/4efu0Xt+GO2w5gaqzrR8CaNEM4Nt2ZNPZe9wDE1jDKt4WwmLEJ4KgV4591922j1LiBmhNfP7xm92z9Juo3FkJ1tpOQl5kY5pv3xIfrYlPVxhDDzgmOOc7gdT9f49LndWAtMD8nGQewYRcHNF4BfCs9Di4B2/cDt+8BHjoENH0HOtXkKdxWshNQwT23S4RuJdHf14ac2Q8Cjqban3z/VWlFqZWATYr0M79ukhUwWWCXruUAnhT5GyNxG3hQABcDuDhiZoUBN8CX/+cefOi3d+Cpp3qYHOvEETRExiuBichtTPuCMxBtEcjlcn6MDwmYuWOOXlM/ft+edacTUa/e9HbIlhuAi87A315/J968sETJDXDOUS+bQkMrQ9xYSWGRkYAbRjUl2LO7wR9s7uHiy7t4yZVdnHZ2jekZg/4AWOoLZOgYsGOVswaPzAFb9wDff0qwb8FdPUTubNOyLOr4YcehlOoVwO2MJucCjI/ADWUl2GDuQ1pWK2EEMx6KMh2T+/ygNFVFzp1E+NY9jsgt0wzKEqp7zuenlTBVReh2CBMTrrw8Oyu4/kv78Yk/24Vbv7MfBgaTY5VT9NiCnLp+9T4AysbPUxR+igliuzh3q0lz4sl8HRnqbcT1dUweRUAnX2VveWx/tb6yDUOoglotAlFLpOIKc28BgjVgSYuNvSMnz6LkBVdwOOUMg/WXdHHiaR2sXlNjarqCqYEdc8Ate4Dt+4B+H6DKsWXE8+FDhYngsXEl/ArO59fkqJPdKsUANQnGwimkZK4DABQFEl1CsBbBpIeTLugoc14rP19XXrg+nTNAUi7/GCBZidoAgyHj4P4hdt0/j7tvP4ibbziEHffMAbAY76YtboZMbP0lT1dxdC93urNdE+F/QgX/z/3eWuGjjpjmX3zP8Re+8zdm7t60SRxhfeNGqW+4gZoX/Erz+u/tqD6+dLCxFVGVBgBRMVdVTaCKG0Q8GYPZCz24BZfAG3J/48UG6FvAWHSnKsysBKpasHeJ3BB+06AmgJnTlkxmNbaF4449vTo99b1z2p3rHxuwdOcW/fPDdVRAowmU7nuOiZahogM3via7CFz16jkVCEISxc6luEy7twTMHmQsLvW8P+1irOvIn8zhueHxRj/bl4ApzXSKkT5B/09PcyNQY2SmfsaZzWdu27nutczXVsCrLamdohDBxGlX8e0PPmHO6FIjwmQShox88pRNw/0knPxstrBTBAl224YdOQwSC7bWxQxDC9jG3WwRMOuAQ7I9uXq0SWuShZQtTTxi/p88Xf97uU1hmS695TYw6MTMjMDiTAubq4xBXVUwxvi4yCQ4hwphZj+bbD0PScYhjizueC23aU5Wr5qRK18/s/7DHz5u2yZca7bg1TayCjdulJqIFl/xm8Nf279gPjt/ANZ4hhKptaPZjFI1WD0MDIl76nw4GskrhpOVCAGM8VFfVUWyJsHvwdHjSQorAHCcdZvavCWjdEetFco7IURGCpD0xmxZRsgiWc+nqOtpHI4iLKtXKZvULRybNf1kVJs92z9OmfggfDU5ItHzRaEBaLOchQBhrmhV9YzTzN9+5KPH3b0JUm0BWShVxQ03UINNUl33gfofTl5tvypVXYtlS1mDoTKVcUmhHiIsnjqdjxlxbozy2mWYjk0EIePp0cl0IkS84USRUX6vciGKj4jD88nUIFO7a5kaoI4PZdKXe506/ey/4mOkav3NhZg1BLV/rHs+xM/mlxoi/rESrmHclxiwVO5fDqNwwzUrP4jA36TwfRB+iPzDfRG0AaCs+KNckYSprywsXVpzLM/9zM8f+6tshc7ZnBxHnWnLOU4ev/Hh4Vue3C937d1vJrpgFoYpFxJmAwNEsp5h+I4aAXKuUtiKSeIOZkS0ghlPs1biOlQThh0ZtQUzNHUYv2snDEOibDp23GJarFKFUcsTc5ZEZvLj0tm47l5vR/OnWKFyei8Aob04ndRjSK/alawjIZyYXMDQaV+hBlnjLmXXY7bNislVnYufRb/882+ffHTTJqmuvprssp2KmzZJtWUL2R//9eZNX7+1+rOFw8NhBe6I2kNbLgYQzegM7ViKECCSt/JItis2PEabdU7KFjddcj7kV/t8abdfBzNLGNHc2HIHkq1VlzTtMGuPzzj47ZFjhaBEdZ1Ra512TuxMzSCUnW3KonsQqY1yufB1xO8dDkS4MVhdn3sB//1N2858VTO8vgZe0OBfalXdtEmq//n3ZC97y/Bj39lW/6xd6g2J0El+2a8wV/NLpNz8nAkeKkhMpUAJfl3avj7OtEcxOL9cRggBZWPfkDVE6opZWrgc4pRc4K34QDiNe9Rr3kSPgUQ2caOkaev0PHUdUDaPKFvZl4neC5rgU0BSVG/K+hj071xTi1jmyeqMM+r7/+mfz7xk9SnvPyzyfiHKieH1KAW49lowkVQ3/OlDbzv/p084eduu8efTcKEhg1pa0TNHjRZ1o4TyVWwuLvLn0fhlkwZ5syH7pFzUyQ03XEyORbO4beBq7Dup4RdU8OGS0KsUYOp4BVrhVAAp7U2a2UrXcjcbtcfEZL0WykJotS0NfUzrqMD/BSOyAORd3SQ85MqccGznwOvedtQrV59ChzZvFlMKf1kFICLZvFmE6JTeE08cfvXLf9V8a+u2qbNqPtwYMrWINpvI0yZCtkI2BaXkx5hR7CUPfj0iiobKZX75CWN1YiMZIs3FTRmJv6VGbZdS6V2kUoEjVhAVQsTFFR5nh4oxwutmpVdWuDwVtLm4Z0yHbeGzpfiHSEaifHrGUDD55WlPG9s9iYeYB1ybk9eu4B/9yWrTO95zxF0bN15fX301NSNl/XTDCjZvFnP11cT3PSIn/NSvNV+5Y0e9rrKHGiJTp7RM+XIhlbkpyJjLXXJSuIwR2zNZp5vtnrZssxLy8bVCCXDJukL8kGbKtvAVaeBIPCG9bkrVJHYaZSvZkPfmE9IijliTR95jSXqycKlAomv6pHj+Kd+XOABO7ICr6sTjZvqve9PkVb/2weM/u/GK6+sbbnhBs5yM/8WNhkEJtm+fPfI17x//1I5Hui9ulg41dSUVc1yI4m8ExTVzUnYYMbJO3SBgzTEgqGBPyrw+ja4nNRtNdy2RF/6oFqg07x7ZOpQU5CXUL1MC5kIhkGMNkHYfhYoPKItLBMpQZNNHSE/4lpLZky97jIUeUXPEWBpgqn7GKZ1DP/oTEy/7nT9c++2NuL6+AcsL/1+lADozEJHO5T8//OjdD3TefPjgIXSMtT5RTqeKVS++tgRwSFdYQ0tqNG0+984FgjqoQjnhauSAJZUGQVqRucQTzIhrKZX/Jt8cQaLJLqkiFgdkFiklZbve8uaakp4lkpdqSSjrRoae5YfcEtCIfY7kOobYMstYfUT1jNOw9W3vXnHVG9569L0bNz79yf+BFEBbgm4FvPgXln7+tm38x3v319PGztraGHLTSXTUbbITKn60fC7AOBA3jTDVg43am54hMmKqKdAai5ptzFTmPCkAvAViBW6VWYAatVbumPGWqhzGwFIKtBiood6TtmyGKFMiUgCyVqzE8WcRESsYq1fOrMC6c8au+fJ3jnsXES36zZH2XyPXH2ypbaAIg/h3/nTuvE9+CX/w+FOTPzw3N48avcYYclVv1YYUmKqit5AWOavL/208ZZmZp3LOrSpLQ41JlXIJBBUWpJx5HwpNNisG5biAS18JaINJMWvIu6YDfqED5DRjID/hTiGTOS/HzBu04xxP6raNoB6vV+O44/nh9Rtm3vU3nz/2Otukg/qvFem/bavxJqmwhezEGPDit8xdtX0nv3/3vonTe4t9GPStZ7cYdjhvNqihXE6dzB5npzzFFWif7MIFiKp/Y2RWliyLhDpCGP8hnHCACG23LU+am6SgcD0sg1PrHBXdszp3T1VMNZ01WhCdcYS4wLgsgcUyWwiqqltNY80x1cIpp0585H9cc8Lvrz2H9gPXVsAmHhH9/CcoQHQJ/iyKTF35tsU33LeLf2Hfge66+R4BdgmExhIZgZtK7qAs1qPKuBVEFU0Hao5P28xn/LcRA3Upix1kNBIY5/WXM/KRg0BZX6S0hatG5WVbx2U0ZkDZ6F1WI90JROLGHDiCpLBIbTCF8fExTM8M9pxz7tR1r7vqxA+9+i10PyTFaP8WOf6795rrFxeRzuvevfhj2x6in9v9lDx3qT+5utcHmuEQYnsgYb9tOPjJMCBVImmh3YdOauJmCpxEQ6KZy0GOEuqKoYgaaCOtXbhxqLKKTqlIPfXoNcqmpaZcHC3LJW0FgG7DY1W5c5UvFoOaJjA2ZjA9sySrVk/deMqpk59+87vW/N1Lf4T2uqdIJQIeBfD8L1OAGBu8GgZeEToV8OkvyHGf/ILd+PBjgxfPzsrFc4v29MaOTzbcwVBPRiO0MPHMCvMyc4t1Z+xocLK1MbM1dVlXMjXs7N2EiN+qKe0pm6TqIrFLVyOHRZqoW7VII49e+IaATm1R1Q2MGQxXrzZPrl41ecsxx9TffPblK67/1Q/MfL/Xizeh2rwZ8oP4+v9cBVDF502bYLZs0btIgfEx4E/+So6/64HemY891j9u/+HO6qkxHH9ozqCGifIyfjiE+4VJ3/ueAuP/P4BQxpgCiGQwG8B3A8d/wa5DOD3M0a85XZzjv+51DIAGqTbhaNuMxs/hDdcy6vXdz+4v6f1yGuXFTbxWUAzDDSanxzB3cPDE6iOq2XXrVh6YWdW951ffP36g06HDagI5bcT11Tfk+fbfc+L/l/23efNms3Gj1K5o/v//92/779pq40apN28W85/1Cv8vBhVfs3MxvwAAAAAASUVORK5CYII=" class="w-8 h-8 rounded-xl object-contain shrink-0 shadow-sm" alt="MySmart Plan Blue Wallet Logo" />
             <span>MySmart <span class="text-cyan-400">Plan</span></span>
           </h1>
-          <span class="text-indigo-400/60 text-xs">•</span>
-          <span id="headerTabSubtitle" class="text-[10px] uppercase tracking-wider text-indigo-200 font-semibold truncate">
-            Dashboard
-          </span>
+          
         </div>
         <div class="flex items-center gap-1 bg-white/15 backdrop-blur-sm px-2 py-0.5 rounded-full text-[11px] font-medium shrink-0">
           <button id="prevMonthBtn" type="button" class="text-indigo-200 hover:text-white px-1 rounded transition text-[10px] font-bold leading-none cursor-pointer" title="Previous Month">◀</button>
           <span id="currentMonthYearBadge" class="font-semibold text-white min-w-[54px] text-center">Nov 2026</span>
           <button id="nextMonthBtn" type="button" class="text-indigo-200 hover:text-white px-1 rounded transition text-[10px] font-bold leading-none cursor-pointer" title="Next Month">▶</button>
         </div>
+        <button
+          id="themeToggleBtn"
+          type="button"
+          class="flex items-center gap-1 bg-white/15 hover:bg-white/25 px-2.5 py-1 rounded-full text-xs font-semibold text-white transition cursor-pointer shrink-0 ml-1 shadow-2xs"
+          title="Toggle Light / Dark Mode"
+        >
+          <span id="themeToggleIcon">🌙</span>
+          <span id="themeToggleText" class="text-[10px] font-bold">Dark</span>
+        </button>
       </div>
 
       <!-- TWO-ACCOUNT SWITCHER: Strictly Fixed to Regular Expense or Personal Account -->
-      <div class="flex items-center gap-1.5 bg-black/30 p-1 rounded-xl mb-2 text-xs font-bold">
+      <div class="flex items-center gap-1.5 bg-black/30 p-1 rounded-xl text-xs font-bold">
         <button
           id="accountRegularBtn"
           type="button"
@@ -104,85 +161,7 @@
         </button>
       </div>
 
-      <!-- Compact Monthly Accounts Card -->
-      <div class="bg-white/10 backdrop-blur-md rounded-xl p-2.5 border border-white/15 space-y-2 shadow-inner">
-        
-        <!-- Primary Net Balance Metric (Single-Line Compact Row) + Quick Funds Transfer Button -->
-        <div class="flex items-center justify-between">
-          <div class="flex items-baseline gap-2">
-            <span class="text-[11px] text-indigo-200 font-medium">Balance:</span>
-            <p id="netBalanceDisplay" class="text-xl font-extrabold tracking-tight text-white">₹0</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <button
-              id="openTransferModalHeaderBtn"
-              type="button"
-              class="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-500/25 hover:bg-emerald-500/40 text-emerald-200 border border-emerald-400/30 transition flex items-center gap-1"
-              title="Transfer funds from Regular Expense to Personal Account"
-            >
-              <span>⇄</span>
-              <span>Transfer</span>
-            </button>
-            <span id="savingsRateBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 shrink-0">
-              0% Saved
-            </span>
-          </div>
-        </div>
-
-        <!-- Slim Inflow & Outflow Pills -->
-        <div class="grid grid-cols-2 gap-2">
-          <!-- Total Income Pill -->
-          <div class="bg-emerald-950/35 rounded-lg px-2.5 py-1.5 border border-emerald-400/20 flex items-center justify-between">
-            <span class="flex items-center gap-1 text-emerald-300 text-[10px] font-semibold">
-              <span>↓</span>
-              <span>Income</span>
-            </span>
-            <p id="totalIncomeDisplay" class="text-sm font-bold text-white">₹65,000</p>
-          </div>
-
-          <!-- Total Expenses Pill -->
-          <div class="bg-rose-950/35 rounded-lg px-2.5 py-1.5 border border-rose-400/20 flex items-center justify-between">
-            <span class="flex items-center gap-1 text-rose-300 text-[10px] font-semibold">
-              <span>↑</span>
-              <span>Expenses</span>
-            </span>
-            <p id="totalSpentDisplay" class="text-sm font-bold text-white">₹0</p>
-          </div>
-        </div>
-
-        <!-- Pending Returnable Dues (Friend Split + Office) Banner in Header -->
-        <div id="headerPendingBanner" class="hidden bg-amber-400/15 hover:bg-amber-400/25 border border-amber-400/30 rounded-lg px-2.5 py-1.5 flex items-center justify-between text-[11px] text-amber-200 cursor-pointer transition" title="Tap to view pending friend & office returns">
-          <div class="flex items-center gap-1.5">
-            <span>⏳</span>
-            <span class="font-medium">Pending to Receive:</span>
-          </div>
-          <span id="headerPendingAmount" class="font-bold text-amber-300">₹0</span>
-        </div>
-
-        <!-- Compact Expense Budget & Category Sync Bar -->
-        <div class="pt-1.5 border-t border-white/10 space-y-1">
-          <div class="flex items-center justify-between text-[10px]">
-            <div class="flex items-center gap-1 text-indigo-100">
-              <span>Budget (<strong id="budgetLimitDisplay" class="text-white font-semibold">₹25,000</strong>):</span>
-              <span id="budgetPercentageText" class="font-bold text-white">0% used</span>
-            </div>
-            <button id="goToCategoriesFromHeaderBtn" type="button" class="text-[10px] text-emerald-300 hover:text-white font-medium flex items-center gap-0.5 transition" title="Overall budget automatically syncs with category budgets">
-              <span>⚡ Synced with Categories →</span>
-            </button>
-          </div>
-
-          <!-- Slim Progress Bar -->
-          <div class="w-full h-1.5 bg-indigo-950/70 rounded-full overflow-hidden">
-            <div id="budgetProgressBar" class="h-full bg-emerald-400 rounded-full transition-all duration-300" style="width: 0%"></div>
-          </div>
-
-          <div class="flex items-center justify-end text-[9px] text-indigo-200">
-            <span id="remainingBalanceText" class="font-medium text-emerald-200">₹25,000 remaining to spend</span>
-          </div>
-        </div>
-
-      </div>
-    </header>
+      </header>
 
     <!-- Scrollable Main Content Area -->
     <main class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4" style="padding-bottom: 120px;">
@@ -191,6 +170,97 @@
            VIEW 1: HOME (DASHBOARD & COMPARISON REPORTS)
            ========================================== -->
       <div id="view-home" class="space-y-4">
+        <!-- Master Monthly Accounts & Budget Summary Card (Home Dashboard Only) -->
+        <section class="bg-gradient-to-br from-indigo-800 via-indigo-900 to-slate-900 text-white rounded-2xl p-4 border border-indigo-700/50 shadow-md space-y-3">
+          
+          <!-- Primary Net Balance Metric + Quick Funds Transfer Button -->
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-baseline gap-2">
+                <span class="text-xs text-indigo-200 font-medium">Balance:</span>
+                <p id="netBalanceDisplay" class="text-2xl font-extrabold tracking-tight text-white">₹0</p>
+              </div>
+              <!-- Monthly Cashflow & Carryover Subtext -->
+              <div id="carryoverBalanceSubtext" class="flex items-center gap-2 mt-0.5 text-[10px] text-indigo-200 flex-wrap">
+                <span id="thisMonthSavingsText" class="font-semibold text-emerald-300">+₹0 this month</span>
+                <span id="openingBalanceCarryoverText" class="font-medium text-indigo-300 hidden">• ₹0 carried over</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button
+                id="openTransferModalHeaderBtn"
+                type="button"
+                class="text-[11px] font-bold px-2.5 py-1 rounded-xl bg-emerald-500/25 hover:bg-emerald-500/40 text-emerald-200 border border-emerald-400/30 transition flex items-center gap-1 cursor-pointer"
+                title="Transfer funds from Regular Expense to Personal Account"
+              >
+                <span>⇄</span>
+                <span>Transfer</span>
+              </button>
+              <span id="savingsRateBadge" class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 shrink-0">
+                0% Saved
+              </span>
+            </div>
+          </div>
+
+          <!-- Slim Inflow & Outflow Pills -->
+          <div class="grid grid-cols-2 gap-2">
+            <!-- Total Income Pill -->
+            <div class="bg-emerald-950/40 rounded-xl px-3 py-2 border border-emerald-400/20 flex items-center justify-between">
+              <span class="flex items-center gap-1 text-emerald-300 text-xs font-semibold">
+                <span>↓</span>
+                <span>Income</span>
+              </span>
+              <p id="totalIncomeDisplay" class="text-sm font-bold text-white">₹0</p>
+            </div>
+
+            <!-- Total Expenses Pill -->
+            <div class="bg-rose-950/40 rounded-xl px-3 py-2 border border-rose-400/20 flex items-center justify-between">
+              <span class="flex items-center gap-1 text-rose-300 text-xs font-semibold">
+                <span>↑</span>
+                <span>Expenses</span>
+              </span>
+              <p id="totalSpentDisplay" class="text-sm font-bold text-white">₹0</p>
+            </div>
+          </div>
+
+          <!-- Pending Returnable Dues (Friend Split + Office) Banner in Header -->
+          <div id="headerPendingBanner" class="hidden bg-amber-400/15 hover:bg-amber-400/25 border border-amber-400/30 rounded-xl px-3 py-2 flex items-center justify-between text-xs text-amber-200 cursor-pointer transition" title="Tap to view pending friend & office returns">
+            <div class="flex items-center gap-1.5">
+              <span>⏳</span>
+              <span class="font-medium">Pending to Receive:</span>
+            </div>
+            <span id="headerPendingAmount" class="font-bold text-amber-300">₹0</span>
+          </div>
+
+          <!-- Compact Expense Budget & Category Sync Bar -->
+          <div class="pt-2 border-t border-white/10 space-y-1.5">
+            <div class="flex items-center justify-between text-xs">
+              <div class="flex items-center gap-1 text-indigo-100">
+                <span>Budget (<strong id="budgetLimitDisplay" class="text-white font-semibold">₹25,000</strong>):</span>
+                <span id="budgetPercentageText" class="font-bold text-white">0% used</span>
+              </div>
+              <button id="goToCategoriesFromHeaderBtn" type="button" class="text-[11px] text-emerald-300 hover:text-white font-medium flex items-center gap-0.5 transition cursor-pointer" title="Overall budget automatically syncs with category budgets">
+                <span>⚡ Synced with Categories →</span>
+              </button>
+            </div>
+
+            <!-- Slim Progress Bar -->
+            <div class="w-full h-2 bg-indigo-950/70 rounded-full overflow-hidden">
+              <div id="budgetProgressBar" class="h-full bg-emerald-400 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+
+            <div class="flex items-center justify-end text-[10px] text-indigo-200">
+              <span id="remainingBalanceText" class="font-medium text-emerald-200">₹25,000 remaining to spend</span>
+            </div>
+
+            <!-- Safe Daily Spend Allowance Indicator -->
+            <div id="safeDailyAllowanceBox" class="mt-2 pt-2 border-t border-white/10 text-xs">
+              <!-- Dynamically populated by JS -->
+            </div>
+          </div>
+
+        </section>
+
         
         <!-- Period Switcher: Current Month vs 3M, 6M, 1 Year Reports -->
         <div class="bg-slate-100 p-1 rounded-xl flex items-center gap-1 overflow-x-auto no-scrollbar">
@@ -534,6 +604,10 @@
               <div id="quickShortcutChipsContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
                 <!-- Dynamically populated based on active account -->
               </div>
+              <!-- Smart Predictive Merchant Suggestions -->
+              <div id="predictiveTagsContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-1 hidden">
+                <!-- Dynamically populated by JS memory -->
+              </div>
             </div>
 
             <div>
@@ -695,6 +769,11 @@
             </button>
           </div>
 
+          <!-- Aggregated Friends Summary Drawer ("Who Owes Me What") -->
+          <div id="aggregatedFriendsSummaryCard" class="hidden mb-2.5 p-3 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200/90 shadow-2xs space-y-2">
+            <!-- Dynamically populated by JS -->
+          </div>
+
           <!-- Pending Reimbursements & Friend Returns Summary Banner -->
           <div id="pendingReturnsBanner" class="hidden mb-2.5 p-2.5 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-between text-xs">
             <div class="flex items-center gap-2">
@@ -767,16 +846,7 @@
                 <option value="All">All Categories</option>
               </select>
 
-              <select
-                id="sortExpenseSelect"
-                aria-label="Sort transactions"
-                class="px-2 py-1.5 rounded-xl border border-slate-200 text-xs font-medium text-slate-600 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 shrink-0"
-              >
-                <option value="newest">Newest Date</option>
-                <option value="oldest">Oldest Date</option>
-                <option value="highest">Highest ₹</option>
-                <option value="lowest">Lowest ₹</option>
-              </select>
+              
 
               <button
                 id="printPdfStatementBtn"
@@ -795,6 +865,16 @@
                 title="Download Statement as CSV for Excel"
               >
                 <span>📊 CSV</span>
+              </button>
+              <button
+                id="toggleLedgerDensityBtn"
+                type="button"
+                onclick="window.toggleLedgerDensity && window.toggleLedgerDensity()"
+                class="px-2.5 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 bg-white hover:bg-slate-100 transition shrink-0 flex items-center gap-1 cursor-pointer ml-auto"
+                title="Toggle Compact / Detailed List Density"
+              >
+                <span id="densityToggleIcon">≡</span>
+                <span id="densityToggleText">Compact</span>
               </button>
             </div>
           </div>
@@ -972,11 +1052,12 @@
     </main>
 
     <!-- Anchored Bottom App Navigation Bar: Fixed at the base -->
-    <nav class="fixed sm:absolute bottom-0 left-0 right-0 max-w-md mx-auto z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 pt-2 pb-5 sm:pb-2 flex items-center justify-around shadow-[0_-4px_16px_rgba(0,0,0,0.08)]" style="padding-bottom: max(20px, env(safe-area-inset-bottom, 20px));">
+    <!-- BOTTOM NAVIGATION BAR (Clean 3-Tab Symmetrical Layout) -->
+    <nav class="fixed sm:absolute bottom-0 left-0 right-0 max-w-md mx-auto z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-6 pt-2 pb-5 sm:pb-2 flex items-center justify-between shadow-[0_-4px_16px_rgba(0,0,0,0.08)]" style="padding-bottom: max(20px, env(safe-area-inset-bottom, 20px));">
       <button
         id="navTabHome"
         type="button"
-        class="flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-2xl text-indigo-600 bg-indigo-50 font-semibold transition"
+        class="flex-1 flex flex-col items-center gap-0.5 py-1.5 rounded-2xl text-indigo-600 bg-indigo-50 dark:bg-indigo-950/60 font-semibold transition cursor-pointer"
       >
         <span class="text-base leading-none">🏠</span>
         <span class="text-[11px]">Home</span>
@@ -985,7 +1066,7 @@
       <button
         id="navTabExpenses"
         type="button"
-        class="flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-2xl text-slate-400 hover:text-slate-700 font-medium transition"
+        class="flex-1 flex flex-col items-center gap-0.5 py-1.5 rounded-2xl text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium transition cursor-pointer"
       >
         <span class="text-base leading-none">🧾</span>
         <span class="text-[11px]">Expenses</span>
@@ -994,16 +1075,28 @@
       <button
         id="navTabCategories"
         type="button"
-        class="flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-2xl text-slate-400 hover:text-slate-700 font-medium transition"
+        class="flex-1 flex flex-col items-center gap-0.5 py-1.5 rounded-2xl text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium transition cursor-pointer"
       >
         <span class="text-base leading-none">🎨</span>
         <span class="text-[11px]">Categories</span>
       </button>
     </nav>
 
+    <!-- Floating Action Button (FAB +): Ergonomic Bottom-Right Thumb Zone -->
+    <button
+      id="globalFabQuickLogBtn"
+      type="button"
+      onclick="window.openQuickLogBottomSheet && window.openQuickLogBottomSheet()"
+      class="fixed bottom-24 right-4 sm:right-6 z-40 w-14 h-14 rounded-full bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 hover:from-indigo-700 hover:to-cyan-500 text-white flex items-center justify-center text-3xl font-bold shadow-2xl shadow-indigo-600/50 hover:scale-105 active:scale-95 transition cursor-pointer"
+      title="Quick 1-Tap Log (+)"
+      aria-label="Quick 1-Tap Log"
+    >
+      <span>+</span>
+    </button>
+
     <!-- FUNDS TRANSFER MODAL: Regular Expense ➔ Personal Account -->
-    <div id="transferFundsModal" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all">
-      <div class="w-full bg-white rounded-t-3xl sm:rounded-3xl p-5 border border-slate-200 shadow-2xl space-y-4 max-h-[90%] overflow-y-auto">
+    <div id="transferFundsModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all overflow-hidden">
+      <div class="w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl p-5 border border-slate-200 shadow-2xl space-y-4 max-h-[88dvh] sm:max-h-[85vh] overflow-y-auto" style="padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 1.25rem));">
         <div class="flex items-center justify-between pb-2 border-b border-slate-100">
           <div class="flex items-center gap-2">
             <span class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-base font-bold">⇄</span>
@@ -1099,9 +1192,138 @@
 
     <!-- IN-PAGE TOAST NOTIFICATION -->
         <!-- SPLIT BILL & GROUP EXPENSE CALCULATOR MODAL -->
-    <div id="splitBillModal" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all">
-      <div class="w-full bg-white rounded-t-3xl sm:rounded-3xl p-5 border border-slate-200 shadow-2xl space-y-4 max-h-[92%] overflow-y-auto">
-        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+        <!-- QUICK LOG 1-TAP MODAL (Centered, Keyboard-Friendly) -->
+    <div id="quickLogModal" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-50 flex items-center justify-center p-3 sm:p-4 transition-all overflow-y-auto">
+      <div class="w-full max-w-sm sm:max-w-md bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col max-h-[84dvh] overflow-hidden my-auto">
+        
+        <!-- Modal Header -->
+        <div class="px-5 py-3.5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between shrink-0 bg-white dark:bg-slate-900">
+          <div class="flex items-center gap-2">
+            <span class="w-7 h-7 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm font-bold">⚡</span>
+            <div>
+              <h3 class="text-sm font-bold text-slate-800 dark:text-slate-100">Quick 1-Tap Logger</h3>
+              <p class="text-[10px] text-slate-400">Log expense or income in seconds</p>
+            </div>
+          </div>
+          <button type="button" onclick="window.closeQuickLogBottomSheet && window.closeQuickLogBottomSheet()" class="text-slate-400 hover:text-slate-600 text-sm font-bold p-1 rounded-lg cursor-pointer">✕</button>
+        </div>
+
+        <form id="quickLogForm" class="flex flex-col flex-1 min-h-0 overflow-hidden">
+          <div class="flex-1 overflow-y-auto px-5 py-3.5 space-y-3 overscroll-contain">
+            
+            <!-- Type Toggle & Split Bill Shortcut -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl text-xs font-semibold">
+                <button id="quickLogTypeExpenseBtn" type="button" class="px-3 py-1 rounded-lg bg-white dark:bg-slate-900 text-rose-700 shadow-sm transition">− Expense</button>
+                <button id="quickLogTypeIncomeBtn" type="button" class="px-3 py-1 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 transition">+ Income</button>
+              </div>
+              <button
+                type="button"
+                onclick="window.closeQuickLogBottomSheet && window.closeQuickLogBottomSheet(); window.openSplitBillModal && window.openSplitBillModal();"
+                class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-2.5 py-1 rounded-lg border border-indigo-200 dark:border-indigo-800 flex items-center gap-1 hover:bg-indigo-100 transition cursor-pointer"
+              >
+                <span>👥 Split Bill</span>
+              </button>
+            </div>
+
+            <!-- Amount Input -->
+            <div>
+              <label for="quickLogAmount" class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">
+                Amount (₹) <span class="text-rose-500">*</span>
+              </label>
+              <div class="relative">
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-slate-400 text-base">₹</span>
+                <input
+                  id="quickLogAmount"
+                  type="text"
+                  required
+                  placeholder="e.g. 150 or 80+40"
+                  class="w-full pl-8 pr-4 py-2 rounded-xl border border-indigo-300 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 text-base font-bold text-slate-800 dark:text-white transition outline-hidden"
+                />
+              </div>
+              <!-- Quick Addition Chips -->
+              <div class="flex items-center gap-1.5 mt-1.5 overflow-x-auto no-scrollbar">
+                <button type="button" onclick="window.addQuickLogAmount && window.addQuickLogAmount(20)" class="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 text-[10px] font-semibold text-slate-600 dark:text-slate-300 transition shrink-0 cursor-pointer">+₹20</button>
+                <button type="button" onclick="window.addQuickLogAmount && window.addQuickLogAmount(50)" class="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 text-[10px] font-semibold text-slate-600 dark:text-slate-300 transition shrink-0 cursor-pointer">+₹50</button>
+                <button type="button" onclick="window.addQuickLogAmount && window.addQuickLogAmount(100)" class="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 text-[10px] font-semibold text-slate-600 dark:text-slate-300 transition shrink-0 cursor-pointer">+₹100</button>
+                <button type="button" onclick="window.addQuickLogAmount && window.addQuickLogAmount(200)" class="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 text-[10px] font-semibold text-slate-600 dark:text-slate-300 transition shrink-0 cursor-pointer">+₹200</button>
+                <button type="button" onclick="window.addQuickLogAmount && window.addQuickLogAmount(500)" class="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 text-[10px] font-semibold text-slate-600 dark:text-slate-300 transition shrink-0 cursor-pointer">+₹500</button>
+              </div>
+            </div>
+
+            <!-- Description / Title with Predictive Chips -->
+            <div>
+              <label for="quickLogTitle" class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">
+                Description <span class="text-rose-500">*</span>
+              </label>
+              <input
+                id="quickLogTitle"
+                type="text"
+                required
+                placeholder="e.g. Chai, Auto, Grocery, Swiggy"
+                class="w-full px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-medium text-slate-800 dark:text-white outline-hidden focus:border-indigo-500"
+              />
+              <div id="quickLogPredictiveChips" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-1.5">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Returnable / Reimbursement Option in Quick Logger -->
+            <div class="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <label class="flex items-center gap-2 cursor-pointer text-xs font-semibold text-amber-900 dark:text-amber-200">
+                  <input id="quickLogIsReimbursable" type="checkbox" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer" />
+                  <span>🔄 Returnable Claim</span>
+                </label>
+                <select id="quickLogReimbursableSource" class="text-xs px-2 py-1 rounded-lg border border-amber-300 dark:border-amber-700 bg-white dark:bg-slate-800 text-amber-900 dark:text-amber-200 font-semibold cursor-pointer">
+                  <option value="friend">👥 Friend</option>
+                  <option value="office">🏢 Office</option>
+                  <option value="family">🏠 Family</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Category & Payment Mode -->
+            <div class="grid grid-cols-2 gap-2.5">
+              <div>
+                <label for="quickLogCategory" class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Category</label>
+                <select id="quickLogCategory" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-medium text-slate-800 dark:text-white bg-white dark:bg-slate-800 outline-hidden focus:border-indigo-500">
+                  <!-- Populated by JS -->
+                </select>
+              </div>
+              <div>
+                <label for="quickLogPaymentMode" class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Paid Via</label>
+                <select id="quickLogPaymentMode" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-white bg-white dark:bg-slate-800 outline-hidden focus:border-indigo-500">
+                  <option value="UPI">📱 UPI</option>
+                  <option value="Cash">💵 Cash</option>
+                  <option value="Card">💳 Card</option>
+                  <option value="NetBanking">🏦 Bank</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Pinned Submit Button -->
+          <div class="px-5 pt-2.5 pb-4 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shrink-0">
+            <button
+              id="confirmQuickLogBtn"
+              type="submit"
+              class="w-full bg-rose-600 hover:bg-rose-700 active:scale-[0.99] text-white font-bold py-3 rounded-2xl text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer"
+            >
+              <span>+ Save Transaction ➔</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- SPLIT BILL & GROUP EXPENSE CALCULATOR MODAL -->
+        <div id="splitBillModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all overflow-hidden">
+      <div class="w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl border border-slate-200 shadow-2xl flex flex-col max-h-[88dvh] sm:max-h-[85vh] overflow-hidden">
+        
+        <!-- Pinned Modal Header -->
+        <div class="px-5 py-3.5 border-b border-slate-100 flex items-center justify-between shrink-0 bg-white">
           <div class="flex items-center gap-2">
             <span class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-base font-bold">👥</span>
             <div>
@@ -1112,175 +1334,183 @@
           <button id="closeSplitBillModalBtn" type="button" onclick="window.closeSplitBillModal && window.closeSplitBillModal()" class="text-slate-400 hover:text-slate-600 text-sm font-bold p-1 rounded-lg cursor-pointer">✕</button>
         </div>
 
-        <form id="splitBillForm" class="space-y-3.5">
-          <!-- Total Bill Amount -->
-          <div>
-            <label for="splitBillTotalAmount" class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
-              Total Bill Amount (₹) <span class="text-rose-500">*</span>
-            </label>
-            <div class="relative">
-              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-slate-400 text-base">₹</span>
+        <!-- Form wrapping scrollable content and pinned footer -->
+        <form id="splitBillForm" class="flex flex-col flex-1 min-h-0 overflow-hidden">
+          
+          <!-- Scrollable Body with smooth touch scrolling -->
+          <div class="flex-1 overflow-y-auto px-5 py-4 space-y-3.5 overscroll-contain">
+            <!-- Total Bill Amount -->
+            <div>
+              <label for="splitBillTotalAmount" class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
+                Total Bill Amount (₹) <span class="text-rose-500">*</span>
+              </label>
+              <div class="relative">
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-slate-400 text-base">₹</span>
+                <input
+                  id="splitBillTotalAmount"
+                  type="number"
+                  min="1"
+                  step="any"
+                  required
+                  placeholder="e.g., 2400"
+                  class="w-full pl-8 pr-4 py-2.5 rounded-xl border border-indigo-300 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 text-base font-bold text-slate-800 transition outline-hidden"
+                />
+              </div>
+              <!-- Quick Addition Chips -->
+              <div class="flex items-center gap-1.5 mt-2 overflow-x-auto no-scrollbar">
+                <button type="button" onclick="window.addSplitAmount && window.addSplitAmount(200)" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[10px] font-semibold text-slate-600 transition shrink-0 cursor-pointer">+₹200</button>
+                <button type="button" onclick="window.addSplitAmount && window.addSplitAmount(500)" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[10px] font-semibold text-slate-600 transition shrink-0 cursor-pointer">+₹500</button>
+                <button type="button" onclick="window.addSplitAmount && window.addSplitAmount(1000)" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[10px] font-semibold text-slate-600 transition shrink-0 cursor-pointer">+₹1,000</button>
+                <button type="button" onclick="window.addSplitAmount && window.addSplitAmount(2000)" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[10px] font-semibold text-slate-600 transition shrink-0 cursor-pointer">+₹2,000</button>
+                <button type="button" onclick="window.addSplitAmount && window.addSplitAmount(5000)" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[10px] font-semibold text-slate-600 transition shrink-0 cursor-pointer">+₹5,000</button>
+              </div>
+            </div>
+
+            <!-- Total People (You + Friends) -->
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider">
+                  Total People (Including You) <span class="text-rose-500">*</span>
+                </label>
+                <span id="splitFriendsSubtext" class="text-[10px] text-indigo-600 font-semibold">You + 3 Friends</span>
+              </div>
+              <div class="flex items-center gap-1.5 mb-2">
+                <button type="button" id="splitCountBtn2" onclick="window.setSplitPeopleCount && window.setSplitPeopleCount(2)" class="split-people-btn flex-1 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition cursor-pointer">2</button>
+                <button type="button" id="splitCountBtn3" onclick="window.setSplitPeopleCount && window.setSplitPeopleCount(3)" class="split-people-btn flex-1 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition cursor-pointer">3</button>
+                <button type="button" id="splitCountBtn4" onclick="window.setSplitPeopleCount && window.setSplitPeopleCount(4)" class="split-people-btn flex-1 py-1.5 rounded-xl border-2 border-indigo-500 bg-indigo-50 text-xs font-bold text-indigo-700 transition cursor-pointer">4</button>
+                <button type="button" id="splitCountBtn5" onclick="window.setSplitPeopleCount && window.setSplitPeopleCount(5)" class="split-people-btn flex-1 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition cursor-pointer">5</button>
+                <button type="button" id="splitCountBtn6" onclick="window.setSplitPeopleCount && window.setSplitPeopleCount(6)" class="split-people-btn flex-1 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition cursor-pointer">6</button>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-slate-500 font-medium whitespace-nowrap">Or custom:</span>
+                <input
+                  id="splitBillPeopleCount"
+                  type="number"
+                  min="2"
+                  max="50"
+                  value="4"
+                  class="w-24 px-3 py-1.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 outline-hidden"
+                />
+                <span class="text-[11px] text-slate-400">people sharing</span>
+              </div>
+            </div>
+
+            <!-- Bill Description / Note -->
+            <div>
+              <label for="splitBillTitle" class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
+                Description / Place Name <span class="text-rose-500">*</span>
+              </label>
               <input
-                id="splitBillTotalAmount"
-                type="number"
-                min="1"
-                step="any"
+                id="splitBillTitle"
+                type="text"
                 required
-                placeholder="e.g., 2400"
-                class="w-full pl-8 pr-4 py-2.5 rounded-xl border border-indigo-300 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 text-base font-bold text-slate-800 transition outline-hidden"
+                value="Dinner with Friends"
+                placeholder="e.g., Barbeque Nation, Goa Cab, Movie Outing"
+                class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-medium text-slate-800 outline-hidden focus:border-indigo-500"
               />
+              <!-- Quick Title Chips -->
+              <div class="flex items-center gap-1.5 mt-1.5 overflow-x-auto no-scrollbar">
+                <button type="button" onclick="window.setSplitTitle && window.setSplitTitle('Restaurant Dinner')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-600 transition shrink-0 cursor-pointer">🍽️ Dinner</button>
+                <button type="button" onclick="window.setSplitTitle && window.setSplitTitle('Team Lunch / Cafe')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-600 transition shrink-0 cursor-pointer">☕ Cafe & Tea</button>
+                <button type="button" onclick="window.setSplitTitle && window.setSplitTitle('Cab / Travel Fare')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-600 transition shrink-0 cursor-pointer">🚕 Cab / Travel</button>
+                <button type="button" onclick="window.setSplitTitle && window.setSplitTitle('Groceries / Party')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-600 transition shrink-0 cursor-pointer">🍕 Party / Food</button>
+                <button type="button" onclick="window.setSplitTitle && window.setSplitTitle('Trip / Hotel Stay')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-600 transition shrink-0 cursor-pointer">🏖️ Trip</button>
+              </div>
             </div>
-            <!-- Quick Addition Chips -->
-            <div class="flex items-center gap-1.5 mt-2 overflow-x-auto no-scrollbar">
-              <button type="button" onclick="window.addSplitAmount && window.addSplitAmount(200)" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[10px] font-semibold text-slate-600 transition shrink-0 cursor-pointer">+₹200</button>
-              <button type="button" onclick="window.addSplitAmount && window.addSplitAmount(500)" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[10px] font-semibold text-slate-600 transition shrink-0 cursor-pointer">+₹500</button>
-              <button type="button" onclick="window.addSplitAmount && window.addSplitAmount(1000)" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[10px] font-semibold text-slate-600 transition shrink-0 cursor-pointer">+₹1,000</button>
-              <button type="button" onclick="window.addSplitAmount && window.addSplitAmount(2000)" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[10px] font-semibold text-slate-600 transition shrink-0 cursor-pointer">+₹2,000</button>
-              <button type="button" onclick="window.addSplitAmount && window.addSplitAmount(5000)" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-[10px] font-semibold text-slate-600 transition shrink-0 cursor-pointer">+₹5,000</button>
-            </div>
-          </div>
 
-          <!-- Total People (You + Friends) -->
-          <div>
-            <div class="flex items-center justify-between mb-1">
-              <label class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider">
-                Total People (Including You) <span class="text-rose-500">*</span>
+            <!-- Category & Payment Method Grid -->
+            <div class="grid grid-cols-2 gap-2.5">
+              <div>
+                <label for="splitBillCategory" class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
+                  Category
+                </label>
+                <select
+                  id="splitBillCategory"
+                  class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium text-slate-800 bg-white outline-hidden focus:border-indigo-500"
+                >
+                  <!-- Populated dynamically with active categories -->
+                </select>
+              </div>
+              <div>
+                <label for="splitBillPaymentModeSelect" class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
+                  Paid Via
+                </label>
+                <select
+                  id="splitBillPaymentModeSelect"
+                  class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-semibold text-slate-800 bg-white outline-hidden focus:border-indigo-500"
+                >
+                  <option value="UPI">📱 UPI</option>
+                  <option value="Cash">💵 Cash</option>
+                  <option value="Card">💳 Card</option>
+                  <option value="NetBanking">🏦 Bank</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Date Picker -->
+            <div>
+              <label for="splitBillDate" class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
+                Date
               </label>
-              <span id="splitFriendsSubtext" class="text-[10px] text-indigo-600 font-semibold">You + 3 Friends</span>
-            </div>
-            <div class="flex items-center gap-1.5 mb-2">
-              <button type="button" id="splitCountBtn2" onclick="window.setSplitPeopleCount && window.setSplitPeopleCount(2)" class="split-people-btn flex-1 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition cursor-pointer">2</button>
-              <button type="button" id="splitCountBtn3" onclick="window.setSplitPeopleCount && window.setSplitPeopleCount(3)" class="split-people-btn flex-1 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition cursor-pointer">3</button>
-              <button type="button" id="splitCountBtn4" onclick="window.setSplitPeopleCount && window.setSplitPeopleCount(4)" class="split-people-btn flex-1 py-1.5 rounded-xl border-2 border-indigo-500 bg-indigo-50 text-xs font-bold text-indigo-700 transition cursor-pointer">4</button>
-              <button type="button" id="splitCountBtn5" onclick="window.setSplitPeopleCount && window.setSplitPeopleCount(5)" class="split-people-btn flex-1 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition cursor-pointer">5</button>
-              <button type="button" id="splitCountBtn6" onclick="window.setSplitPeopleCount && window.setSplitPeopleCount(6)" class="split-people-btn flex-1 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition cursor-pointer">6</button>
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="text-xs text-slate-500 font-medium whitespace-nowrap">Or custom:</span>
               <input
-                id="splitBillPeopleCount"
-                type="number"
-                min="2"
-                max="50"
-                value="4"
-                class="w-24 px-3 py-1.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 outline-hidden"
+                id="splitBillDate"
+                type="date"
+                class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium text-slate-800 outline-hidden focus:border-indigo-500"
               />
-              <span class="text-[11px] text-slate-400">people sharing</span>
-            </div>
-          </div>
-
-          <!-- Bill Description / Note -->
-          <div>
-            <label for="splitBillTitle" class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
-              Description / Place Name <span class="text-rose-500">*</span>
-            </label>
-            <input
-              id="splitBillTitle"
-              type="text"
-              required
-              value="Dinner with Friends"
-              placeholder="e.g., Barbeque Nation, Goa Cab, Movie Outing"
-              class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-medium text-slate-800 outline-hidden focus:border-indigo-500"
-            />
-            <!-- Quick Title Chips -->
-            <div class="flex items-center gap-1.5 mt-1.5 overflow-x-auto no-scrollbar">
-              <button type="button" onclick="window.setSplitTitle && window.setSplitTitle('Restaurant Dinner')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-600 transition shrink-0 cursor-pointer">🍽️ Dinner</button>
-              <button type="button" onclick="window.setSplitTitle && window.setSplitTitle('Team Lunch / Cafe')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-600 transition shrink-0 cursor-pointer">☕ Cafe & Tea</button>
-              <button type="button" onclick="window.setSplitTitle && window.setSplitTitle('Cab / Travel Fare')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-600 transition shrink-0 cursor-pointer">🚕 Cab / Travel</button>
-              <button type="button" onclick="window.setSplitTitle && window.setSplitTitle('Groceries / Party')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-600 transition shrink-0 cursor-pointer">🍕 Party / Food</button>
-              <button type="button" onclick="window.setSplitTitle && window.setSplitTitle('Trip / Hotel Stay')" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-600 transition shrink-0 cursor-pointer">🏖️ Trip</button>
-            </div>
-          </div>
-
-          <!-- Category & Payment Method Grid -->
-          <div class="grid grid-cols-2 gap-2.5">
-            <div>
-              <label for="splitBillCategory" class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
-                Category
-              </label>
-              <select
-                id="splitBillCategory"
-                class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium text-slate-800 bg-white outline-hidden focus:border-indigo-500"
-              >
-                <!-- Populated dynamically with active categories -->
-              </select>
-            </div>
-            <div>
-              <label for="splitBillPaymentModeSelect" class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
-                Paid Via
-              </label>
-              <select
-                id="splitBillPaymentModeSelect"
-                class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-semibold text-slate-800 bg-white outline-hidden focus:border-indigo-500"
-              >
-                <option value="UPI">📱 UPI</option>
-                <option value="Cash">💵 Cash</option>
-                <option value="Card">💳 Card</option>
-                <option value="NetBanking">🏦 Bank</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Date Picker -->
-          <div>
-            <label for="splitBillDate" class="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
-              Date
-            </label>
-            <input
-              id="splitBillDate"
-              type="date"
-              class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium text-slate-800 outline-hidden focus:border-indigo-500"
-            />
-          </div>
-
-          <!-- Live Split Calculation Breakdown Card -->
-          <div class="bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200/90 rounded-2xl p-3.5 space-y-2.5">
-            <div class="flex items-center justify-between pb-2 border-b border-indigo-100 text-xs">
-              <span class="text-slate-600 font-semibold">Exact Per-Person Share:</span>
-              <span id="splitPerPersonText" class="font-bold text-indigo-700 text-sm">₹600 / person</span>
             </div>
 
-            <div class="grid grid-cols-2 gap-2 text-xs">
-              <div class="bg-white p-2.5 rounded-xl border border-indigo-100 shadow-2xs">
-                <span class="text-[9px] text-slate-400 font-bold uppercase block tracking-wider">👤 Your Share</span>
-                <span id="splitMyShareAmount" class="text-sm font-bold text-slate-800 block mt-0.5">₹600</span>
-                <span class="text-[10px] text-emerald-600 font-medium block mt-0.5">Logs to Regular Expense</span>
+            <!-- Live Split Calculation Breakdown Card -->
+            <div class="bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200/90 rounded-2xl p-3.5 space-y-2.5">
+              <div class="flex items-center justify-between pb-2 border-b border-indigo-100 text-xs">
+                <span class="text-slate-600 font-semibold">Exact Per-Person Share:</span>
+                <span id="splitPerPersonText" class="font-bold text-indigo-700 text-sm">₹0 / person</span>
               </div>
-              <div class="bg-white p-2.5 rounded-xl border border-amber-200 shadow-2xs">
-                <span class="text-[9px] text-amber-700 font-bold uppercase block tracking-wider">👥 Friends' Share</span>
-                <span id="splitFriendsShareAmount" class="text-sm font-bold text-amber-700 block mt-0.5">₹1,800</span>
-                <span id="splitFriendsShareCount" class="text-[10px] text-amber-600 font-medium block mt-0.5">3 friends × ₹600</span>
+
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <div class="bg-white p-2.5 rounded-xl border border-indigo-100 shadow-2xs">
+                  <span class="text-[9px] text-slate-400 font-bold uppercase block tracking-wider">👤 Your Share</span>
+                  <span id="splitMyShareAmount" class="text-sm font-bold text-slate-800 block mt-0.5">₹0</span>
+                  <span class="text-[10px] text-emerald-600 font-medium block mt-0.5">Logs to Regular Expense</span>
+                </div>
+                <div class="bg-white p-2.5 rounded-xl border border-amber-200 shadow-2xs">
+                  <span class="text-[9px] text-amber-700 font-bold uppercase block tracking-wider">👥 Friends' Share</span>
+                  <span id="splitFriendsShareAmount" class="text-sm font-bold text-amber-700 block mt-0.5">₹0</span>
+                  <span id="splitFriendsShareCount" class="text-[10px] text-amber-600 font-medium block mt-0.5">3 friends × ₹0</span>
+                </div>
+              </div>
+
+              <div class="p-2 rounded-lg bg-amber-50/80 border border-amber-200/60 text-[10px] text-amber-800 flex items-start gap-1.5">
+                <span class="text-xs shrink-0">💡</span>
+                <span>With 1 tap, your share is logged as an expense, and each friend gets their own independent return card so you can settle one-by-one as they pay you back.</span>
               </div>
             </div>
 
-            <div class="p-2 rounded-lg bg-amber-50/80 border border-amber-200/60 text-[10px] text-amber-800 flex items-start gap-1.5">
-              <span class="text-xs shrink-0">💡</span>
-              <span>With 1 tap, your share is logged as an expense, and each friend gets their own independent return card so you can settle one-by-one as they pay you back.</span>
+            <!-- Individual Friends List with Optional Names for Day-Wise Payback -->
+            <div class="bg-white p-3 rounded-2xl border border-slate-200/90 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">👥 Friends' Shares (Tap-to-Settle Day by Day)</span>
+                <span id="splitFriendsHeaderCount" class="text-[10px] text-indigo-600 font-bold bg-indigo-50 px-2 py-0.5 rounded-full">3 Friends</span>
+              </div>
+              <p class="text-[10px] text-slate-500">
+                Each friend below gets an individual card in your ledger. When Rahul pays on UPI today, tap his card to settle. When Priya pays next week, tap hers! (Names are optional).
+              </p>
+              <div id="splitFriendsNamesList" class="space-y-1.5 max-h-48 overflow-y-auto pr-1">
+                <!-- Dynamically populated rows -->
+              </div>
             </div>
+
           </div>
 
-          <!-- Individual Friends List with Optional Names for Day-Wise Payback -->
-          <div class="bg-white p-3 rounded-2xl border border-slate-200/90 space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">👥 Friends' Shares (Tap-to-Settle Day by Day)</span>
-              <span id="splitFriendsHeaderCount" class="text-[10px] text-indigo-600 font-bold bg-indigo-50 px-2 py-0.5 rounded-full">3 Friends</span>
-            </div>
-            <p class="text-[10px] text-slate-500">
-              Each friend below gets an individual card in your ledger. When Rahul pays on UPI today, tap his card to settle. When Priya pays next week, tap hers! (Names are optional).
-            </p>
-            <div id="splitFriendsNamesList" class="space-y-1.5 max-h-40 overflow-y-auto pr-1">
-              <!-- Dynamically populated rows: Friend 1 [Input Name] -> ₹600 -->
-            </div>
+          <!-- Pinned Footer Action Button: ALWAYS 100% VISIBLE ON SCREEN -->
+          <div class="px-5 pt-3 pb-5 sm:pb-3 border-t border-slate-100 bg-white shrink-0 shadow-[0_-4px_12px_rgba(0,0,0,0.04)]" style="padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 1.25rem));">
+            <button
+              id="confirmSplitBillBtn"
+              type="submit"
+              class="w-full bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white font-bold py-3.5 rounded-2xl text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer"
+            >
+              <span>Confirm & Log Split (₹600 Mine + ₹1,800 Returnable) ➔</span>
+            </button>
           </div>
-
-          <!-- Submit Button -->
-          <button
-            id="confirmSplitBillBtn"
-            type="submit"
-            class="w-full bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white font-semibold py-3 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer"
-          >
-            <span>Confirm & Log Split (₹600 Mine + ₹1,800 Returnable) ➔</span>
-          </button>
         </form>
       </div>
     </div>
@@ -1341,8 +1571,8 @@
 
 
     <!-- EDIT TRANSACTION MODAL (Mobile Bottom Sheet / Popup) -->
-    <div id="editTxModal" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all">
-      <div class="w-full bg-white rounded-t-3xl sm:rounded-3xl p-5 border border-slate-200 shadow-2xl space-y-4 max-h-[90%] overflow-y-auto">
+    <div id="editTxModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all overflow-hidden">
+      <div class="w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl p-5 border border-slate-200 shadow-2xl space-y-4 max-h-[88dvh] sm:max-h-[85vh] overflow-y-auto" style="padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 1.25rem));">
         <div class="flex items-center justify-between pb-2 border-b border-slate-100">
           <div class="flex items-center gap-2">
             <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm font-bold">✎</span>
@@ -1595,7 +1825,7 @@
     };
 
     // --- 2. DOM ELEMENTS ---
-    const headerTabSubtitle = document.getElementById('headerTabSubtitle');
+    const headerTabSubtitle = null;
     const netBalanceDisplay = document.getElementById('netBalanceDisplay');
     const savingsRateBadge = document.getElementById('savingsRateBadge');
     const totalIncomeDisplay = document.getElementById('totalIncomeDisplay');
@@ -1674,7 +1904,7 @@
     const filterTypeExpenseBtn = document.getElementById('filterTypeExpenseBtn');
     const categoryFilterBar = document.getElementById('categoryFilterBar');
     const searchExpenseInput = document.getElementById('searchExpenseInput');
-    const sortExpenseSelect = document.getElementById('sortExpenseSelect');
+    const sortExpenseSelect = null;
     const expenseList = document.getElementById('expenseList');
     const itemCountBadge = document.getElementById('itemCountBadge');
 
@@ -1835,7 +2065,7 @@
         expenses: 'Expenses • Monthly Ledger',
         categories: 'Categories • Budgets & Limits'
       };
-      headerTabSubtitle.textContent = tabTitles[tabName] || 'Dashboard • Overview';
+      if (headerTabSubtitle) headerTabSubtitle.textContent = tabTitles[tabName] || 'Dashboard • Overview';
 
       const navButtons = [
         { el: navTabHome, id: 'home' },
@@ -3141,23 +3371,584 @@
       banner.innerHTML = html;
     }
 
+    
+    // ==========================================
+    // TOPIC 5: TRUE AMOLED DARK MODE THEME (☀️ / 🌙)
+    // ==========================================
+    let currentTheme = localStorage.getItem('mysmartplan_theme') || 'light';
+
+    function applyTheme(theme) {
+      currentTheme = theme;
+      const htmlEl = document.documentElement;
+      const iconEl = document.getElementById('themeToggleIcon');
+      const textEl = document.getElementById('themeToggleText');
+      if (theme === 'dark') {
+        htmlEl.classList.add('dark');
+        if (iconEl) iconEl.textContent = '☀️';
+        if (textEl) textEl.textContent = 'Light';
+        localStorage.setItem('mysmartplan_theme', 'dark');
+      } else {
+        htmlEl.classList.remove('dark');
+        if (iconEl) iconEl.textContent = '🌙';
+        if (textEl) textEl.textContent = 'Dark';
+        localStorage.setItem('mysmartplan_theme', 'light');
+      }
+    }
+
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+        const nextTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+        applyTheme(nextTheme);
+        renderDashboard();
+      });
+    }
+
+    // ==========================================
+    // TOPIC 2: SMART MATH EVALUATOR & RECENT MERCHANT MEMORY
+    // ==========================================
+    function evaluateAmountMath(val) {
+      if (!val) return 0;
+      if (typeof val === 'number') return val;
+      const str = String(val).trim();
+      const clean = str.replace(/[^0-9+\-*\/.]/g, '');
+      if (!clean) return 0;
+      try {
+        const tokens = clean.match(/(\d+(?:\.\d+)?|[+\-*\/])/g);
+        if (!tokens || tokens.length === 0) return parseFloat(clean) || 0;
+        let total = parseFloat(tokens[0]);
+        for (let i = 1; i < tokens.length; i += 2) {
+          const op = tokens[i];
+          const nextVal = parseFloat(tokens[i + 1]);
+          if (isNaN(nextVal)) continue;
+          if (op === '+') total += nextVal;
+          else if (op === '-') total -= nextVal;
+          else if (op === '*') total *= nextVal;
+          else if (op === '/') total = nextVal !== 0 ? total / nextVal : total;
+        }
+        return Math.round(total * 100) / 100;
+      } catch (e) {
+        return parseFloat(clean) || 0;
+      }
+    }
+
+    // Attach Math Evaluator to amount inputs
+    if (expenseAmount) {
+      expenseAmount.addEventListener('blur', () => {
+        if (expenseAmount.value && /[+\-*\/]/.test(expenseAmount.value)) {
+          const res = evaluateAmountMath(expenseAmount.value);
+          if (res > 0) expenseAmount.value = res;
+        }
+      });
+    }
+
+    function getRecentMerchantsMemory() {
+      const map = new Map();
+      // Inspect latest 60 transactions
+      transactions.slice(0, 60).forEach((t) => {
+        const title = (t.title || '').trim();
+        if (!title) return;
+        const cleanTitle = title.replace(/\(.*?\)/, '').trim();
+        const key = cleanTitle.toLowerCase();
+        if (cleanTitle && !map.has(key)) {
+          map.set(key, {
+            title: cleanTitle,
+            categoryId: t.categoryId,
+            paymentMode: t.paymentMode || 'UPI',
+            type: t.type || 'expense'
+          });
+        }
+      });
+      return Array.from(map.values());
+    }
+
+    function renderPredictiveSuggestions(targetInput, containerId, onSelect) {
+      const container = document.getElementById(containerId);
+      if (!container || !targetInput) return;
+
+      const query = (targetInput.value || '').trim().toLowerCase();
+      const allMemories = getRecentMerchantsMemory();
+      
+      const filtered = query
+        ? allMemories.filter(m => m.title.toLowerCase().includes(query)).slice(0, 6)
+        : allMemories.slice(0, 5);
+
+      if (filtered.length === 0) {
+        container.classList.add('hidden');
+        container.innerHTML = '';
+        return;
+      }
+
+      container.classList.remove('hidden');
+      container.innerHTML = '';
+      filtered.forEach((m) => {
+        const cat = getAnyCategoryById(m.categoryId);
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 border border-slate-200 dark:border-slate-700 text-[11px] font-semibold text-slate-700 dark:text-slate-300 transition shrink-0 flex items-center gap-1 cursor-pointer';
+        chip.innerHTML = `<span>${cat ? cat.icon : '🏷️'}</span> <span>${m.title}</span>`;
+        chip.addEventListener('click', () => {
+          onSelect(m);
+        });
+        container.appendChild(chip);
+      });
+    }
+
+    if (expenseTitle) {
+      expenseTitle.addEventListener('input', () => {
+        renderPredictiveSuggestions(expenseTitle, 'predictiveTagsContainer', (m) => {
+          expenseTitle.value = m.title;
+          expenseCategory.value = m.categoryId;
+          if (window.selectPaymentMode) window.selectPaymentMode(m.paymentMode);
+          if (m.type && m.type !== logType) setLogType(m.type);
+          expenseAmount.focus();
+        });
+      });
+      expenseTitle.addEventListener('focus', () => {
+        renderPredictiveSuggestions(expenseTitle, 'predictiveTagsContainer', (m) => {
+          expenseTitle.value = m.title;
+          expenseCategory.value = m.categoryId;
+          if (window.selectPaymentMode) window.selectPaymentMode(m.paymentMode);
+          if (m.type && m.type !== logType) setLogType(m.type);
+          expenseAmount.focus();
+        });
+      });
+    }
+
+    // ==========================================
+    // TOPIC 3: SAFE DAILY SPEND ALLOWANCE & COMPACT LIST DENSITY
+    // ==========================================
+    let ledgerDensity = localStorage.getItem('mysmartplan_ledger_density') || 'detailed';
+
+    window.toggleLedgerDensity = function() {
+      ledgerDensity = ledgerDensity === 'detailed' ? 'compact' : 'detailed';
+      localStorage.setItem('mysmartplan_ledger_density', ledgerDensity);
+      syncLedgerDensityButton();
+      renderDashboard();
+    };
+
+    function syncLedgerDensityButton() {
+      const iconEl = document.getElementById('densityToggleIcon');
+      const textEl = document.getElementById('densityToggleText');
+      if (iconEl && textEl) {
+        if (ledgerDensity === 'compact') {
+          iconEl.textContent = '⊞';
+          textEl.textContent = 'Detailed';
+        } else {
+          iconEl.textContent = '≡';
+          textEl.textContent = 'Compact';
+        }
+      }
+    }
+
+    function updateSafeDailyAllowance(spent, budget) {
+      const container = document.getElementById('safeDailyAllowanceBox');
+      if (!container) return;
+
+      if (budget <= 0) {
+        container.classList.add('hidden');
+        return;
+      }
+
+      container.classList.remove('hidden');
+
+      const now = new Date();
+      const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+      const currentDay = now.getDate();
+      const remainingDays = Math.max(1, daysInMonth - currentDay + 1);
+
+      const remainingBudget = Math.max(0, budget - spent);
+      const safeDaily = Math.round(remainingBudget / remainingDays);
+
+      if (spent >= budget) {
+        container.innerHTML = `
+          <div class="flex items-center gap-1.5 text-rose-300 font-semibold text-[11px] bg-rose-950/40 p-2 rounded-xl border border-rose-500/30">
+            <span>🚨</span>
+            <span>Monthly Budget Exceeded by ${formatCurrency(spent - budget)}. No remaining daily allowance.</span>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div class="flex items-center justify-between w-full text-[11px] bg-indigo-950/40 px-3 py-1.5 rounded-xl border border-indigo-400/20">
+            <span class="flex items-center gap-1.5 text-indigo-200 font-medium">
+              <span>💡</span>
+              <span>Safe Daily Spend:</span>
+            </span>
+            <span class="font-bold text-emerald-300">
+              ${formatCurrency(safeDaily)} / day <span class="text-[9px] font-normal text-indigo-200">(${remainingDays} days left)</span>
+            </span>
+          </div>
+        `;
+      }
+    }
+
+    // ==========================================
+    // TOPIC 4: AGGREGATED FRIEND SUMMARY DRAWER ("WHO OWES ME WHAT")
+    // ==========================================
+    function renderAggregatedFriendsSummary(pendingClaims) {
+      const container = document.getElementById('aggregatedFriendsSummaryCard');
+      if (!container) return;
+
+      if (pendingClaims.length === 0 || activeAccount === 'personal') {
+        container.classList.add('hidden');
+        container.innerHTML = '';
+        return;
+      }
+
+      const friendsMap = new Map();
+      pendingClaims.forEach((t) => {
+        let name = 'Friend';
+        const match = t.title.match(/\((.*?)\)/);
+        if (match && match[1]) {
+          name = match[1].replace(/'s Share/i, '').replace(/Friend Split - /i, '').trim();
+        } else if (t.reimbursableSource === 'office') {
+          name = 'Office Claim';
+        }
+        if (!friendsMap.has(name)) {
+          friendsMap.set(name, { name, total: 0, items: [] });
+        }
+        const entry = friendsMap.get(name);
+        entry.total += t.amount;
+        entry.items.push(t);
+      });
+
+      const totalPending = pendingClaims.reduce((s, t) => s + t.amount, 0);
+      container.classList.remove('hidden');
+
+      let listHtml = '';
+      friendsMap.forEach((f) => {
+        const isOffice = f.items[0] && f.items[0].reimbursableSource === 'office';
+        const billCount = f.items.length;
+        const encoded = encodeURIComponent(f.name);
+        listHtml += `
+          <div class="flex items-center justify-between bg-white dark:bg-slate-800/90 p-2.5 rounded-xl border border-amber-200/70 dark:border-amber-700/50 shadow-2xs text-xs">
+            <div class="min-w-0">
+              <div class="flex items-center gap-1.5">
+                <span class="font-bold text-slate-800 dark:text-slate-100 truncate">${f.name}</span>
+                <span class="text-[9px] font-semibold text-amber-800 dark:text-amber-300 bg-amber-100 dark:bg-amber-900/40 px-1.5 py-0.2 rounded-full">
+                  ${billCount} bill${billCount > 1 ? 's' : ''}
+                </span>
+              </div>
+              <p class="text-[10px] text-amber-700 dark:text-amber-400 font-bold mt-0.5">
+                ${formatCurrency(f.total)} Pending
+              </p>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0 ml-2">
+              ${!isOffice ? `
+                <button
+                  type="button"
+                  onclick="window.sendCombinedWhatsAppReminder && window.sendCombinedWhatsAppReminder('${encoded}', ${f.total}, ${billCount})"
+                  class="px-2 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] flex items-center gap-1 shadow-2xs transition cursor-pointer"
+                  title="Send WhatsApp reminder for all pending bills"
+                >
+                  <span>💬 Remind</span>
+                </button>
+              ` : ''}
+              <button
+                type="button"
+                onclick="window.settleAllForFriend && window.settleAllForFriend('${encoded}')"
+                class="px-2 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-bold text-[10px] flex items-center gap-1 shadow-2xs transition cursor-pointer"
+                title="Mark all pending bills for ${f.name} as settled"
+              >
+                <span>✓ Settle All</span>
+              </button>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = `
+        <div class="flex items-center justify-between pb-1 border-b border-amber-200/60 dark:border-amber-800/60">
+          <div class="flex items-center gap-1.5 text-xs font-bold text-amber-950 dark:text-amber-200">
+            <span class="text-sm">👥</span>
+            <span>Who Owes Me What</span>
+          </div>
+          <span class="text-xs font-extrabold text-amber-900 dark:text-amber-300 bg-amber-100 dark:bg-amber-900/50 px-2.5 py-0.5 rounded-lg border border-amber-300 dark:border-amber-700">
+            ${formatCurrency(totalPending)} Total
+          </span>
+        </div>
+        <div class="space-y-1.5 max-h-44 overflow-y-auto pr-0.5">
+          ${listHtml}
+        </div>
+      `;
+    }
+
+    window.sendCombinedWhatsAppReminder = function(encodedName, total, billCount) {
+      const friendName = decodeURIComponent(encodedName);
+      const msg = `Hey ${friendName}, gentle reminder: your pending total for ${billCount} bill${billCount > 1 ? 's' : ''} is ${formatCurrency(total)}. Please UPI/GPay me when you get a chance! Thanks 🙏`;
+      const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    };
+
+    window.settleAllForFriend = function(encodedName) {
+      const friendName = decodeURIComponent(encodedName);
+      let settledCount = 0;
+      transactions.forEach((t) => {
+        if (t.accountId === 'regular' && t.isReimbursable && t.reimbursementStatus === 'pending') {
+          let name = 'Friend';
+          const match = t.title.match(/\((.*?)\)/);
+          if (match && match[1]) {
+            name = match[1].replace(/'s Share/i, '').replace(/Friend Split - /i, '').trim();
+          } else if (t.reimbursableSource === 'office') {
+            name = 'Office Claim';
+          }
+          if (name === friendName) {
+            t.reimbursementStatus = 'settled';
+            settledCount++;
+          }
+        }
+      });
+      saveToLocalStorage();
+      renderDashboard();
+      showToast(`Settled all ${settledCount} bills for ${friendName}!`);
+    };
+
+    // ==========================================
+    // TOPIC 1: GLOBAL FAB QUICK LOG BOTTOM SHEET
+    // ==========================================
+    const quickLogModal = document.getElementById('quickLogModal');
+    const quickLogForm = document.getElementById('quickLogForm');
+    const quickLogAmount = document.getElementById('quickLogAmount');
+    const quickLogTitle = document.getElementById('quickLogTitle');
+    const quickLogCategory = document.getElementById('quickLogCategory');
+    const quickLogPaymentMode = document.getElementById('quickLogPaymentMode');
+    const quickLogTypeExpenseBtn = document.getElementById('quickLogTypeExpenseBtn');
+    const quickLogTypeIncomeBtn = document.getElementById('quickLogTypeIncomeBtn');
+    let quickLogType = 'expense';
+
+    window.openQuickLogBottomSheet = function() {
+      if (!quickLogModal) return;
+      quickLogType = 'expense';
+      syncQuickLogTypeButtons();
+
+      // Populate Category select
+      if (quickLogCategory) {
+        quickLogCategory.innerHTML = '';
+        getActiveCategories().forEach((cat) => {
+          const opt = document.createElement('option');
+          opt.value = cat.id;
+          opt.textContent = `${cat.icon} ${cat.name}`;
+          quickLogCategory.appendChild(opt);
+        });
+      }
+
+      if (quickLogAmount) quickLogAmount.value = '';
+      if (quickLogTitle) quickLogTitle.value = '';
+      const qReimb = document.getElementById('quickLogIsReimbursable');
+      if (qReimb) qReimb.checked = false;
+
+      renderPredictiveSuggestions(quickLogTitle, 'quickLogPredictiveChips', (m) => {
+        quickLogTitle.value = m.title;
+        if (quickLogCategory) quickLogCategory.value = m.categoryId;
+        if (quickLogPaymentMode) quickLogPaymentMode.value = m.paymentMode;
+        if (m.type) {
+          quickLogType = m.type;
+          syncQuickLogTypeButtons();
+        }
+        if (quickLogAmount) quickLogAmount.focus();
+      });
+
+      quickLogModal.classList.remove('hidden');
+    };
+
+    
+    // Smooth scroll inputs into view above soft keyboard
+    [quickLogAmount, quickLogTitle].forEach((inputEl) => {
+      if (inputEl) {
+        inputEl.addEventListener('focus', () => {
+          setTimeout(() => {
+            inputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 150);
+        });
+      }
+    });
+
+    window.closeQuickLogBottomSheet = function() {
+      if (quickLogModal) quickLogModal.classList.add('hidden');
+    };
+
+    window.addQuickLogAmount = function(amt) {
+      if (!quickLogAmount) return;
+      const cur = evaluateAmountMath(quickLogAmount.value);
+      quickLogAmount.value = cur + amt;
+    };
+
+    function syncQuickLogTypeButtons() {
+      if (!quickLogTypeExpenseBtn || !quickLogTypeIncomeBtn) return;
+      if (quickLogType === 'expense') {
+        quickLogTypeExpenseBtn.className = 'px-3 py-1 rounded-lg bg-white text-rose-700 shadow-sm transition font-bold';
+        quickLogTypeIncomeBtn.className = 'px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition font-medium';
+        const submitBtn = document.getElementById('confirmQuickLogBtn');
+        if (submitBtn) {
+          submitBtn.className = 'w-full bg-rose-600 hover:bg-rose-700 active:scale-[0.99] text-white font-bold py-3.5 rounded-2xl text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer';
+          submitBtn.innerHTML = '<span>+ Save Expense ➔</span>';
+        }
+      } else {
+        quickLogTypeIncomeBtn.className = 'px-3 py-1 rounded-lg bg-white text-emerald-700 shadow-sm transition font-bold';
+        quickLogTypeExpenseBtn.className = 'px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition font-medium';
+        const submitBtn = document.getElementById('confirmQuickLogBtn');
+        if (submitBtn) {
+          submitBtn.className = 'w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white font-bold py-3.5 rounded-2xl text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer';
+          submitBtn.innerHTML = '<span>+ Save Income ➔</span>';
+        }
+      }
+    }
+
+    if (quickLogTypeExpenseBtn) {
+      quickLogTypeExpenseBtn.addEventListener('click', () => {
+        quickLogType = 'expense';
+        syncQuickLogTypeButtons();
+      });
+    }
+    if (quickLogTypeIncomeBtn) {
+      quickLogTypeIncomeBtn.addEventListener('click', () => {
+        quickLogType = 'income';
+        syncQuickLogTypeButtons();
+      });
+    }
+
+    if (quickLogTitle) {
+      quickLogTitle.addEventListener('input', () => {
+        renderPredictiveSuggestions(quickLogTitle, 'quickLogPredictiveChips', (m) => {
+          quickLogTitle.value = m.title;
+          if (quickLogCategory) quickLogCategory.value = m.categoryId;
+          if (quickLogPaymentMode) quickLogPaymentMode.value = m.paymentMode;
+          if (m.type) {
+            quickLogType = m.type;
+            syncQuickLogTypeButtons();
+          }
+          if (quickLogAmount) quickLogAmount.focus();
+        });
+      });
+    }
+
+    if (quickLogModal) {
+      quickLogModal.addEventListener('click', (e) => {
+        if (e.target === quickLogModal) window.closeQuickLogBottomSheet();
+      });
+    }
+
+    if (quickLogForm) {
+      quickLogForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const amt = evaluateAmountMath(quickLogAmount.value);
+        const title = (quickLogTitle.value || 'Quick Item').trim();
+        const categoryId = quickLogCategory.value;
+        const paymentMode = quickLogPaymentMode.value || 'UPI';
+
+        if (isNaN(amt) || amt <= 0) {
+          showToast('Please enter a valid amount');
+          return;
+        }
+
+        const chosenIso = getTodayIso();
+        const displayDate = isoToDisplayDate(chosenIso);
+        const txMonthYear = getTxMonthYear({ isoDate: chosenIso, date: displayDate });
+
+        const reimbCb = document.getElementById('quickLogIsReimbursable');
+        const reimbSrc = document.getElementById('quickLogReimbursableSource');
+        const isReimbursable = quickLogType === 'expense' && reimbCb && reimbCb.checked;
+        const reimbursableSource = reimbSrc ? reimbSrc.value : 'friend';
+
+        transactions.unshift({
+          id: Date.now(),
+          accountId: activeAccount,
+          type: quickLogType,
+          title,
+          amount: amt,
+          categoryId,
+          paymentMode,
+          date: displayDate,
+          isoDate: chosenIso,
+          monthYear: txMonthYear,
+          isReimbursable,
+          reimbursableSource,
+          reimbursementStatus: isReimbursable ? 'pending' : 'none',
+          notes: isReimbursable ? `Quick returnable claim from ${reimbursableSource}.` : ''
+        });
+        if (reimbCb) reimbCb.checked = false;
+
+        saveToLocalStorage();
+        renderDashboard();
+        window.closeQuickLogBottomSheet();
+        showToast(`Logged ${quickLogType === 'income' ? '+' : '-'}${formatCurrency(amt)} "${title}"!`);
+      });
+    }
+
+    
+    // ==========================================
+    // MONTHLY BALANCE CARRYOVER & OPENING BALANCE ENGINE
+    // ==========================================
+    function getNetSavingsForMonth(monthName, accountId) {
+      const inc = transactions
+        .filter(t => (activeAccount === 'both' || t.accountId === accountId) && getTxMonthYear(t) === monthName && t.type === 'income')
+        .reduce((s, t) => s + t.amount, 0);
+
+      const exp = transactions
+        .filter(t => (activeAccount === 'both' || t.accountId === accountId) && getTxMonthYear(t) === monthName && t.type === 'expense' && !(t.isReimbursable && t.reimbursementStatus === 'settled'))
+        .reduce((s, t) => s + t.amount, 0);
+
+      return inc - exp;
+    }
+
+    function getOpeningCarryoverBalance(monthIndex, accountId) {
+      let carryover = 0;
+      for (let i = 0; i < monthIndex; i++) {
+        carryover += getNetSavingsForMonth(availableMonths[i], accountId);
+      }
+      return carryover;
+    }
+
     function renderDashboard() {
       populateCategorySelects();
+      if (typeof renderQuickShortcutChips === 'function') renderQuickShortcutChips();
 
       const totalIncome = getMonthIncome();
       const totalExpenses = getMonthExpenses();
-      const netBalance = totalIncome - totalExpenses;
+      const thisMonthSavings = totalIncome - totalExpenses;
       const syncedOverallBudget = getOverallBudget();
       const totalsByCategory = getCategorySpentMap();
 
-      // Savings rate calculation
-      const savingsRate = totalIncome > 0 ? Math.round((netBalance / totalIncome) * 100) : 0;
+      // Automatic Cumulative Carryover Balance Calculation
+      const openingCarryover = getOpeningCarryoverBalance(currentMonthIndex, activeAccount);
+      const totalCumulativeBalance = openingCarryover + thisMonthSavings;
+
+      // Savings rate calculation for this month
+      const savingsRate = totalIncome > 0 ? Math.round((thisMonthSavings / totalIncome) * 100) : 0;
       const budgetUsedPct = syncedOverallBudget > 0 ? Math.round((totalExpenses / syncedOverallBudget) * 100) : 0;
       const budgetBarWidth = Math.min(budgetUsedPct, 100);
       const budgetRemaining = syncedOverallBudget - totalExpenses;
 
-      // Update Header Cards
-      netBalanceDisplay.textContent = (netBalance >= 0 ? '+' : '-') + formatCurrency(Math.abs(netBalance));
+      // Update Header Master Cards
+      netBalanceDisplay.textContent = (totalCumulativeBalance >= 0 ? '+' : '-') + formatCurrency(Math.abs(totalCumulativeBalance));
+
+      // Update Month Savings & Carryover Subtext
+      const savingsTextEl = document.getElementById('thisMonthSavingsText');
+      const carryoverTextEl = document.getElementById('openingBalanceCarryoverText');
+      const curMonthShort = availableMonths[currentMonthIndex] ? availableMonths[currentMonthIndex].split(' ')[0] : 'This Month';
+
+      if (savingsTextEl) {
+        if (thisMonthSavings > 0) {
+          savingsTextEl.className = 'font-semibold text-emerald-300';
+          savingsTextEl.textContent = `+${formatCurrency(thisMonthSavings)} saved in ${curMonthShort}`;
+        } else if (thisMonthSavings < 0) {
+          savingsTextEl.className = 'font-semibold text-rose-300';
+          savingsTextEl.textContent = `-${formatCurrency(Math.abs(thisMonthSavings))} deficit in ${curMonthShort}`;
+        } else {
+          savingsTextEl.className = 'font-semibold text-indigo-200';
+          savingsTextEl.textContent = `₹0 saved in ${curMonthShort}`;
+        }
+      }
+
+      if (carryoverTextEl) {
+        if (currentMonthIndex > 0 && openingCarryover !== 0) {
+          const prevMonthShort = availableMonths[currentMonthIndex - 1].split(' ')[0];
+          carryoverTextEl.classList.remove('hidden');
+          carryoverTextEl.textContent = `• ${openingCarryover >= 0 ? '+' : '-'}${formatCurrency(Math.abs(openingCarryover))} carryover from ${prevMonthShort}`;
+        } else {
+          carryoverTextEl.classList.add('hidden');
+        }
+      }
       totalIncomeDisplay.textContent = formatCurrency(totalIncome);
       totalSpentDisplay.textContent = formatCurrency(totalExpenses);
       budgetLimitDisplay.textContent = formatCurrency(syncedOverallBudget);
@@ -3173,6 +3964,7 @@
 
       budgetProgressBar.style.width = budgetBarWidth + '%';
       budgetPercentageText.textContent = `${budgetUsedPct}% used`;
+      updateSafeDailyAllowance(totalExpenses, syncedOverallBudget);
       if (budgetRemaining >= 0) {
         remainingBalanceText.textContent = `${formatCurrency(budgetRemaining)} remaining to spend`;
       } else {
@@ -3206,12 +3998,15 @@
         if (activeAccount === 'personal') {
           // Strictly disable/hide office reimbursement details when viewing Personal Account
           pendingReturnsBanner.classList.add('hidden');
+          const aggCard = document.getElementById('aggregatedFriendsSummaryCard');
+          if (aggCard) aggCard.classList.add('hidden');
           const headerPendingBanner = document.getElementById('headerPendingBanner');
           if (headerPendingBanner) headerPendingBanner.classList.add('hidden');
         } else {
           // Filter pending claims for Regular Expense account
           const pendingClaims = transactions.filter((t) => t.accountId === 'regular' && t.type === 'expense' && t.isReimbursable && t.reimbursementStatus === 'pending');
           const pendingTotal = pendingClaims.reduce((sum, t) => sum + t.amount, 0);
+          renderAggregatedFriendsSummary(pendingClaims);
           if (pendingClaims.length > 0) {
             pendingReturnsBanner.classList.remove('hidden');
             pendingReturnsTitle.textContent = `${pendingClaims.length} Pending Return${pendingClaims.length > 1 ? 's' : ''} (Office / Friends)`;
@@ -3434,11 +4229,15 @@
             `;
           }
 
+          const isCompact = ledgerDensity === 'compact';
+          const rowPadding = isCompact ? 'py-1.5 px-3' : 'p-3';
+          const iconSizeClass = isCompact ? 'w-7 h-7 rounded-lg text-xs' : 'w-9 h-9 rounded-xl text-base';
+
           const row = document.createElement('div');
-          row.className = `flex items-center justify-between p-3 bg-white hover:bg-slate-50/60 transition`;
+          row.className = `flex items-center justify-between ${rowPadding} bg-white dark:bg-slate-800 hover:bg-slate-50/60 dark:hover:bg-slate-700/40 transition`;
           row.innerHTML = `
-            <div class="flex items-center gap-2.5 min-w-0">
-              <div class="w-9 h-9 rounded-xl flex items-center justify-center text-base shrink-0 text-white shadow-2xs" style="background-color: ${isSettled ? '#10b981' : cat.color}">
+            <div class="flex items-center gap-2 min-w-0">
+              <div class="${iconSizeClass} flex items-center justify-center shrink-0 text-white shadow-2xs" style="background-color: ${isSettled ? '#10b981' : cat.color}">
                 ${item.isReimbursable ? rMeta.icon : cat.icon}
               </div>
               <div class="min-w-0">
@@ -3790,10 +4589,12 @@
       renderDashboard();
     });
 
-    sortExpenseSelect.addEventListener('change', (e) => {
-      sortBy = e.target.value;
-      renderDashboard();
-    });
+    if (sortExpenseSelect) {
+      sortExpenseSelect.addEventListener('change', (e) => {
+        sortBy = e.target.value;
+        renderDashboard();
+      });
+    }
 
     // Recurring Bills Listeners
     toggleAddBillFormBtn.addEventListener('click', () => {
@@ -4184,7 +4985,7 @@
       }
 
       // Update header subtitle
-      const sub = document.getElementById('headerTabSubtitle');
+      const sub = null;
       if (sub) {
         sub.textContent = activeAccount === 'personal' ? 'Personal Account' : 'Regular Expense';
       }
@@ -4686,7 +5487,10 @@ function showToast(message) {
 
       const totalIncome = txs.filter(t => t.type === 'income').reduce((s, t) => s + t.amount, 0);
       const totalExpense = txs.filter(t => t.type === 'expense' && !(t.isReimbursable && t.reimbursementStatus === 'settled')).reduce((s, t) => s + t.amount, 0);
-      const netBalance = totalIncome - totalExpense;
+      const thisMonthSavings = totalIncome - totalExpense;
+      const openingCarryover = getOpeningCarryoverBalance(currentMonthIndex, activeAccount);
+      const totalCumulativeBalance = openingCarryover + thisMonthSavings;
+      const netBalance = totalCumulativeBalance;
 
       // Group Splits & Returnable Claims
       const groupSplits = txs.filter(t => t.isReimbursable);
@@ -4719,23 +5523,27 @@ function showToast(message) {
             </div>
           </div>
 
-          <!-- KPI Summary Cards -->
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px;">
-            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 10px; text-align: center;">
-              <span style="font-size: 10px; color: #166534; font-weight: 700; text-transform: uppercase;">Total Inflow</span>
-              <div style="font-size: 16px; font-weight: 800; color: #15803d; margin-top: 4px;">${formatCurrency(totalIncome)}</div>
+          <!-- KPI Summary Cards with Opening Balance & Cumulative Balance -->
+          <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 20px;">
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px; text-align: center;">
+              <span style="font-size: 9px; color: #64748b; font-weight: 700; text-transform: uppercase;">Opening Carryover</span>
+              <div style="font-size: 14px; font-weight: 800; color: #334155; margin-top: 4px;">${formatCurrency(openingCarryover)}</div>
             </div>
-            <div style="background: #fff1f2; border: 1px solid #fecdd3; border-radius: 8px; padding: 10px; text-align: center;">
-              <span style="font-size: 10px; color: #9f1239; font-weight: 700; text-transform: uppercase;">Real Living Expenses</span>
-              <div style="font-size: 16px; font-weight: 800; color: #be123c; margin-top: 4px;">${formatCurrency(totalExpense)}</div>
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 8px; text-align: center;">
+              <span style="font-size: 9px; color: #166534; font-weight: 700; text-transform: uppercase;">Total Inflow</span>
+              <div style="font-size: 14px; font-weight: 800; color: #15803d; margin-top: 4px;">${formatCurrency(totalIncome)}</div>
             </div>
-            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; text-align: center;">
-              <span style="font-size: 10px; color: #334155; font-weight: 700; text-transform: uppercase;">Net Balance</span>
-              <div style="font-size: 16px; font-weight: 800; color: ${netBalance >= 0 ? '#1e293b' : '#dc2626'}; margin-top: 4px;">${formatCurrency(netBalance)}</div>
+            <div style="background: #fff1f2; border: 1px solid #fecdd3; border-radius: 8px; padding: 8px; text-align: center;">
+              <span style="font-size: 9px; color: #9f1239; font-weight: 700; text-transform: uppercase;">Actual Expenses</span>
+              <div style="font-size: 14px; font-weight: 800; color: #be123c; margin-top: 4px;">${formatCurrency(totalExpense)}</div>
             </div>
-            <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 10px; text-align: center;">
-              <span style="font-size: 10px; color: #92400e; font-weight: 700; text-transform: uppercase;">Pending Returns</span>
-              <div style="font-size: 16px; font-weight: 800; color: #b45309; margin-top: 4px;">${formatCurrency(pendingSplitsTotal)}</div>
+            <div style="background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 8px; padding: 8px; text-align: center;">
+              <span style="font-size: 9px; color: #3730a3; font-weight: 700; text-transform: uppercase;">Total Balance</span>
+              <div style="font-size: 14px; font-weight: 800; color: #4338ca; margin-top: 4px;">${formatCurrency(totalCumulativeBalance)}</div>
+            </div>
+            <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 8px; text-align: center;">
+              <span style="font-size: 9px; color: #92400e; font-weight: 700; text-transform: uppercase;">Pending Returns</span>
+              <div style="font-size: 14px; font-weight: 800; color: #b45309; margin-top: 4px;">${formatCurrency(pendingSplitsTotal)}</div>
             </div>
           </div>
       `;
@@ -4974,12 +5782,16 @@ function showToast(message) {
 
 
 
+    // Initialize theme and ledger density
+    applyTheme(currentTheme);
+    syncLedgerDensityButton();
+
     // Load saved data and deployed protection state from localStorage on app launch
     loadFromLocalStorage();
 
     currentMonthYearBadge.textContent = availableMonths[currentMonthIndex];
 
-// Initial render
+    // Initial render
     renderDashboard();
   </script>
   <!-- PRINT-READY MONTHLY STATEMENT CONTAINER -->
