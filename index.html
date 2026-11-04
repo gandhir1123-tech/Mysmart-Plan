@@ -1253,7 +1253,7 @@
 
             <!-- Description / Title with Predictive Chips -->
             <div>
-              <label for="quickLogTitle" class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">
+              <label id="quickLogTitleLabel" for="quickLogTitle" class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">
                 Description <span class="text-rose-500">*</span>
               </label>
               <input
@@ -1269,7 +1269,7 @@
             </div>
 
             <!-- Returnable / Reimbursement Option in Quick Logger -->
-            <div class="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60 space-y-1.5">
+            <div id="quickLogReimbursementContainer" class="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60 space-y-1.5">
               <div class="flex items-center justify-between">
                 <label class="flex items-center gap-2 cursor-pointer text-xs font-semibold text-amber-900 dark:text-amber-200">
                   <input id="quickLogIsReimbursable" type="checkbox" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer" />
@@ -1286,7 +1286,7 @@
             <!-- Category & Payment Mode -->
             <div class="grid grid-cols-2 gap-2.5">
               <div>
-                <label for="quickLogCategory" class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Category</label>
+                <label id="quickLogCategoryLabel" for="quickLogCategory" class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Category</label>
                 <select id="quickLogCategory" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-medium text-slate-800 dark:text-white bg-white dark:bg-slate-800 outline-hidden focus:border-indigo-500">
                   <!-- Populated by JS -->
                 </select>
@@ -3721,17 +3721,6 @@
       quickLogType = 'expense';
       syncQuickLogTypeButtons();
 
-      // Populate Category select
-      if (quickLogCategory) {
-        quickLogCategory.innerHTML = '';
-        getActiveCategories().forEach((cat) => {
-          const opt = document.createElement('option');
-          opt.value = cat.id;
-          opt.textContent = `${cat.icon} ${cat.name}`;
-          quickLogCategory.appendChild(opt);
-        });
-      }
-
       if (quickLogAmount) quickLogAmount.value = '';
       if (quickLogTitle) quickLogTitle.value = '';
       const qReimb = document.getElementById('quickLogIsReimbursable');
@@ -3773,20 +3762,64 @@
       quickLogAmount.value = cur + amt;
     };
 
+    function populateQuickLogCategories() {
+      if (!quickLogCategory) return;
+      quickLogCategory.innerHTML = '';
+      if (quickLogType === 'expense') {
+        getActiveCategories().forEach((cat) => {
+          const opt = document.createElement('option');
+          opt.value = cat.id;
+          opt.textContent = `${cat.icon} ${cat.name}`;
+          quickLogCategory.appendChild(opt);
+        });
+      } else {
+        incomeSources.forEach((inc) => {
+          const opt = document.createElement('option');
+          opt.value = inc.id;
+          opt.textContent = `${inc.icon} ${inc.name}`;
+          quickLogCategory.appendChild(opt);
+        });
+      }
+    }
+
+    function updateQuickLogReimbursementVisibility() {
+      const container = document.getElementById('quickLogReimbursementContainer');
+      const isPersonal = activeAccount === 'personal';
+      if (!container) return;
+      if (quickLogType === 'expense' && !isPersonal) {
+        container.classList.remove('hidden');
+      } else {
+        container.classList.add('hidden');
+        const cb = document.getElementById('quickLogIsReimbursable');
+        if (cb) cb.checked = false;
+      }
+    }
+
     function syncQuickLogTypeButtons() {
       if (!quickLogTypeExpenseBtn || !quickLogTypeIncomeBtn) return;
+      populateQuickLogCategories();
+      updateQuickLogReimbursementVisibility();
+
+      const submitBtn = document.getElementById('confirmQuickLogBtn');
+      const titleLabel = document.getElementById('quickLogTitleLabel');
+      const catLabel = document.getElementById('quickLogCategoryLabel');
+
       if (quickLogType === 'expense') {
-        quickLogTypeExpenseBtn.className = 'px-3 py-1 rounded-lg bg-white text-rose-700 shadow-sm transition font-bold';
-        quickLogTypeIncomeBtn.className = 'px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition font-medium';
-        const submitBtn = document.getElementById('confirmQuickLogBtn');
+        quickLogTypeExpenseBtn.className = 'px-3 py-1 rounded-lg bg-white dark:bg-slate-900 text-rose-700 shadow-sm transition font-bold';
+        quickLogTypeIncomeBtn.className = 'px-3 py-1 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 transition font-medium';
+        if (titleLabel) titleLabel.textContent = 'Expense Description';
+        if (catLabel) catLabel.textContent = 'Expense Category';
+        if (quickLogTitle) quickLogTitle.placeholder = 'e.g. Chai, Auto, Grocery, Swiggy';
         if (submitBtn) {
           submitBtn.className = 'w-full bg-rose-600 hover:bg-rose-700 active:scale-[0.99] text-white font-bold py-3.5 rounded-2xl text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer';
           submitBtn.innerHTML = '<span>+ Save Expense ➔</span>';
         }
       } else {
-        quickLogTypeIncomeBtn.className = 'px-3 py-1 rounded-lg bg-white text-emerald-700 shadow-sm transition font-bold';
-        quickLogTypeExpenseBtn.className = 'px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition font-medium';
-        const submitBtn = document.getElementById('confirmQuickLogBtn');
+        quickLogTypeIncomeBtn.className = 'px-3 py-1 rounded-lg bg-white dark:bg-slate-900 text-emerald-700 shadow-sm transition font-bold';
+        quickLogTypeExpenseBtn.className = 'px-3 py-1 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 transition font-medium';
+        if (titleLabel) titleLabel.textContent = 'Income Source / Title';
+        if (catLabel) catLabel.textContent = 'Income Category';
+        if (quickLogTitle) quickLogTitle.placeholder = 'e.g. Salary Credit, Consulting, Dividend';
         if (submitBtn) {
           submitBtn.className = 'w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white font-bold py-3.5 rounded-2xl text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-1.5 cursor-pointer';
           submitBtn.innerHTML = '<span>+ Save Income ➔</span>';
