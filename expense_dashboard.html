@@ -4063,7 +4063,8 @@
       const container = document.getElementById('safeDailyAllowanceBox');
       if (!container) return;
 
-      if (budget <= 0) {
+      // Personal Account is for wealth & investments; Safe Daily Spend is only for Regular Expenses
+      if (activeAccount === 'personal' || budget <= 0) {
         container.classList.add('hidden');
         return;
       }
@@ -6418,6 +6419,14 @@ function showToast(message) {
     function updateHabitInsightsAndMoM(curSpent, curIncome) {
       const section = document.getElementById('habitInsightsSection');
       if (!section) return;
+
+      // Habit insights & micro-spends are exclusive to Regular Expense daily routines
+      if (activeAccount === 'personal') {
+        section.classList.add('hidden');
+        return;
+      }
+
+      section.classList.remove('hidden');
 
       const curMonthName = availableMonths[currentMonthIndex];
       const isPersonal = (activeAccount === 'personal');
