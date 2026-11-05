@@ -454,8 +454,6 @@
           </div>
 
           
-          <!-- Monthly Accounts Summary Card: Equation Breakdown -->
-          
 
           <!-- Expense Category Breakdown Snapshot -->
           <section class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm">
@@ -488,6 +486,121 @@
               <button id="jumpToCategoriesBtn" type="button" class="text-indigo-600 font-semibold hover:underline">
                 Customize Budgets →
               </button>
+            </div>
+          </section>
+
+          <!-- PHASE 3: Smart Habit Insights & Month-over-Month Trends Drawer -->
+          <section id="habitInsightsSection" class="bg-white dark:bg-slate-900 rounded-2xl p-3.5 sm:p-4 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-3">
+            <button
+              type="button"
+              id="toggleHabitInsightsBtn"
+              onclick="window.toggleHabitInsightsDrawer && window.toggleHabitInsightsDrawer()"
+              class="w-full flex items-center justify-between text-left cursor-pointer transition group"
+            >
+              <div class="flex items-center gap-2.5 min-w-0">
+                <span class="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 text-white flex items-center justify-center text-sm font-bold shrink-0 shadow-xs group-hover:scale-105 transition">💡</span>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-100">
+                      Habit Insights & Trends
+                    </h2>
+                    <span id="habitInsightSummaryBadge" class="text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                      Phase 3
+                    </span>
+                  </div>
+                  <p id="habitInsightSubtitle" class="text-[10px] text-slate-400 truncate">
+                    Micro-spends, weekend habits & MoM comparison
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center gap-1 shrink-0 ml-1">
+                <span id="habitDrawerArrow" class="text-xs font-bold text-slate-400 group-hover:text-indigo-600 transition-transform">▼</span>
+              </div>
+            </button>
+
+            <!-- Expandable Insights Body -->
+            <div id="habitInsightsDrawerBody" class="hidden pt-2 border-t border-slate-100 dark:border-slate-800 space-y-3 text-xs">
+              
+              <!-- 1. Money Leakage & Routine Habit Cards (2-Grid) -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                
+                <!-- Micro-Spend Tracker Card -->
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-1.5">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                      <span>☕</span>
+                      <span>Micro-Spend Leakage</span>
+                    </span>
+                    <span id="microSpendCountBadge" class="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300">
+                      0 payments
+                    </span>
+                  </div>
+                  <div class="flex items-baseline gap-1.5">
+                    <span id="microSpendTotalDisplay" class="text-base font-extrabold text-slate-800 dark:text-slate-100">₹0</span>
+                    <span id="microSpendAvgDisplay" class="text-[10px] text-slate-400">(₹0 / day)</span>
+                  </div>
+                  <p id="microSpendDescText" class="text-[10px] text-slate-500 dark:text-slate-400 leading-tight">
+                    Small routine spends under ₹150 (chai, auto, snacks) across active days.
+                  </p>
+                </div>
+
+                <!-- Weekend vs Weekday Pattern Card -->
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-1.5">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                      <span>🗓️</span>
+                      <span>Weekend vs Weekday</span>
+                    </span>
+                    <span id="weekendShareBadge" class="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">
+                      0% Weekend
+                    </span>
+                  </div>
+                  <div class="flex items-baseline gap-1.5">
+                    <span id="weekendTotalDisplay" class="text-base font-extrabold text-slate-800 dark:text-slate-100">₹0</span>
+                    <span id="weekdayTotalDisplay" class="text-[10px] text-slate-400">(vs ₹0 weekdays)</span>
+                  </div>
+                  <p id="weekendDescText" class="text-[10px] text-slate-500 dark:text-slate-400 leading-tight">
+                    Track discretionary spikes and leisure spending on Sat & Sun.
+                  </p>
+                </div>
+
+              </div>
+
+              <!-- Top Payee / Merchant Highlight Strip -->
+              <div id="topPayeeInsightStrip" class="p-2.5 rounded-xl bg-indigo-50/60 dark:bg-slate-800/80 border border-indigo-100 dark:border-slate-700 flex items-center justify-between gap-2 text-xs">
+                <div class="flex items-center gap-2 min-w-0">
+                  <span class="text-base shrink-0">👑</span>
+                  <div class="min-w-0">
+                    <span class="text-[10px] text-slate-500 dark:text-slate-400 block">Top Payee This Month:</span>
+                    <span id="topPayeeName" class="font-bold text-slate-800 dark:text-slate-100 truncate block">No transactions yet</span>
+                  </div>
+                </div>
+                <div class="text-right shrink-0">
+                  <span id="topPayeeAmount" class="font-extrabold text-indigo-700 dark:text-indigo-300 block">₹0</span>
+                  <span id="topPayeeCount" class="text-[9px] text-slate-400 block">0 visits</span>
+                </div>
+              </div>
+
+              <!-- 2. Month-over-Month Trend Intelligence (e.g. Nov vs. Oct) -->
+              <div class="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-xs">📊</span>
+                    <span id="momComparisonHeading" class="text-xs font-bold text-slate-700 dark:text-slate-200">
+                      Nov vs. Oct Comparison
+                    </span>
+                  </div>
+                  <span id="momNetChangeBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                    ₹0 net change
+                  </span>
+                </div>
+
+                <!-- MoM Category Shift List -->
+                <div id="momCategoryShiftList" class="space-y-1.5 pt-1">
+                  <!-- Populated dynamically by JS -->
+                </div>
+              </div>
+
             </div>
           </section>
 
@@ -711,6 +824,29 @@
            VIEW 2: TRANSACTIONS / EXPENSES (INCOME & EXPENSES LOG)
            ========================================== -->
       <div id="view-expenses" class="hidden space-y-4">
+        <!-- Quick Bank SMS & UPI Smart Parser Banner -->
+        <div class="p-3 rounded-2xl bg-gradient-to-r from-indigo-500/10 via-emerald-500/10 to-cyan-500/10 dark:from-indigo-950/40 dark:via-emerald-950/30 dark:to-cyan-950/30 border border-indigo-200/80 dark:border-indigo-800/60 flex items-center justify-between gap-3 shadow-2xs">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-500 text-white flex items-center justify-center text-lg shrink-0 shadow-xs">
+              ⚡
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
+                <span>SMS & UPI Smart Logger</span>
+                <span class="text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded-md bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300">Fast Entry</span>
+              </div>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400 truncate">Auto-extract amount, merchant & category in 2s</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onclick="window.openSmsParserModal && window.openSmsParserModal()"
+            class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold text-xs shadow-sm flex items-center gap-1 shrink-0 transition cursor-pointer"
+          >
+            <span>📋 Paste SMS</span>
+          </button>
+        </div>
+
         
         <!-- User-Friendly Transaction Logger: Toggle between Expense and Income -->
         <section class="bg-slate-50 rounded-2xl p-4 border border-slate-200/80 space-y-3">
@@ -1128,11 +1264,11 @@
               <input
                 id="catEditBudgetInput"
                 type="number"
-                min="100"
-                step="100"
+                min="0"
+                step="any"
                 required
-                placeholder="e.g., 8000"
-                class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="e.g., 350 or 8000"
+                class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-semibold text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
 
@@ -1346,6 +1482,215 @@
 
 
     <!-- IN-PAGE TOAST NOTIFICATION -->
+        <!-- SMS & UPI CLIPBOARD QUICK-PARSER MODAL -->
+    <div id="smsParseModal" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-50 flex items-center justify-center p-3 sm:p-4 transition-all overflow-y-auto">
+      <div class="w-full max-w-sm sm:max-w-md bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col max-h-[88dvh] overflow-hidden my-auto">
+        
+        <!-- Modal Header -->
+        <div class="px-5 py-3.5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between shrink-0 bg-white dark:bg-slate-900">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-white flex items-center justify-center text-sm font-bold shadow-xs">⚡</span>
+            <div>
+              <div class="flex items-center gap-1.5">
+                <h3 class="text-sm font-bold text-slate-800 dark:text-slate-100">SMS & UPI Quick-Parser</h3>
+                <span class="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">Auto-Detect</span>
+              </div>
+              <p class="text-[10px] text-slate-400">Copy any bank SMS / UPI text & paste here</p>
+            </div>
+          </div>
+          <button type="button" onclick="window.closeSmsParserModal && window.closeSmsParserModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-sm font-bold p-1 rounded-lg cursor-pointer">✕</button>
+        </div>
+
+        <!-- Scrollable Body -->
+        <div class="flex-1 overflow-y-auto px-5 py-3.5 space-y-3.5 overscroll-contain">
+          
+          <!-- Quick 1-Tap Sample Test Chips -->
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Try Sample SMS</span>
+              <span class="text-[10px] text-slate-400">Tap to test</span>
+            </div>
+            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
+              <button type="button" onclick="window.loadSmsSample('swiggy')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-[10px] font-bold text-slate-700 dark:text-slate-200 shrink-0 border border-slate-200/60 dark:border-slate-700 transition cursor-pointer">🍔 Swiggy (₹340)</button>
+              <button type="button" onclick="window.loadSmsSample('uber')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-[10px] font-bold text-slate-700 dark:text-slate-200 shrink-0 border border-slate-200/60 dark:border-slate-700 transition cursor-pointer">🚖 Uber (₹210)</button>
+              <button type="button" onclick="window.loadSmsSample('zepto')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-[10px] font-bold text-slate-700 dark:text-slate-200 shrink-0 border border-slate-200/60 dark:border-slate-700 transition cursor-pointer">🥦 Zepto (₹540)</button>
+              <button type="button" onclick="window.loadSmsSample('salary')" class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 hover:bg-emerald-100 text-[10px] font-bold text-emerald-700 dark:text-emerald-300 shrink-0 border border-emerald-200 dark:border-emerald-800 transition cursor-pointer">💼 Salary (₹75k)</button>
+              <button type="button" onclick="window.loadSmsSample('chai')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-[10px] font-bold text-slate-700 dark:text-slate-200 shrink-0 border border-slate-200/60 dark:border-slate-700 transition cursor-pointer">☕ Chai UPI (₹40)</button>
+              <button type="button" onclick="window.loadSmsSample('sbi_tailor')" class="px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 hover:bg-indigo-100 text-[10px] font-bold text-indigo-700 dark:text-indigo-300 shrink-0 border border-indigo-200 dark:border-indigo-800 transition cursor-pointer">✂️ Tailor (₹1,050)</button>
+              <button type="button" onclick="window.loadSmsSample('electricity')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-[10px] font-bold text-slate-700 dark:text-slate-200 shrink-0 border border-slate-200/60 dark:border-slate-700 transition cursor-pointer">⚡ Power (₹1.2k)</button>
+            </div>
+          </div>
+
+          <!-- SMS Text Input Box with Paste Button -->
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label for="smsRawInput" class="text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+                Paste SMS / UPI Text
+              </label>
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  id="smsPasteClipboardBtn"
+                  onclick="window.pasteFromClipboard && window.pasteFromClipboard()"
+                  class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 px-2 py-0.5 rounded-md border border-indigo-200 dark:border-indigo-800 transition cursor-pointer flex items-center gap-1"
+                >
+                  <span>📋 Paste</span>
+                </button>
+                <button
+                  type="button"
+                  onclick="window.clearSmsInput && window.clearSmsInput()"
+                  class="text-[10px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+            <textarea
+              id="smsRawInput"
+              rows="3"
+              placeholder="e.g. Rs. 340.00 debited from A/c XX1234 on 05-Nov-26 to VPA swiggy@icici UPI Ref 4310291029..."
+              class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-800 text-xs font-mono text-slate-800 dark:text-white outline-hidden focus:border-indigo-500 transition resize-none"
+            ></textarea>
+          </div>
+
+          <!-- Parsed Extraction Live Result Card -->
+          <div id="smsParsedCard" class="hidden p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-200/60 dark:border-slate-700/60 pb-2">
+              <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                <span>🎯</span>
+                <span>Detected Transaction</span>
+              </span>
+              <div id="smsDetectedTypeBadge" class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
+                − Expense
+              </div>
+            </div>
+
+            <!-- Amount & Merchant Row -->
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[10px] font-medium text-slate-500 dark:text-slate-400 mb-0.5">Amount (₹)</label>
+                <div class="relative">
+                  <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">₹</span>
+                  <input
+                    id="smsParsedAmount"
+                    type="number"
+                    step="any"
+                    class="w-full pl-6 pr-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm font-extrabold text-slate-800 dark:text-white outline-hidden focus:ring-1 focus:ring-indigo-500"
+                  />
+                </div>
+              </div>
+              <div>
+                <label class="block text-[10px] font-medium text-slate-500 dark:text-slate-400 mb-0.5">Merchant / Payee</label>
+                <input
+                  id="smsParsedMerchant"
+                  type="text"
+                  class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs font-semibold text-slate-800 dark:text-white outline-hidden focus:ring-1 focus:ring-indigo-500"
+                />
+              </div>
+            </div>
+
+            <!-- 1-Tap Smart Purpose Micro-Chips -->
+            <div id="smsPurposeChipsWrap" class="space-y-1 pt-0.5">
+              <div class="flex items-center justify-between text-[10px]">
+                <span class="text-slate-500 dark:text-slate-400 font-medium">1-Tap Purpose:</span>
+                <span id="smsTimeHintText" class="text-indigo-600 dark:text-indigo-400 font-semibold text-[9px]">💡 Suggested for current time</span>
+              </div>
+              <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
+                <button type="button" onclick="window.applySmsPurposeTag('☕ Chai', 'cat-other')" class="sms-purpose-chip px-2 py-1 rounded-lg bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-indigo-950/70 text-[10px] font-bold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shrink-0 shadow-2xs transition cursor-pointer">☕ Chai</button>
+                <button type="button" onclick="window.applySmsPurposeTag('🍽️ Tiffin', 'cat-other')" class="sms-purpose-chip px-2 py-1 rounded-lg bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-indigo-950/70 text-[10px] font-bold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shrink-0 shadow-2xs transition cursor-pointer">🍽️ Tiffin</button>
+                <button type="button" onclick="window.applySmsPurposeTag('🍛 Lunch', 'cat-other')" class="sms-purpose-chip px-2 py-1 rounded-lg bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-indigo-950/70 text-[10px] font-bold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shrink-0 shadow-2xs transition cursor-pointer">🍛 Lunch</button>
+                <button type="button" onclick="window.applySmsPurposeTag('🚕 Auto/Cab', 'cat-trans')" class="sms-purpose-chip px-2 py-1 rounded-lg bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-indigo-950/70 text-[10px] font-bold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shrink-0 shadow-2xs transition cursor-pointer">🚕 Auto/Cab</button>
+                <button type="button" onclick="window.applySmsPurposeTag('🥦 Kirana', 'cat-groc')" class="sms-purpose-chip px-2 py-1 rounded-lg bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-indigo-950/70 text-[10px] font-bold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shrink-0 shadow-2xs transition cursor-pointer">🥦 Kirana</button>
+              </div>
+            </div>
+
+            <!-- Category & Payment Mode Row -->
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[10px] font-medium text-slate-500 dark:text-slate-400 mb-0.5">Auto-Mapped Category</label>
+                <select
+                  id="smsParsedCategory"
+                  class="w-full px-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs font-medium text-slate-800 dark:text-white outline-hidden focus:ring-1 focus:ring-indigo-500 cursor-pointer"
+                >
+                  <!-- Populated dynamically -->
+                </select>
+              </div>
+              <div>
+                <label class="block text-[10px] font-medium text-slate-500 dark:text-slate-400 mb-0.5">Payment Mode</label>
+                <select
+                  id="smsParsedMode"
+                  class="w-full px-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs font-medium text-slate-800 dark:text-white outline-hidden focus:ring-1 focus:ring-indigo-500 cursor-pointer"
+                >
+                  <option value="UPI">UPI (GPay/PhonePe/Paytm)</option>
+                  <option value="Card">Debit / Credit Card</option>
+                  <option value="NetBanking">NetBanking / NEFT</option>
+                  <option value="Cash">Cash</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Account Destination Row -->
+            <div class="flex items-center justify-between text-[11px] pt-1 border-t border-slate-200/50 dark:border-slate-700/50">
+              <span class="text-slate-500 dark:text-slate-400">Save to Account:</span>
+              <span id="smsParsedAccountBadge" class="font-bold text-indigo-700 dark:text-cyan-300 bg-indigo-50 dark:bg-slate-900 px-2 py-0.5 rounded-md border border-indigo-200/60 dark:border-slate-700">
+                💳 Regular Expense
+              </span>
+            </div>
+
+            <!-- Returnable / Reimbursement Claim Option in SMS Parser -->
+            <div id="smsReimbursableContainer" class="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60 space-y-2">
+              <div class="flex items-center justify-between">
+                <label class="flex items-center gap-2 cursor-pointer text-xs font-semibold text-amber-900 dark:text-amber-200">
+                  <input id="smsIsReimbursable" type="checkbox" onchange="window.toggleSmsReimbursableSource && window.toggleSmsReimbursableSource()" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer" />
+                  <span>🔄 Returnable / Claim Pending</span>
+                </label>
+                <span class="text-[10px] text-amber-700 dark:text-amber-400 font-medium">Excluded from budget</span>
+              </div>
+              <div id="smsReimbursableSourceWrap" class="hidden flex items-center justify-between gap-2 pt-1.5 border-t border-amber-200/60 dark:border-amber-800/50">
+                <span class="text-[10px] font-medium text-amber-800 dark:text-amber-300">Claim From:</span>
+                <select id="smsReimbursableSource" class="text-xs font-semibold px-2 py-1 rounded-lg border border-amber-300 dark:border-amber-700 bg-white dark:bg-slate-900 text-amber-900 dark:text-amber-200 outline-hidden cursor-pointer">
+                  <option value="office">🏢 Office Reimbursement</option>
+                  <option value="friend">👥 Friend / Group</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Empty prompt placeholder -->
+          <div id="smsEmptyPrompt" class="text-center py-6 text-slate-400 dark:text-slate-500 text-xs">
+            <span class="text-2xl block mb-1">📩</span>
+            Paste any bank SMS or tap a sample above to preview detected details
+          </div>
+
+        </div>
+
+        <!-- Sticky Modal Footer -->
+        <div class="px-5 py-3 border-t border-slate-100 dark:border-slate-800 shrink-0 bg-white dark:bg-slate-900 flex items-center gap-2">
+          <button
+            type="button"
+            id="smsSaveDirectBtn"
+            onclick="window.confirmAndSaveParsedSms && window.confirmAndSaveParsedSms()"
+            class="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 active:scale-[0.99] text-white font-bold py-2.5 rounded-xl text-xs transition shadow-sm flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled
+          >
+            <span>⚡ Confirm & Log Immediately</span>
+          </button>
+          <button
+            type="button"
+            id="smsOpenFullLoggerBtn"
+            onclick="window.openParsedInFullForm && window.openParsedInFullForm()"
+            class="px-3 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl text-xs transition cursor-pointer disabled:opacity-50"
+            disabled
+            title="Edit in full logger"
+          >
+            <span>✏️ Full Edit</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+
         <!-- SPLIT BILL & GROUP EXPENSE CALCULATOR MODAL -->
         <!-- QUICK LOG 1-TAP MODAL (Centered, Keyboard-Friendly) -->
     <div id="quickLogModal" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-50 flex items-center justify-center p-3 sm:p-4 transition-all overflow-y-auto">
@@ -1366,19 +1711,40 @@
         <form id="quickLogForm" class="flex flex-col flex-1 min-h-0 overflow-hidden">
           <div class="flex-1 overflow-y-auto px-5 py-3.5 space-y-3 overscroll-contain">
             
+            <!-- Fast Clipboard / SMS Smart Entry Banner -->
+            <button
+              type="button"
+              onclick="window.closeQuickLogBottomSheet && window.closeQuickLogBottomSheet(); window.openSmsParserModal && window.openSmsParserModal();"
+              class="w-full p-2.5 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-indigo-500/10 dark:from-emerald-950/40 dark:via-teal-950/30 dark:to-indigo-950/30 border border-emerald-200/80 dark:border-emerald-800/60 flex items-center justify-between text-left hover:border-emerald-400 dark:hover:border-emerald-700 transition group cursor-pointer"
+            >
+              <div class="flex items-center gap-2.5 min-w-0">
+                <span class="w-7 h-7 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-sm font-bold shrink-0 shadow-xs group-hover:scale-105 transition">📋</span>
+                <div class="min-w-0">
+                  <div class="text-xs font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1">
+                    <span>Paste Bank SMS / UPI</span>
+                    <span class="text-[9px] font-extrabold uppercase px-1 py-0.2 rounded-md bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300">Auto-Detect</span>
+                  </div>
+                  <p class="text-[10px] text-slate-500 dark:text-slate-400 truncate">Detect amount, payee & category in 1 tap</p>
+                </div>
+              </div>
+              <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 group-hover:translate-x-0.5 transition shrink-0 ml-1">➔</span>
+            </button>
+
             <!-- Type Toggle & Split Bill Shortcut -->
             <div class="flex items-center justify-between">
               <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl text-xs font-semibold">
                 <button id="quickLogTypeExpenseBtn" type="button" class="px-3 py-1 rounded-lg bg-white dark:bg-slate-900 text-rose-700 shadow-sm transition">− Expense</button>
                 <button id="quickLogTypeIncomeBtn" type="button" class="px-3 py-1 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 transition">+ Income</button>
               </div>
-              <button
-                type="button"
-                onclick="window.closeQuickLogBottomSheet && window.closeQuickLogBottomSheet(); window.openSplitBillModal && window.openSplitBillModal();"
-                class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-2.5 py-1 rounded-lg border border-indigo-200 dark:border-indigo-800 flex items-center gap-1 hover:bg-indigo-100 transition cursor-pointer"
-              >
-                <span>👥 Split Bill</span>
-              </button>
+              <div class="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onclick="window.closeQuickLogBottomSheet && window.closeQuickLogBottomSheet(); window.openSplitBillModal && window.openSplitBillModal();"
+                  class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-2 py-1 rounded-lg border border-indigo-200 dark:border-indigo-800 flex items-center gap-1 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition cursor-pointer"
+                >
+                  <span>👥 Split</span>
+                </button>
+              </div>
             </div>
 
             <!-- Amount Input -->
@@ -3707,19 +4073,82 @@
 
       container.classList.remove('hidden');
 
+      const selMonthStr = (availableMonths && availableMonths[currentMonthIndex]) ? availableMonths[currentMonthIndex] : '';
+      const [selShort, selYearStr] = selMonthStr.split(' ');
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const selMonthNum = monthNames.indexOf(selShort);
+      const selYear = parseInt(selYearStr, 10);
+
       const now = new Date();
-      const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-      const currentDay = now.getDate();
-      const remainingDays = Math.max(1, daysInMonth - currentDay + 1);
+      const nowYear = now.getFullYear();
+      const nowMonthNum = now.getMonth();
+      const nowDate = now.getDate();
+
+      const isCurrentActiveMonth = (selYear === nowYear && selMonthNum === nowMonthNum);
+      const isPastMonth = (selYear < nowYear) || (selYear === nowYear && selMonthNum < nowMonthNum);
+      const isFutureMonth = (selYear > nowYear) || (selYear === nowYear && selMonthNum > nowMonthNum);
+
+      const daysInMonth = (selYear && selMonthNum >= 0) ? new Date(selYear, selMonthNum + 1, 0).getDate() : 30;
+
+      let currentDay = nowDate;
+      let elapsedDays = 1;
+      let remainingDays = daysInMonth;
+
+      if (isCurrentActiveMonth) {
+        currentDay = nowDate;
+        elapsedDays = Math.max(1, currentDay);
+        remainingDays = Math.max(1, daysInMonth - currentDay + 1);
+      } else if (isPastMonth) {
+        currentDay = daysInMonth;
+        elapsedDays = daysInMonth;
+        remainingDays = 0;
+      } else if (isFutureMonth) {
+        currentDay = 1;
+        elapsedDays = 0;
+        remainingDays = daysInMonth;
+      }
 
       const remainingBudget = Math.max(0, budget - spent);
-      const safeDaily = Math.round(remainingBudget / remainingDays);
+      const safeDaily = remainingDays > 0 ? Math.round(remainingBudget / remainingDays) : 0;
+      const dailyBurnRate = elapsedDays > 0 ? (spent / elapsedDays) : 0;
+      const projectedMonthEnd = isPastMonth ? spent : Math.round(dailyBurnRate * daysInMonth);
+      const exhaustionDay = (dailyBurnRate > 0 && budget > 0) ? (budget / dailyBurnRate) : daysInMonth;
 
-      if (spent >= budget) {
+      if (isPastMonth) {
         container.innerHTML = `
-          <div class="flex items-center gap-1.5 text-rose-300 font-semibold text-[11px] bg-rose-950/40 p-2 rounded-xl border border-rose-500/30">
-            <span>🚨</span>
-            <span>Monthly Budget Exceeded by ${formatCurrency(spent - budget)}. No remaining daily allowance.</span>
+          <div class="flex items-center justify-between w-full text-[11px] bg-slate-900/60 px-3 py-1.5 rounded-xl border border-white/10">
+            <span class="flex items-center gap-1.5 text-slate-300 font-medium">
+              <span>🏁</span>
+              <span>Month Complete:</span>
+            </span>
+            <span class="font-bold ${spent <= budget ? 'text-emerald-300' : 'text-rose-300'}">
+              ${formatCurrency(spent)} spent (${spent <= budget ? '+' + formatCurrency(budget - spent) + ' saved' : formatCurrency(spent - budget) + ' over'})
+            </span>
+          </div>
+        `;
+      } else if (spent >= budget) {
+        container.innerHTML = `
+          <div class="flex items-center justify-between w-full text-[11px] bg-rose-950/60 px-3 py-1.5 rounded-xl border border-rose-500/40">
+            <span class="flex items-center gap-1.5 text-rose-200 font-medium">
+              <span>🚨</span>
+              <span>Budget Exhausted:</span>
+            </span>
+            <span class="font-bold text-rose-300">
+              Over by ${formatCurrency(spent - budget)} • ${remainingDays}d left
+            </span>
+          </div>
+        `;
+      } else if (exhaustionDay < daysInMonth && spent > 0) {
+        const runOutDay = Math.min(daysInMonth, Math.max(1, Math.round(exhaustionDay)));
+        container.innerHTML = `
+          <div class="flex items-center justify-between w-full text-[11px] bg-amber-950/60 px-3 py-1.5 rounded-xl border border-amber-500/40">
+            <span class="flex items-center gap-1.5 text-amber-200 font-medium">
+              <span>⚠️</span>
+              <span>Fast Burn Rate:</span>
+            </span>
+            <span class="font-bold text-amber-300">
+              Runs out Day ${runOutDay} • Safe: ${formatCurrency(safeDaily)}/d
+            </span>
           </div>
         `;
       } else {
@@ -3730,7 +4159,7 @@
               <span>Safe Daily Spend:</span>
             </span>
             <span class="font-bold text-emerald-300">
-              ${formatCurrency(safeDaily)} / day <span class="text-[9px] font-normal text-indigo-200">(${remainingDays} days left)</span>
+              ${formatCurrency(safeDaily)} / day <span class="text-[9px] font-normal text-indigo-200">(${remainingDays}d left • On track)</span>
             </span>
           </div>
         `;
@@ -4153,6 +4582,7 @@
       budgetProgressBar.style.width = budgetBarWidth + '%';
       budgetPercentageText.textContent = `${budgetUsedPct}% used`;
       updateSafeDailyAllowance(totalExpenses, syncedOverallBudget);
+      updateHabitInsightsAndMoM(totalExpenses, totalIncome);
       if (budgetRemaining >= 0) {
         remainingBalanceText.textContent = `${formatCurrency(budgetRemaining)} remaining to spend`;
       } else {
@@ -4921,7 +5351,7 @@
       const name = catEditNameInput.value.trim();
       const budget = parseFloat(catEditBudgetInput.value);
 
-      if (!name || isNaN(budget) || budget <= 0) return;
+      if (!name || isNaN(budget) || budget < 0) return;
 
       if (editingCategoryId === 'new') {
         const catAccount = activeAccount === 'both' ? 'regular' : activeAccount;
@@ -5968,6 +6398,863 @@ function showToast(message) {
       });
     }
 
+
+
+
+    // =========================================================================
+    // PHASE 3: HABIT INSIGHTS & MONTH-OVER-MONTH TREND INTELLIGENCE ENGINE
+    // =========================================================================
+    let isHabitInsightsDrawerOpen = false;
+
+    function toggleHabitInsightsDrawer() {
+      const body = document.getElementById('habitInsightsDrawerBody');
+      const arrow = document.getElementById('habitDrawerArrow');
+      if (!body) return;
+      isHabitInsightsDrawerOpen = !isHabitInsightsDrawerOpen;
+      body.classList.toggle('hidden', !isHabitInsightsDrawerOpen);
+      if (arrow) {
+        arrow.style.transform = isHabitInsightsDrawerOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+      }
+    }
+    window.toggleHabitInsightsDrawer = toggleHabitInsightsDrawer;
+
+    function updateHabitInsightsAndMoM(curSpent, curIncome) {
+      const section = document.getElementById('habitInsightsSection');
+      if (!section) return;
+
+      const curMonthName = availableMonths[currentMonthIndex];
+      const isPersonal = (activeAccount === 'personal');
+
+      // 1. Filter current month transactions
+      const curMonthTxs = transactions.filter(t => 
+        (t.accountId === activeAccount || activeAccount === 'both') &&
+        (t.monthYear || getTxMonthYear(t)) === curMonthName &&
+        t.type === 'expense' &&
+        !(t.isReimbursable && t.reimbursementStatus === 'settled')
+      );
+
+      // --- Micro-Spends Leakage (< ₹150) ---
+      const microTxs = curMonthTxs.filter(t => t.amount > 0 && t.amount <= 150);
+      const microTotal = microTxs.reduce((sum, t) => sum + t.amount, 0);
+      const microCount = microTxs.length;
+
+      const now = new Date();
+      const [selShort, selYearStr] = curMonthName.split(' ');
+      const monthNamesArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const selMonthNum = monthNamesArr.indexOf(selShort);
+      const selYear = parseInt(selYearStr, 10);
+      const isCurCalendarMonth = (selYear === now.getFullYear() && selMonthNum === now.getMonth());
+      const daysInMonth = (selYear && selMonthNum >= 0) ? new Date(selYear, selMonthNum + 1, 0).getDate() : 30;
+      const elapsedDays = isCurCalendarMonth ? Math.max(1, now.getDate()) : daysInMonth;
+      const microDailyAvg = Math.round(microTotal / elapsedDays);
+
+      const microCountBadge = document.getElementById('microSpendCountBadge');
+      const microTotalDisplay = document.getElementById('microSpendTotalDisplay');
+      const microAvgDisplay = document.getElementById('microSpendAvgDisplay');
+      const microDescText = document.getElementById('microSpendDescText');
+
+      if (microCountBadge) microCountBadge.textContent = `${microCount} ${microCount === 1 ? 'payment' : 'payments'}`;
+      if (microTotalDisplay) microTotalDisplay.textContent = formatCurrency(microTotal);
+      if (microAvgDisplay) microAvgDisplay.textContent = `(${formatCurrency(microDailyAvg)} / day)`;
+      if (microDescText) {
+        if (microCount === 0) {
+          microDescText.textContent = 'No low-value routine payments under ₹150 logged yet for this month.';
+        } else {
+          microDescText.textContent = `Small daily habits (chai, snacks, auto) account for ${curSpent > 0 ? Math.round((microTotal / curSpent) * 100) : 0}% of your monthly expenses.`;
+        }
+      }
+
+      // --- Weekend vs Weekday Pattern ---
+      let weekendTotal = 0;
+      let weekdayTotal = 0;
+
+      curMonthTxs.forEach(t => {
+        const d = new Date(t.isoDate || dateToIso(t.date));
+        const dayOfWeek = isNaN(d.getTime()) ? 1 : d.getDay();
+        if (dayOfWeek === 0 || dayOfWeek === 6) {
+          weekendTotal += t.amount;
+        } else {
+          weekdayTotal += t.amount;
+        }
+      });
+
+      const totalSplitSpend = weekendTotal + weekdayTotal;
+      const weekendPct = totalSplitSpend > 0 ? Math.round((weekendTotal / totalSplitSpend) * 100) : 0;
+
+      const weekendBadge = document.getElementById('weekendShareBadge');
+      const weekendTotalDisplay = document.getElementById('weekendTotalDisplay');
+      const weekdayTotalDisplay = document.getElementById('weekdayTotalDisplay');
+      const weekendDescText = document.getElementById('weekendDescText');
+
+      if (weekendBadge) weekendBadge.textContent = `${weekendPct}% Weekend`;
+      if (weekendTotalDisplay) weekendTotalDisplay.textContent = formatCurrency(weekendTotal);
+      if (weekdayTotalDisplay) weekdayTotalDisplay.textContent = `(vs ${formatCurrency(weekdayTotal)} weekdays)`;
+      if (weekendDescText) {
+        if (totalSplitSpend === 0) {
+          weekendDescText.textContent = 'Add expenses to see your weekend vs weekday leisure pattern.';
+        } else if (weekendPct >= 50) {
+          weekendDescText.textContent = `High weekend leisure spike: over half of your spend occurred on Saturdays and Sundays.`;
+        } else {
+          weekendDescText.textContent = `Balanced pace: weekend spending is moderate at ${weekendPct}% of total outlay.`;
+        }
+      }
+
+      // --- Top Payee Highlight ---
+      const payeeMap = {};
+      curMonthTxs.forEach(t => {
+        const baseName = (t.title || 'Store').split(' • ')[0].trim();
+        if (!payeeMap[baseName]) payeeMap[baseName] = { amount: 0, count: 0 };
+        payeeMap[baseName].amount += t.amount;
+        payeeMap[baseName].count++;
+      });
+
+      let topPayee = null;
+      Object.keys(payeeMap).forEach(name => {
+        if (!topPayee || payeeMap[name].amount > topPayee.amount) {
+          topPayee = { name, amount: payeeMap[name].amount, count: payeeMap[name].count };
+        }
+      });
+
+      const topPayeeNameEl = document.getElementById('topPayeeName');
+      const topPayeeAmountEl = document.getElementById('topPayeeAmount');
+      const topPayeeCountEl = document.getElementById('topPayeeCount');
+
+      if (topPayeeNameEl) topPayeeNameEl.textContent = topPayee ? topPayee.name : 'No transactions yet';
+      if (topPayeeAmountEl) topPayeeAmountEl.textContent = topPayee ? formatCurrency(topPayee.amount) : '₹0';
+      if (topPayeeCountEl) topPayeeCountEl.textContent = topPayee ? `${topPayee.count} ${topPayee.count === 1 ? 'transaction' : 'transactions'}` : '0 visits';
+
+      // --- Month-over-Month Trend Intelligence (Current vs Previous) ---
+      const momHeading = document.getElementById('momComparisonHeading');
+      const momNetBadge = document.getElementById('momNetChangeBadge');
+      const momList = document.getElementById('momCategoryShiftList');
+
+      if (currentMonthIndex === 0) {
+        // Oldest recorded month, no prior month available
+        if (momHeading) momHeading.textContent = `${curMonthName} (Starting Horizon)`;
+        if (momNetBadge) {
+          momNetBadge.textContent = 'Baseline Month';
+          momNetBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700';
+        }
+        if (momList) {
+          momList.innerHTML = `
+            <div class="text-[11px] text-slate-400 py-1.5 text-center">
+              This is your earliest recorded month. Trends will compare as future months are logged.
+            </div>
+          `;
+        }
+        return;
+      }
+
+      const prevMonthName = availableMonths[currentMonthIndex - 1];
+      const prevMonthShort = prevMonthName.split(' ')[0];
+      const curMonthShort = curMonthName.split(' ')[0];
+
+      if (momHeading) momHeading.textContent = `${curMonthShort} vs. ${prevMonthShort} Scorecard`;
+
+      // Previous month expenses
+      const prevMonthTxs = transactions.filter(t => 
+        (t.accountId === activeAccount || activeAccount === 'both') &&
+        (t.monthYear || getTxMonthYear(t)) === prevMonthName &&
+        t.type === 'expense' &&
+        !(t.isReimbursable && t.reimbursementStatus === 'settled')
+      );
+      const prevSpent = prevMonthTxs.reduce((sum, t) => sum + t.amount, 0);
+
+      const netDiff = curSpent - prevSpent;
+      const netPct = prevSpent > 0 ? Math.round((Math.abs(netDiff) / prevSpent) * 100) : 0;
+
+      if (momNetBadge) {
+        if (prevSpent === 0 && curSpent === 0) {
+          momNetBadge.textContent = 'No spend recorded';
+          momNetBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300';
+        } else if (netDiff < 0) {
+          momNetBadge.textContent = `-${formatCurrency(Math.abs(netDiff))} (-${netPct}%) 🟢`;
+          momNetBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800';
+        } else if (netDiff > 0) {
+          momNetBadge.textContent = `+${formatCurrency(netDiff)} (+${netPct}%) 🔴`;
+          momNetBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800';
+        } else {
+          momNetBadge.textContent = `Equal to ${prevMonthShort}`;
+          momNetBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800';
+        }
+      }
+
+      // Populate Category Shifts
+      if (momList) {
+        momList.innerHTML = '';
+        const activeCats = getActiveCategories();
+        let renderedRows = 0;
+
+        activeCats.forEach(cat => {
+          const curCatSpent = curMonthTxs.filter(t => t.categoryId === cat.id).reduce((s, t) => s + t.amount, 0);
+          const prevCatSpent = prevMonthTxs.filter(t => t.categoryId === cat.id).reduce((s, t) => s + t.amount, 0);
+          const catDiff = curCatSpent - prevCatSpent;
+
+          // Only show row if either current or previous month had spend
+          if (curCatSpent > 0 || prevCatSpent > 0) {
+            renderedRows++;
+            const row = document.createElement('div');
+            row.className = 'p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs';
+
+            let diffBadge = '';
+            if (catDiff < 0) {
+              diffBadge = `<span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400">-${formatCurrency(Math.abs(catDiff))} saved 🟢</span>`;
+            } else if (catDiff > 0) {
+              diffBadge = `<span class="text-[10px] font-bold text-rose-600 dark:text-rose-400">+${formatCurrency(catDiff)} higher 🔴</span>`;
+            } else {
+              diffBadge = `<span class="text-[10px] font-semibold text-slate-400">Same as ${prevMonthShort}</span>`;
+            }
+
+            row.innerHTML = `
+              <div class="flex items-center gap-1.5 min-w-0">
+                <span>${cat.icon}</span>
+                <span class="font-bold text-slate-800 dark:text-slate-100 truncate">${cat.name}</span>
+                <span class="text-[10px] text-slate-400 font-normal">(${formatCurrency(curCatSpent)} vs ${formatCurrency(prevCatSpent)})</span>
+              </div>
+              <div class="shrink-0">${diffBadge}</div>
+            `;
+            momList.appendChild(row);
+          }
+        });
+
+        if (renderedRows === 0) {
+          momList.innerHTML = `
+            <div class="text-[11px] text-slate-400 py-1.5 text-center">
+              No category expenses recorded yet for comparison.
+            </div>
+          `;
+        }
+      }
+    }
+
+
+    // =========================================================================
+    // PHASE 2: SMS & UPI CLIPBOARD QUICK-PARSER ENGINE (REFINED)
+    // =========================================================================
+    let currentParsedSmsData = null;
+
+    // Persistent User Learning: Remember category choice for specific merchants/payees
+    let merchantCategoryMemory = {};
+    try {
+      const savedMem = localStorage.getItem('mysmartplan_merchant_memory');
+      if (savedMem) merchantCategoryMemory = JSON.parse(savedMem);
+    } catch (e) {
+      merchantCategoryMemory = {};
+    }
+
+    function rememberMerchantCategory(merchant, categoryId) {
+      if (!merchant || !categoryId) return;
+      // Strip any tag like " • Chai" when remembering base merchant/payee
+      const base = merchant.split(' • ')[0].trim().toLowerCase();
+      if (!base) return;
+      merchantCategoryMemory[base] = categoryId;
+      try {
+        localStorage.setItem('mysmartplan_merchant_memory', JSON.stringify(merchantCategoryMemory));
+      } catch (e) {}
+    }
+
+    const SMS_SAMPLES = {
+      swiggy: 'Rs. 340.00 debited from A/c XX1234 on 05-Nov-26 to VPA swiggy@icici UPI Ref 4310291029',
+      uber: 'Paid Rs. 210 to Uber India via Paytm UPI on 05/11/2026 Ref 99201',
+      zepto: 'Alert: INR 540 spent on HDFC Bank Card XX9876 at Zepto on 04-Nov-2026',
+      salary: 'Your A/C XX5678 is credited with INR 75,000.00 on 01-Nov-26 by NEFT-Salary',
+      chai: 'Sent Rs. 40 to Ramesh Tea Stall via PhonePe UPI Ref 9988',
+      electricity: 'Axis Bank: INR 1,250.00 debited from A/c XX4321 on 03-Nov-26 at TNEB Electricity Bill',
+      sbi_deepa: 'Dear UPI user A/C X9137 debited by 120.00 on date 25Sep26 trf to DEEPA W/O VIJAYA Refno 626849374840 If not u? call-1800111109 for other services-18001234-SBI',
+      sbi_tailor: 'Dear UPI user A/C X9137 debited by 1050.00 on date 03Nov26 trf to RV LADIES TAILOR Refno 630784624015 If not u? call-1800111109 for other services-18001234-SBI'
+    };
+
+    function parseBankSmsText(text) {
+      if (!text || typeof text !== 'string') return null;
+      const clean = text.trim();
+      if (!clean) return null;
+
+      // 1. Detect Transaction Type (Credit/Income vs Debit/Expense)
+      const isCredit = (/\b(credited|credit|received|refund|deposited|salary)\b/i.test(clean)) &&
+                       !(/\b(debited|spent|paid|purchase|sent)\b/i.test(clean));
+      const txType = isCredit ? 'income' : 'expense';
+
+      // 2. Extract Amount
+      let amount = 0;
+      const amtMatch1 = clean.match(/(?:rs\.?|inr)\s*([0-9,]+(?:\.[0-9]{1,2})?)/i);
+      if (amtMatch1 && amtMatch1[1]) {
+        amount = parseFloat(amtMatch1[1].replace(/,/g, ''));
+      } else {
+        const amtMatch2 = clean.match(/(?:debited\s+by|credited\s+by|debited\s+with|credited\s+with|paid|spent|sent)\s+(?:rs\.?|inr)?\s*([0-9,]+(?:\.[0-9]{1,2})?)/i);
+        if (amtMatch2 && amtMatch2[1]) {
+          amount = parseFloat(amtMatch2[1].replace(/,/g, ''));
+        }
+      }
+
+      // 3. Extract Transaction Date (e.g. 'on 03-11-26', 'on 02-11-2026', 'on 04-Nov-26')
+      let detectedIsoDate = null;
+      let detectedDisplayDate = null;
+      const dateNumMatch = clean.match(/\bon\s+(?:date\s+)?([0-3]?[0-9])-([0-1]?[0-9])-([0-9]{2,4})\b/i);
+      const monthsArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+      if (dateNumMatch) {
+        let d = dateNumMatch[1].padStart(2, '0');
+        let m = dateNumMatch[2].padStart(2, '0');
+        let y = dateNumMatch[3];
+        if (y.length === 2) y = '20' + y;
+        detectedIsoDate = `${y}-${m}-${d}`;
+        const mIdx = parseInt(m, 10) - 1;
+        if (mIdx >= 0 && mIdx < 12) {
+          detectedDisplayDate = `${monthsArr[mIdx]} ${d}`;
+        }
+      } else {
+        const dateStrMatch = clean.match(/\bon\s+(?:date\s+)?([0-3]?[0-9])(?:st|nd|rd|th)?-?([A-Za-z]{3})-?([0-9]{2,4})\b/i);
+        if (dateStrMatch) {
+          let d = dateStrMatch[1].padStart(2, '0');
+          let mStr = dateStrMatch[2].charAt(0).toUpperCase() + dateStrMatch[2].slice(1).toLowerCase();
+          let y = dateStrMatch[3];
+          if (y.length === 2) y = '20' + y;
+          const mIdx = monthsArr.indexOf(mStr);
+          if (mIdx !== -1) {
+            let m = String(mIdx + 1).padStart(2, '0');
+            detectedIsoDate = `${y}-${m}-${d}`;
+            detectedDisplayDate = `${mStr} ${d}`;
+          }
+        }
+      }
+
+      // 4. Extract Merchant / Payee (Accurate Indian Bank, SBI, HDFC, PhonePe, GPay extraction)
+      let merchant = '';
+
+      // Pattern A: VPA (e.g. to VPA swiggy@icici)
+      const vpaMatch = clean.match(/(?:to\s+vpa|vpa)\s+([a-zA-Z0-9.\-_@]+)/i);
+      if (vpaMatch && vpaMatch[1]) {
+        const raw = vpaMatch[1].split('@')[0].replace(/[._-]/g, ' ');
+        merchant = raw.charAt(0).toUpperCase() + raw.slice(1);
+      }
+
+      // Pattern B: 'to (Mr/Mrs/Dr)? <Name>.RRN' or 'to <Name>'
+      if (!merchant) {
+        const toMatch = clean.match(/\b(?:to|at|for|paid to|sent to)\s+(?:mr\.?|mrs\.?|ms\.?|dr\.?|shri|smt\.?)?\s*([A-Za-z0-9\s&'\-_/]{2,45}?)(?:\.rrn|\.ref|\.avl|\.bal|\s+rrn|\s+ref|\s+on|\s+via|\s+using|\s+upi|\.|\band\b|$)/i);
+        if (toMatch && toMatch[1]) {
+          merchant = toMatch[1].trim();
+        }
+      }
+
+      // Pattern C: Info / transfer to / by NEFT
+      if (!merchant) {
+        const infoMatch = clean.match(/(?:info:|transfer to|by\s+neft-|by\s+imps-|by|from)\s+([A-Za-z0-9\s&'\-_/]{2,35}?)(?:\.|\s+available|\s+on|$)/i);
+        if (infoMatch && infoMatch[1]) {
+          merchant = infoMatch[1].trim();
+        }
+      }
+
+      // Clean up merchant name while preserving initials like 'A K BIRIYANI'
+      merchant = merchant.replace(/^(the)\s+/i, '');
+      if (/^a\s+[a-z]{3,}/i.test(merchant)) {
+        merchant = merchant.replace(/^a\s+/i, '');
+      }
+      merchant = merchant.replace(/[\.\-_]+$/, '').trim();
+      if (!merchant) {
+        merchant = txType === 'income' ? 'Bank Deposit / Salary' : 'Store / UPI Payment';
+      }
+
+      // 5. Payment Mode
+      let paymentMode = 'UPI';
+      if (/\bcard\b/i.test(clean) || /\bpos\b/i.test(clean)) {
+        paymentMode = 'Card';
+      } else if (/\b(neft|rtgs|imps|netbanking|bank transfer)\b/i.test(clean)) {
+        paymentMode = 'NetBanking';
+      } else if (/\bupi\b/i.test(clean) || /\bgpay\b/i.test(clean) || /\bphonepe\b/i.test(clean) || /\bpaytm\b/i.test(clean)) {
+        paymentMode = 'UPI';
+      }
+
+      // 6. Auto Category Detection
+      const categoryId = autoDetectCategoryForMerchant(merchant, txType, clean);
+
+      return {
+        amount: isNaN(amount) ? 0 : amount,
+        type: txType,
+        merchant,
+        paymentMode,
+        categoryId,
+        accountId: activeAccount,
+        detectedIsoDate,
+        detectedDisplayDate
+      };
+    }
+    function resolveCategoryByPermanentId(permanentId, fallbackKeywords = []) {
+      const activeCats = getActiveCategories();
+      // 1. Permanent ID match (works even if user renames "Groceries" -> "Room expanse" or "Home & Utilities" -> "Home")
+      const idMatch = activeCats.find(c => c.id === permanentId);
+      if (idMatch) return idMatch.id;
+
+      // 2. Fuzzy name match
+      if (fallbackKeywords && fallbackKeywords.length > 0) {
+        const nameMatch = activeCats.find(c => fallbackKeywords.some(k => c.name.toLowerCase().includes(k.toLowerCase())));
+        if (nameMatch) return nameMatch.id;
+      }
+
+      // 3. Fallback
+      return (activeCats[0] && activeCats[0].id) ? activeCats[0].id : 'cat-other';
+    }
+
+    function autoDetectCategoryForMerchant(merchant, txType, rawText) {
+      // 1. Check User's Personal Learned Memory
+      const baseMerchant = (merchant || '').split(' • ')[0].trim().toLowerCase();
+      if (baseMerchant && merchantCategoryMemory[baseMerchant]) {
+        const activeCats = getActiveCategories();
+        const memCat = activeCats.find(c => c.id === merchantCategoryMemory[baseMerchant]);
+        if (memCat) return memCat.id;
+      }
+
+      const combined = `${merchant} ${rawText}`.toLowerCase();
+
+      // Income Categories
+      if (txType === 'income') {
+        if (/\b(salary|payroll|stipend|employer|infosys|tcs|wipro|hcl|cognizant|accenture|google|amazon|microsoft)\b/i.test(combined)) return 'inc-sal';
+        if (/\b(rent|tenant|lease)\b/i.test(combined)) return 'inc-rent';
+        if (/\b(freelance|consulting|upwork|fiverr|client|extra)\b/i.test(combined)) return 'inc-free';
+        if (/\b(dividend|interest|cashback|reward|refund|deposit)\b/i.test(combined)) return 'inc-inv';
+        return 'inc-sal';
+      }
+
+      // Expense Categories (mapped to Permanent IDs so user renaming never breaks anything)
+      // Groceries (cat-groc): Zepto, Blinkit, BigBasket, DMart, Supermarket, Milk, Vegetables, Kirana
+      if (/\b(zepto|blinkit|bigbasket|instamart|bb daily|dmart|supermarket|grocery|kirana|milk|country delight|akshayakalpa|nandini|amul|licious|freshtohome|meat|vegetable|fruits|provision|more retail|spencer|nature basket|star bazaar)\b/i.test(combined)) {
+        return resolveCategoryByPermanentId('cat-groc', ['grocer', 'room', 'kitchen', 'food']);
+      }
+
+      // Transport & Fuel (cat-trans): Uber, Ola, Rapido, Petrol, Shell, Fastag, CMRL Metro, IRCTC
+      if (/\b(uber|ola|rapido|namma yatri|blusmart|petrol|fuel|fuel station|diesel|shell|hpcl|bpcl|hp\b|indian oil|fastag|toll|parking|metro|bmrcl|cmrl|dmrc|irctc|railway|train|bus|redbus|abhibus|flight|indigo|air india)\b/i.test(combined)) {
+        return resolveCategoryByPermanentId('cat-trans', ['trans', 'travel', 'commute', 'fuel']);
+      }
+
+      // Subscriptions (cat-subs): Netflix, Spotify, Prime, YouTube, Hotstar, Google One, Apple
+      if (/\b(netflix|spotify|prime|youtube|hotstar|sonyliv|zee5|apple|icloud|google one|audible|kindle|chatgpt|openai|canva|cult|fitness|gym membership|recharge)\b/i.test(combined)) {
+        return resolveCategoryByPermanentId('cat-subs', ['sub', 'media', 'stream', 'digital']);
+      }
+
+      // Home & Utilities (cat-home): Electricity, TNEB, BESCOM, Gas Cylinder, Wi-Fi, ACT, Airtel, Jio, Maintenance, Rent
+      if (/\b(electricity|bescom|tneb|tangedco|water|gas|cylinder|indane|bharat gas|hp gas|wifi|broadband|act fibernet|airtel|jio|bsnl|vodafone|vi\b|hathway|rent|maintenance|nobroker|mygate|urban company|maid|cook|plumber|power)\b/i.test(combined)) {
+        return resolveCategoryByPermanentId('cat-home', ['home', 'house', 'utilit', 'bill']);
+      }
+
+      // Personal Account Categories (when viewing personal account)
+      if (activeAccount === 'personal') {
+        if (/\b(apollo|pharmacy|medplus|pharmeasy|1mg|netmeds|hospital|clinic|doctor|dentist|lab|diagnostic|srl|spa|salon|barber|haircut|health)\b/i.test(combined)) {
+          return resolveCategoryByPermanentId('cat-per-self', ['self', 'health', 'care']);
+        }
+        if (/\b(amazon|flipkart|myntra|ajio|tata cliq|meesho|nykaa|zara|h&m|uniqlo|croma|reliance digital|vijay sales|decathlon|shopping|clothing|fashion)\b/i.test(combined)) {
+          return resolveCategoryByPermanentId('cat-per-shop', ['shop', 'cloth', 'tech']);
+        }
+        if (/\b(zerodha|groww|upstox|angel one|coin|kuvera|indmoney|smallcase|mutual fund|sip|stock|etf|gold|nps|ppf)\b/i.test(combined)) {
+          return resolveCategoryByPermanentId('cat-per-sip', ['sip', 'sav', 'invest']);
+        }
+      }
+
+      // Food / Dining / Cafes / Tiffin (cat-other or Food): Swiggy, Zomato, Saravana Bhavan, A2B, Tea Stalls
+      if (/\b(biryani|biriyani|briyani|hotel|restaurant|catering|catering service|bakery|mess|tiffin|canteen|bhavan|sagar|sweets|juice|tea|chai|coffee|cafe|pizza|burger|sandwich|shawarma|mcdonald|kfc|subway|starbucks|domino|swiggy|zomato|dhabha|dhaba|kitchen|bhojanalaya|parotta|meals|tandoor|grill|bbq|barbeque|ice cream|falooda|food)\b/i.test(combined)) {
+        return resolveCategoryByPermanentId('cat-other', ['food', 'dining', 'tiffin', 'restaurant', 'meal', 'biriyani', 'biryani', 'other']);
+      }
+
+      // Check Clothing, Tailoring & Fashion (cat-other or Shopping)
+      if (/\b(tailor|ladies tailor|tailoring|boutique|textiles|clothing|fashion|silks|sarees|garments)\b/i.test(combined)) {
+        return resolveCategoryByPermanentId('cat-other', ['shop', 'cloth', 'tailor', 'fashion', 'other']);
+      }
+
+      // Default fallback
+      return resolveCategoryByPermanentId('cat-other', ['other', 'general']);
+    }
+
+    // 1-Tap Purpose Chip Handler: Appends micro-tag to title and auto-selects target category & claim
+    function applySmsPurposeTag(tagLabel, targetPermanentId, isClaim = false, claimSrc = 'office') {
+      const merchantInput = document.getElementById('smsParsedMerchant');
+      const catSelect = document.getElementById('smsParsedCategory');
+      const reimbCb = document.getElementById('smsIsReimbursable');
+      const reimbWrap = document.getElementById('smsReimbursableSourceWrap');
+      const reimbSrcSelect = document.getElementById('smsReimbursableSource');
+
+      if (merchantInput) {
+        let base = merchantInput.value.trim();
+        if (base.includes(' • ')) {
+          base = base.split(' • ')[0].trim();
+        }
+        merchantInput.value = `${base} • ${tagLabel}`;
+      }
+
+      // Update category dropdown if targetPermanentId specified
+      if (targetPermanentId && catSelect) {
+        const resolvedId = resolveCategoryByPermanentId(targetPermanentId);
+        if (resolvedId) {
+          catSelect.value = resolvedId;
+        }
+      }
+
+      // If marked returnable/claim
+      if (isClaim && reimbCb) {
+        reimbCb.checked = true;
+        if (reimbWrap) reimbWrap.classList.remove('hidden');
+        if (reimbSrcSelect && claimSrc) reimbSrcSelect.value = claimSrc;
+        showToast(`Tagged as ${tagLabel} & marked returnable! 🔄`);
+      } else {
+        showToast(`Tagged as ${tagLabel}! ✨`);
+      }
+    }
+    window.applySmsPurposeTag = applySmsPurposeTag;
+
+    // Time-of-Day Contextual Highlighting for Purpose Chips
+    function updateSmsTimeOfDayHighlights() {
+      const hour = new Date().getHours();
+      const hintEl = document.getElementById('smsTimeHintText');
+      let hint = '💡 Tap chip to add purpose';
+      let targetTag = '';
+
+      if (hour >= 6 && hour < 11) {
+        hint = '💡 Suggested for Morning Tiffin / Coffee';
+        targetTag = 'Tiffin';
+      } else if (hour >= 12 && hour < 15) {
+        hint = '💡 Suggested for Lunch time';
+        targetTag = 'Lunch';
+      } else if (hour >= 16 && hour < 19) {
+        hint = '💡 Suggested for Evening Chai / Snacks';
+        targetTag = 'Chai';
+      } else if (hour >= 19 && hour < 23) {
+        hint = '💡 Suggested for Dinner time';
+        targetTag = 'Dinner';
+      }
+
+      if (hintEl) hintEl.textContent = hint;
+
+      document.querySelectorAll('.sms-purpose-chip').forEach(chip => {
+        if (targetTag && chip.textContent.includes(targetTag)) {
+          chip.classList.add('ring-2', 'ring-indigo-500', 'bg-indigo-50', 'dark:bg-indigo-950/80', 'font-extrabold');
+        } else {
+          chip.classList.remove('ring-2', 'ring-indigo-500', 'font-extrabold');
+        }
+      });
+    }
+    window.updateSmsTimeOfDayHighlights = updateSmsTimeOfDayHighlights;
+
+    function toggleSmsReimbursableSource() {
+      const cb = document.getElementById('smsIsReimbursable');
+      const wrap = document.getElementById('smsReimbursableSourceWrap');
+      if (wrap) {
+        wrap.classList.toggle('hidden', !cb || !cb.checked);
+      }
+    }
+    window.toggleSmsReimbursableSource = toggleSmsReimbursableSource;
+
+    function populateSmsCategoryDropdown(selectedCategoryId, txType) {
+      const select = document.getElementById('smsParsedCategory');
+      if (!select) return;
+      select.innerHTML = '';
+
+      if (txType === 'income') {
+        incomeSources.forEach((inc) => {
+          const opt = document.createElement('option');
+          opt.value = inc.id;
+          opt.textContent = `${inc.icon} ${inc.name}`;
+          if (inc.id === selectedCategoryId) opt.selected = true;
+          select.appendChild(opt);
+        });
+      } else {
+        const activeCats = getActiveCategories();
+        activeCats.forEach((cat) => {
+          const opt = document.createElement('option');
+          opt.value = cat.id;
+          opt.textContent = `${cat.icon} ${cat.name}`;
+          if (cat.id === selectedCategoryId) opt.selected = true;
+          select.appendChild(opt);
+        });
+      }
+    }
+
+    function openSmsParserModal(initialText = '') {
+      const modal = document.getElementById('smsParseModal');
+      const input = document.getElementById('smsRawInput');
+      const reimbCb = document.getElementById('smsIsReimbursable');
+      const reimbWrap = document.getElementById('smsReimbursableSourceWrap');
+
+      if (reimbCb) reimbCb.checked = false;
+      if (reimbWrap) reimbWrap.classList.add('hidden');
+
+      if (!modal) return;
+
+      modal.classList.remove('hidden');
+      updateSmsTimeOfDayHighlights();
+
+      if (input) {
+        input.value = initialText || '';
+        handleSmsInputChange();
+        setTimeout(() => input.focus(), 100);
+      }
+    }
+    window.openSmsParserModal = openSmsParserModal;
+
+    function closeSmsParserModal() {
+      const modal = document.getElementById('smsParseModal');
+      if (modal) modal.classList.add('hidden');
+    }
+    window.closeSmsParserModal = closeSmsParserModal;
+
+    function loadSmsSample(sampleKey) {
+      const text = SMS_SAMPLES[sampleKey];
+      const input = document.getElementById('smsRawInput');
+      if (text && input) {
+        input.value = text;
+        handleSmsInputChange();
+      }
+    }
+    window.loadSmsSample = loadSmsSample;
+
+    async function pasteFromClipboard() {
+      try {
+        if (navigator.clipboard && navigator.clipboard.readText) {
+          const clipText = await navigator.clipboard.readText();
+          const input = document.getElementById('smsRawInput');
+          if (input && clipText) {
+            input.value = clipText;
+            handleSmsInputChange();
+            showToast('Pasted from clipboard! 📋');
+          }
+        } else {
+          showToast('Clipboard permission not granted or not supported');
+        }
+      } catch (err) {
+        showToast('Please paste manually into the text box');
+      }
+    }
+    window.pasteFromClipboard = pasteFromClipboard;
+
+    function clearSmsInput() {
+      const input = document.getElementById('smsRawInput');
+      if (input) {
+        input.value = '';
+        handleSmsInputChange();
+      }
+    }
+    window.clearSmsInput = clearSmsInput;
+
+    function handleSmsInputChange() {
+      const input = document.getElementById('smsRawInput');
+      const parsedCard = document.getElementById('smsParsedCard');
+      const emptyPrompt = document.getElementById('smsEmptyPrompt');
+      const saveBtn = document.getElementById('smsSaveDirectBtn');
+      const fullEditBtn = document.getElementById('smsOpenFullLoggerBtn');
+      const reimbContainer = document.getElementById('smsReimbursableContainer');
+
+      if (!input) return;
+      const text = input.value.trim();
+
+      if (!text) {
+        currentParsedSmsData = null;
+        if (parsedCard) parsedCard.classList.add('hidden');
+        if (emptyPrompt) emptyPrompt.classList.remove('hidden');
+        if (saveBtn) saveBtn.disabled = true;
+        if (fullEditBtn) fullEditBtn.disabled = true;
+        return;
+      }
+
+      const parsed = parseBankSmsText(text);
+      if (!parsed || parsed.amount <= 0) {
+        currentParsedSmsData = null;
+        if (parsedCard) parsedCard.classList.add('hidden');
+        if (emptyPrompt) {
+          emptyPrompt.classList.remove('hidden');
+          emptyPrompt.innerHTML = '<span class="text-rose-500 block text-sm font-semibold">⚠️ Could not detect amount</span>Ensure the text includes Rs. or INR with an amount';
+        }
+        if (saveBtn) saveBtn.disabled = true;
+        if (fullEditBtn) fullEditBtn.disabled = true;
+        return;
+      }
+
+      currentParsedSmsData = parsed;
+      if (emptyPrompt) emptyPrompt.classList.add('hidden');
+      if (parsedCard) parsedCard.classList.remove('hidden');
+
+      // Populate UI
+      const typeBadge = document.getElementById('smsDetectedTypeBadge');
+      const amountInput = document.getElementById('smsParsedAmount');
+      const merchantInput = document.getElementById('smsParsedMerchant');
+      const modeSelect = document.getElementById('smsParsedMode');
+      const acctBadge = document.getElementById('smsParsedAccountBadge');
+
+      if (typeBadge) {
+        if (parsed.type === 'income') {
+          typeBadge.className = 'text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800';
+          typeBadge.textContent = '+ Income';
+        } else {
+          typeBadge.className = 'text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800';
+          typeBadge.textContent = '− Expense';
+        }
+      }
+
+      if (amountInput) amountInput.value = parsed.amount;
+      if (merchantInput) merchantInput.value = parsed.merchant;
+      if (modeSelect) modeSelect.value = parsed.paymentMode || 'UPI';
+
+      populateSmsCategoryDropdown(parsed.categoryId, parsed.type);
+
+      if (acctBadge) {
+        const activeAcctName = activeAccount === 'personal' ? 'Personal Account' : 'Regular Expense';
+        acctBadge.textContent = activeAccount === 'personal' ? '🧘 Personal Account' : '💳 Regular Expense';
+      }
+
+      // Hide reimbursement option for Income
+      if (reimbContainer) {
+        if (parsed.type === 'income') {
+          reimbContainer.classList.add('hidden');
+        } else {
+          reimbContainer.classList.remove('hidden');
+        }
+      }
+
+      updateSmsTimeOfDayHighlights();
+
+      if (saveBtn) saveBtn.disabled = false;
+      if (fullEditBtn) fullEditBtn.disabled = false;
+    }
+    window.handleSmsInputChange = handleSmsInputChange;
+
+    function confirmAndSaveParsedSms() {
+      if (!currentParsedSmsData) {
+        showToast('No valid transaction detected');
+        return;
+      }
+
+      const amountInput = document.getElementById('smsParsedAmount');
+      const merchantInput = document.getElementById('smsParsedMerchant');
+      const categorySelect = document.getElementById('smsParsedCategory');
+      const modeSelect = document.getElementById('smsParsedMode');
+      const reimbCb = document.getElementById('smsIsReimbursable');
+      const reimbSrc = document.getElementById('smsReimbursableSource');
+
+      const amount = amountInput ? parseFloat(amountInput.value) : currentParsedSmsData.amount;
+      const title = (merchantInput && merchantInput.value.trim()) ? merchantInput.value.trim() : currentParsedSmsData.merchant;
+      const categoryId = categorySelect ? categorySelect.value : currentParsedSmsData.categoryId;
+      const paymentMode = modeSelect ? modeSelect.value : currentParsedSmsData.paymentMode;
+      const txType = currentParsedSmsData.type;
+
+      const isReimbursable = (txType === 'expense' && reimbCb && reimbCb.checked);
+      const reimbursableSource = reimbSrc ? reimbSrc.value : 'office';
+
+      if (isNaN(amount) || amount <= 0) {
+        showToast('Please enter a valid amount');
+        return;
+      }
+
+      // Save to personal learned merchant memory
+      rememberMerchantCategory(title, categoryId);
+
+      const todayIso = (currentParsedSmsData && currentParsedSmsData.detectedIsoDate) ? currentParsedSmsData.detectedIsoDate : getTodayIso();
+      const displayDate = (currentParsedSmsData && currentParsedSmsData.detectedDisplayDate) ? currentParsedSmsData.detectedDisplayDate : isoToDisplayDate(todayIso);
+      const chosenAccountId = activeAccount;
+      const txMonthYear = getTxMonthYear({ isoDate: todayIso, date: displayDate });
+
+      const newTx = {
+        id: Date.now(),
+        accountId: chosenAccountId,
+        type: txType,
+        title,
+        amount,
+        categoryId,
+        paymentMode,
+        date: displayDate,
+        isoDate: todayIso,
+        monthYear: txMonthYear,
+        isReimbursable: isReimbursable,
+        reimbursableSource: reimbursableSource,
+        reimbursementStatus: isReimbursable ? 'pending' : 'none'
+      };
+
+      transactions.unshift(newTx);
+      saveToLocalStorage();
+      renderDashboard();
+      if (typeof renderLedger === 'function') renderLedger();
+
+      closeSmsParserModal();
+      if (isReimbursable) {
+        showToast(`🎉 Logged returnable ${title} (₹${amount.toLocaleString('en-IN')}) — Tracked in Pending Claims!`);
+      } else {
+        showToast(`🎉 Logged ${title} (₹${amount.toLocaleString('en-IN')}) via ${paymentMode}!`);
+      }
+    }
+    window.confirmAndSaveParsedSms = confirmAndSaveParsedSms;
+
+    function openParsedInFullForm() {
+      if (!currentParsedSmsData) return;
+
+      const amountInput = document.getElementById('smsParsedAmount');
+      const merchantInput = document.getElementById('smsParsedMerchant');
+      const categorySelect = document.getElementById('smsParsedCategory');
+      const modeSelect = document.getElementById('smsParsedMode');
+      const reimbCb = document.getElementById('smsIsReimbursable');
+      const reimbSrc = document.getElementById('smsReimbursableSource');
+
+      const amount = amountInput ? parseFloat(amountInput.value) : currentParsedSmsData.amount;
+      const title = (merchantInput && merchantInput.value.trim()) ? merchantInput.value.trim() : currentParsedSmsData.merchant;
+      const categoryId = categorySelect ? categorySelect.value : currentParsedSmsData.categoryId;
+      const paymentMode = modeSelect ? modeSelect.value : currentParsedSmsData.paymentMode;
+      const txType = currentParsedSmsData.type;
+      const isReimbursable = (txType === 'expense' && reimbCb && reimbCb.checked);
+      const reimbursableSource = reimbSrc ? reimbSrc.value : 'office';
+
+      closeSmsParserModal();
+
+      // Navigate to Expenses View using switchTab
+      if (typeof switchTab === 'function') {
+        switchTab('expenses');
+      }
+
+      // Pre-fill full form
+      if (typeof setLogType === 'function') {
+        setLogType(txType);
+      }
+
+      const expTitle = document.getElementById('expenseTitle');
+      const expAmt = document.getElementById('expenseAmount');
+      const expCat = document.getElementById('expenseCategory');
+      const modeInput = document.getElementById('selectedPaymentModeInput');
+      const fullReimbCb = document.getElementById('isReimbursableCheckbox');
+      const fullReimbSrc = document.getElementById('reimbursableSourceSelect');
+
+      if (expTitle) expTitle.value = title;
+      if (expAmt) expAmt.value = amount;
+      if (expCat) expCat.value = categoryId;
+      if (modeInput) modeInput.value = paymentMode;
+      const expDateEl = document.getElementById('expenseDateInput');
+      if (expDateEl && currentParsedSmsData && currentParsedSmsData.detectedIsoDate) {
+        expDateEl.value = currentParsedSmsData.detectedIsoDate;
+      }
+
+      if (fullReimbCb) {
+        fullReimbCb.checked = isReimbursable;
+        if (typeof updateReimbursementVisibility === 'function') {
+          updateReimbursementVisibility();
+        }
+      }
+      if (fullReimbSrc) {
+        fullReimbSrc.value = reimbursableSource;
+      }
+
+      const formEl = document.getElementById('expenseForm');
+      if (formEl) {
+        formEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      showToast('Pre-filled into transaction logger ✏️');
+    }
+    window.openParsedInFullForm = openParsedInFullForm;
+
+
+    // Attach real-time input listener for SMS textarea
+    const rawSmsInputEl = document.getElementById('smsRawInput');
+    if (rawSmsInputEl) {
+      rawSmsInputEl.addEventListener('input', handleSmsInputChange);
+    }
+
+    const smsModalEl = document.getElementById('smsParseModal');
+    if (smsModalEl) {
+      smsModalEl.addEventListener('click', (e) => {
+        if (e.target === smsModalEl) closeSmsParserModal();
+      });
+    }
 
 
     // Initialize theme and ledger density
