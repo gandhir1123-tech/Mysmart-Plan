@@ -5197,6 +5197,7 @@
       if (expenseDateInput) {
         expenseDateInput.value = getTodayIso();
       }
+      saveToLocalStorage();
       renderDashboard();
     });
 
@@ -5300,7 +5301,9 @@
     cancelCategoryEditBtn.addEventListener('click', () => {
       editingCategoryId = null;
       categoryEditorCard.classList.add('hidden');
+      saveToLocalStorage();
       renderDashboard();
+      showToast('Category & budget saved successfully! 💾');
     });
 
     
@@ -5495,7 +5498,9 @@
           }
         });
         closeEditTxModal();
+        saveToLocalStorage();
         renderDashboard();
+        showToast('Transaction deleted');
       }
     });
 
@@ -5534,7 +5539,9 @@
       }
 
       closeEditTxModal();
+      saveToLocalStorage();
       renderDashboard();
+      showToast('Transaction updated successfully! 💾');
     });
 
 
