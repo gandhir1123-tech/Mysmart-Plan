@@ -478,9 +478,9 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
-              <!-- Centered Doughnut Chart with Rich Center Metrics -->
-              <div class="relative w-44 h-44 mx-auto flex items-center justify-center">
-                <canvas id="categoryChart" width="176" height="176" class="mx-auto block"></canvas>
+              <!-- Centered Doughnut Chart with Rich Center Metrics (Fixed dimension, non-collapsing) -->
+              <div class="relative w-44 h-44 mx-auto" style="width: 176px; height: 176px;">
+                <canvas id="categoryChart" width="176" height="176" class="block" style="width: 176px; height: 176px;"></canvas>
                 <!-- Dynamic Center Metric Badge inside Doughnut Ring -->
                 <div id="chartCenterBadge" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
                   <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Total Spent</span>
@@ -2784,6 +2784,64 @@
       });
     }
 
+    // --- NATIVE 2D CANVAS DOUGHNUT RING (100% Offline & Bulletproof Fallback) ---
+    function drawNativeDoughnutRing(canvas, activeCats, totalsByCategory, totalSpent, isDark) {
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      const dpr = (typeof window !== 'undefined' && window.devicePixelRatio) ? window.devicePixelRatio : 1;
+      const size = 176;
+      canvas.width = size * dpr;
+      canvas.height = size * dpr;
+      canvas.style.width = size + 'px';
+      canvas.style.height = size + 'px';
+
+      ctx.save();
+      ctx.scale(dpr, dpr);
+      ctx.clearRect(0, 0, size, size);
+
+      const centerX = size / 2;
+      const centerY = size / 2;
+      const radius = 68;
+      const lineWidth = 24;
+
+      if (totalSpent <= 0 || activeCats.length === 0) {
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+        ctx.strokeStyle = isDark ? '#334155' : '#e2e8f0';
+        ctx.lineWidth = lineWidth;
+        ctx.stroke();
+        ctx.restore();
+        return;
+      }
+
+      let startAngle = -Math.PI / 2; // Start from top
+      activeCats.forEach((cat) => {
+        const val = totalsByCategory[cat.id] || 0;
+        const sliceAngle = (val / totalSpent) * (Math.PI * 2);
+        const endAngle = startAngle + sliceAngle;
+
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+        ctx.strokeStyle = cat.color;
+        ctx.lineWidth = lineWidth;
+        ctx.lineCap = 'butt';
+        ctx.stroke();
+
+        // Clean slice separator
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, endAngle - 0.02, endAngle);
+        ctx.strokeStyle = isDark ? '#0f172a' : '#ffffff';
+        ctx.lineWidth = lineWidth + 2;
+        ctx.stroke();
+
+        startAngle = endAngle;
+      });
+
+      ctx.restore();
+    }
+
     // --- 4. RENDER CURRENT MONTH DOUGHNUT CHART & HOME SNAPSHOT ---
     function updateCategoryBreakdown(totalSpent, totalsByCategory) {
       const currentCats = getActiveCategories();
@@ -2802,6 +2860,10 @@
         if (emptyChartMessage) emptyChartMessage.classList.remove('hidden');
         if (chartCenterBadge) chartCenterBadge.classList.add('hidden');
         if (chartCanvas) chartCanvas.classList.add('opacity-0');
+        if (doughnutChartInstance) {
+          try { doughnutChartInstance.destroy(); } catch (e) {}
+          doughnutChartInstance = null;
+        }
       } else {
         if (emptyChartMessage) emptyChartMessage.classList.add('hidden');
         if (chartCenterBadge) chartCenterBadge.classList.remove('hidden');
@@ -2820,61 +2882,67 @@
         if (chartCenterSubtext) chartCenterSubtext.textContent = `${budgetPct}% used`;
       }
 
-      // Always destroy existing chart instance before creating a new one to prevent canvas desync
-      if (doughnutChartInstance) {
-        try {
-          doughnutChartInstance.destroy();
-        } catch (e) {
-          console.warn('Chart destroy error:', e);
-        }
-        doughnutChartInstance = null;
-      }
-
-      // Render Chart.js Doughnut Chart if Chart.js is loaded and there is active spending
-      if (typeof Chart !== 'undefined' && chartCanvas && activeCats.length > 0) {
+      // Render Doughnut Chart with Chart.js or Native Canvas fallback
+      if (chartCanvas && activeCats.length > 0) {
         const labels = activeCats.map((c) => c.name);
         const dataValues = activeCats.map((c) => totalsByCategory[c.id]);
         const bgColors = activeCats.map((c) => c.color);
         const isDark = document.documentElement.classList.contains('dark');
 
-        try {
-          doughnutChartInstance = new Chart(chartCanvas, {
-            type: 'doughnut',
-            data: {
-              labels,
-              datasets: [{
-                data: dataValues,
-                backgroundColor: bgColors,
-                borderWidth: 2,
-                borderColor: isDark ? '#0f172a' : '#ffffff',
-                hoverOffset: 6
-              }]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: true,
-              aspectRatio: 1,
-              cutout: '72%',
-              layout: {
-                padding: 4
-              },
-              plugins: {
-                legend: { display: false },
-                tooltip: {
-                  enabled: true,
-                  callbacks: {
-                    label: function(context) {
-                      const val = context.raw || 0;
-                      const pct = totalSpent > 0 ? Math.round((val / totalSpent) * 100) : 0;
-                      return ` ${context.label}: ${formatCurrency(val)} (${pct}%)`;
+        let renderedWithChartJs = false;
+        if (typeof Chart !== 'undefined') {
+          try {
+            if (!doughnutChartInstance) {
+              doughnutChartInstance = new Chart(chartCanvas, {
+                type: 'doughnut',
+                data: {
+                  labels,
+                  datasets: [{
+                    data: dataValues,
+                    backgroundColor: bgColors,
+                    borderWidth: 2,
+                    borderColor: isDark ? '#0f172a' : '#ffffff',
+                    hoverOffset: 6
+                  }]
+                },
+                options: {
+                  responsive: false, // Explicit 176x176 dimensions prevent flexbox collapse
+                  maintainAspectRatio: false,
+                  animation: { duration: 350 },
+                  cutout: '70%',
+                  layout: { padding: 4 },
+                  plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                      enabled: true,
+                      callbacks: {
+                        label: function(context) {
+                          const val = context.raw || 0;
+                          const pct = totalSpent > 0 ? Math.round((val / totalSpent) * 100) : 0;
+                          return ` ${context.label}: ${formatCurrency(val)} (${pct}%)`;
+                        }
+                      }
                     }
                   }
                 }
-              }
+              });
+            } else {
+              doughnutChartInstance.data.labels = labels;
+              doughnutChartInstance.data.datasets[0].data = dataValues;
+              doughnutChartInstance.data.datasets[0].backgroundColor = bgColors;
+              doughnutChartInstance.data.datasets[0].borderColor = isDark ? '#0f172a' : '#ffffff';
+              doughnutChartInstance.update();
             }
-          });
-        } catch (err) {
-          console.error('Error initializing doughnut chart:', err);
+            renderedWithChartJs = true;
+          } catch (err) {
+            console.warn('Chart.js render issue, using native 2D canvas fallback:', err);
+            renderedWithChartJs = false;
+          }
+        }
+
+        // Native 2D Canvas Fallback: Guarantees the doughnut ring ALWAYS appears perfectly
+        if (!renderedWithChartJs) {
+          drawNativeDoughnutRing(chartCanvas, activeCats, totalsByCategory, totalSpent, isDark);
         }
       }
 
