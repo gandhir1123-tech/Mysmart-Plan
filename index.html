@@ -478,15 +478,29 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
-              <!-- Centered Doughnut Chart with Rich Center Metrics (Fixed dimension, non-collapsing) -->
-              <div class="relative w-44 h-44 mx-auto" style="width: 176px; height: 176px;">
-                <canvas id="categoryChart" width="176" height="176" class="block" style="width: 176px; height: 176px;"></canvas>
+              <!-- Centered Doughnut Chart with Rich Center Metrics (Crisp SVG Ring + Canvas Fallback) -->
+              <div class="relative w-44 h-44 mx-auto flex items-center justify-center" style="width: 176px; height: 176px;">
+                
+                <!-- Native Vector SVG Doughnut: 100% Reliable, Zero CDN Dependency, Never Goes Blank -->
+                <svg id="categoryDoughnutSvg" viewBox="0 0 100 100" class="w-44 h-44 -rotate-90 block overflow-visible">
+                  <!-- Background subtle track -->
+                  <circle cx="50" cy="50" r="38" fill="transparent" stroke="#e2e8f0" stroke-width="13" class="dark:stroke-slate-800 transition-colors" />
+                  <!-- Slices group -->
+                  <g id="categoryDoughnutSlices">
+                    <!-- Populated dynamically with colorful SVG circles -->
+                  </g>
+                </svg>
+
+                <!-- Retained Canvas Element for Chart.js / Context compatibility -->
+                <canvas id="categoryChart" width="176" height="176" class="hidden"></canvas>
+
                 <!-- Dynamic Center Metric Badge inside Doughnut Ring -->
                 <div id="chartCenterBadge" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
                   <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Total Spent</span>
                   <span id="chartCenterAmount" class="text-base font-black text-slate-800 dark:text-white leading-tight">₹0</span>
                   <span id="chartCenterSubtext" class="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">0% used</span>
                 </div>
+
                 <!-- Empty Chart Fallback -->
                 <div id="emptyChartMessage" class="hidden absolute inset-0 flex flex-col items-center justify-center text-xs text-slate-400 text-center px-3 bg-white/95 dark:bg-slate-900/95 rounded-full">
                   <span class="text-xl mb-0.5">📊</span>
@@ -2852,22 +2866,17 @@
       const chartCenterAmount = document.getElementById('chartCenterAmount');
       const chartCenterSubtext = document.getElementById('chartCenterSubtext');
       const emptyChartMessage = document.getElementById('emptyChartMessage');
-      const chartCanvas = document.getElementById('categoryChart');
+      const svgSlicesGroup = document.getElementById('categoryDoughnutSlices');
 
       // Update Top Category Badge
-      if (activeCats.length === 0) {
+      if (activeCats.length === 0 || totalSpent <= 0) {
         if (topCategoryBadge) topCategoryBadge.textContent = 'No data yet';
         if (emptyChartMessage) emptyChartMessage.classList.remove('hidden');
         if (chartCenterBadge) chartCenterBadge.classList.add('hidden');
-        if (chartCanvas) chartCanvas.classList.add('opacity-0');
-        if (doughnutChartInstance) {
-          try { doughnutChartInstance.destroy(); } catch (e) {}
-          doughnutChartInstance = null;
-        }
+        if (svgSlicesGroup) svgSlicesGroup.innerHTML = '';
       } else {
         if (emptyChartMessage) emptyChartMessage.classList.add('hidden');
         if (chartCenterBadge) chartCenterBadge.classList.remove('hidden');
-        if (chartCanvas) chartCanvas.classList.remove('opacity-0');
 
         const topCat = activeCats.reduce((a, b) =>
           (totalsByCategory[a.id] || 0) >= (totalsByCategory[b.id] || 0) ? a : b
@@ -2882,67 +2891,47 @@
         if (chartCenterSubtext) chartCenterSubtext.textContent = `${budgetPct}% used`;
       }
 
-      // Render Doughnut Chart with Chart.js or Native Canvas fallback
-      if (chartCanvas && activeCats.length > 0) {
-        const labels = activeCats.map((c) => c.name);
-        const dataValues = activeCats.map((c) => totalsByCategory[c.id]);
-        const bgColors = activeCats.map((c) => c.color);
-        const isDark = document.documentElement.classList.contains('dark');
+      // Render Bulletproof Vector SVG Doughnut Ring: 100% Reliable & Zero Dependency
+      if (svgSlicesGroup) {
+        svgSlicesGroup.innerHTML = '';
+        if (activeCats.length > 0 && totalSpent > 0) {
+          const radius = 38;
+          const circumference = 2 * Math.PI * radius; // 238.761
+          let currentOffset = 0;
 
-        let renderedWithChartJs = false;
-        if (typeof Chart !== 'undefined') {
-          try {
-            if (!doughnutChartInstance) {
-              doughnutChartInstance = new Chart(chartCanvas, {
-                type: 'doughnut',
-                data: {
-                  labels,
-                  datasets: [{
-                    data: dataValues,
-                    backgroundColor: bgColors,
-                    borderWidth: 2,
-                    borderColor: isDark ? '#0f172a' : '#ffffff',
-                    hoverOffset: 6
-                  }]
-                },
-                options: {
-                  responsive: false, // Explicit 176x176 dimensions prevent flexbox collapse
-                  maintainAspectRatio: false,
-                  animation: { duration: 350 },
-                  cutout: '70%',
-                  layout: { padding: 4 },
-                  plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                      enabled: true,
-                      callbacks: {
-                        label: function(context) {
-                          const val = context.raw || 0;
-                          const pct = totalSpent > 0 ? Math.round((val / totalSpent) * 100) : 0;
-                          return ` ${context.label}: ${formatCurrency(val)} (${pct}%)`;
-                        }
-                      }
-                    }
-                  }
-                }
-              });
-            } else {
-              doughnutChartInstance.data.labels = labels;
-              doughnutChartInstance.data.datasets[0].data = dataValues;
-              doughnutChartInstance.data.datasets[0].backgroundColor = bgColors;
-              doughnutChartInstance.data.datasets[0].borderColor = isDark ? '#0f172a' : '#ffffff';
-              doughnutChartInstance.update();
-            }
-            renderedWithChartJs = true;
-          } catch (err) {
-            console.warn('Chart.js render issue, using native 2D canvas fallback:', err);
-            renderedWithChartJs = false;
-          }
-        }
+          activeCats.forEach((cat) => {
+            const val = totalsByCategory[cat.id] || 0;
+            const pct = val / totalSpent;
+            const dashLength = pct * circumference;
+            const dashOffset = -currentOffset;
+            currentOffset += dashLength;
 
-        // Native 2D Canvas Fallback: Guarantees the doughnut ring ALWAYS appears perfectly
-        if (!renderedWithChartJs) {
-          drawNativeDoughnutRing(chartCanvas, activeCats, totalsByCategory, totalSpent, isDark);
+            const slicePct = Math.round(pct * 100);
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('cx', '50');
+            circle.setAttribute('cy', '50');
+            circle.setAttribute('r', String(radius));
+            circle.setAttribute('fill', 'transparent');
+            circle.setAttribute('stroke', cat.color || '#4f46e5');
+            circle.setAttribute('stroke-width', '13');
+            circle.setAttribute('stroke-dasharray', `${dashLength.toFixed(2)} ${circumference.toFixed(2)}`);
+            circle.setAttribute('stroke-dashoffset', dashOffset.toFixed(2));
+            circle.setAttribute('class', 'transition-all duration-300 hover:opacity-85 cursor-pointer');
+
+            // Native hover tooltip
+            const titleEl = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+            titleEl.textContent = `${cat.icon || ''} ${cat.name}: ${formatCurrency(val)} (${slicePct}%)`;
+            circle.appendChild(titleEl);
+
+            // Click slice to filter transaction ledger by this category
+            circle.addEventListener('click', () => {
+              selectedCategory = cat.id;
+              filterLedgerType = 'expense';
+              switchTab('expenses');
+            });
+
+            svgSlicesGroup.appendChild(circle);
+          });
         }
       }
 
@@ -3083,53 +3072,59 @@
         });
       }
 
-      if (!comparisonChartInstance) {
-        comparisonChartInstance = new Chart(comparisonChartCanvas, {
-          data: {
-            labels: chartLabels,
-            datasets: categoryDatasets
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { display: false },
-              tooltip: {
-                callbacks: {
-                  label: function(ctx) {
-                    return ` ${ctx.dataset.label}: ${formatCurrency(ctx.raw)}`;
+      if (typeof Chart !== 'undefined' && comparisonChartCanvas) {
+        try {
+          if (!comparisonChartInstance) {
+            comparisonChartInstance = new Chart(comparisonChartCanvas, {
+              data: {
+                labels: chartLabels,
+                datasets: categoryDatasets
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: { display: false },
+                  tooltip: {
+                    callbacks: {
+                      label: function(ctx) {
+                        return ` ${ctx.dataset.label}: ${formatCurrency(ctx.raw)}`;
+                      },
+                      footer: function(items) {
+                        const monthTotal = items.reduce((sum, it) => sum + (it.raw || 0), 0);
+                        return `Total: ${formatCurrency(monthTotal)}`;
+                      }
+                    }
+                  }
+                },
+                scales: {
+                  x: {
+                    stacked: true,
+                    grid: { display: false },
+                    ticks: { font: { size: 10 } }
                   },
-                  footer: function(items) {
-                    const monthTotal = items.reduce((sum, it) => sum + (it.raw || 0), 0);
-                    return `Total: ${formatCurrency(monthTotal)}`;
+                  y: {
+                    stacked: true,
+                    beginAtZero: true,
+                    grid: { color: '#f1f5f9' },
+                    ticks: {
+                      callback: function(v) { return '₹' + (v / 1000) + 'k'; },
+                      font: { size: 10 }
+                    }
                   }
                 }
               }
-            },
-            scales: {
-              x: {
-                stacked: true,
-                grid: { display: false },
-                ticks: { font: { size: 10 } }
-              },
-              y: {
-                stacked: true,
-                beginAtZero: true,
-                grid: { color: '#f1f5f9' },
-                ticks: {
-                  callback: function(v) { return '₹' + (v / 1000) + 'k'; },
-                  font: { size: 10 }
-                }
-              }
-            }
+            });
+          } else {
+            comparisonChartInstance.data.labels = chartLabels;
+            comparisonChartInstance.data.datasets = categoryDatasets;
+            comparisonChartInstance.options.scales.x.stacked = true;
+            comparisonChartInstance.options.scales.y.stacked = true;
+            comparisonChartInstance.update();
           }
-        });
-      } else {
-        comparisonChartInstance.data.labels = chartLabels;
-        comparisonChartInstance.data.datasets = categoryDatasets;
-        comparisonChartInstance.options.scales.x.stacked = true;
-        comparisonChartInstance.options.scales.y.stacked = true;
-        comparisonChartInstance.update();
+        } catch (err) {
+          console.warn('Comparison chart render error:', err);
+        }
       }
 
       // Compute Total Spent per category across the selected period
