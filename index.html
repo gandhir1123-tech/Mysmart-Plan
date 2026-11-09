@@ -23,10 +23,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     html, body {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
       height: 100%;
+      height: 100dvh;
       margin: 0;
       padding: 0;
       overflow: hidden;
+      overscroll-behavior: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    @media (min-width: 640px) {
+      html, body {
+        position: static;
+        height: 100%;
+        overflow: auto;
+      }
     }
     body {
       font-family: 'Inter', sans-serif;
@@ -265,10 +281,10 @@
 <body class="min-h-screen bg-slate-100 flex justify-center items-start sm:items-center sm:py-4 px-0 sm:px-4 text-slate-800">
 
   <!-- Mobile App Shell: Anchored to viewport height on mobile, cleanly framed on desktop -->
-  <div class="w-full max-w-md bg-white sm:rounded-3xl shadow-2xl overflow-hidden h-screen h-[100dvh] flex flex-col sm:h-[840px] border-0 sm:border border-slate-200/80 relative">
+  <div class="w-full max-w-md bg-white sm:rounded-3xl shadow-2xl overflow-hidden h-full h-[100dvh] flex flex-col sm:h-[840px] border-0 sm:border border-slate-200/80 relative">
     
     <!-- Compact Top Header: Reduced vertical height for mobile screens -->
-    <header class="bg-gradient-to-br from-indigo-700 via-indigo-800 to-slate-900 text-white px-3.5 py-2.5 shrink-0 z-20 shadow-sm">
+    <header class="bg-gradient-to-br from-indigo-700 via-indigo-800 to-slate-900 text-white px-3.5 py-2.5 shrink-0 z-30 shadow-sm w-full sticky top-0" style="padding-top: max(10px, env(safe-area-inset-top, 10px));">
       <div class="flex items-center justify-between mb-1.5">
         <div class="flex items-center gap-2 min-w-0">
           <h1 class="text-base font-extrabold tracking-tight flex items-center gap-2 shrink-0">
@@ -316,7 +332,7 @@
       </header>
 
     <!-- Scrollable Main Content Area -->
-    <main class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4" style="padding-bottom: 120px;">
+    <main class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4" style="padding-bottom: 160px;">
 
       <!-- ==========================================
            VIEW 1: HOME (DASHBOARD & COMPARISON REPORTS)
@@ -325,32 +341,29 @@
         <!-- Master Monthly Accounts & Budget Summary Card (Home Dashboard Only) -->
         <section class="bg-gradient-to-br from-indigo-800 via-indigo-900 to-slate-900 text-white rounded-2xl p-4 border border-indigo-700/50 shadow-md space-y-3">
           
-          <!-- Primary Net Balance Metric + Quick Funds Transfer Button -->
-          <div class="flex items-center justify-between">
-            <div>
-              <div class="flex items-baseline gap-2">
-                <span class="text-xs text-indigo-200 font-medium">Balance:</span>
-                <p id="netBalanceDisplay" class="text-2xl font-extrabold tracking-tight text-white">₹0</p>
-              </div>
-              <!-- Monthly Cashflow & Carryover Subtext -->
-              <div id="carryoverBalanceSubtext" class="flex items-center gap-2 mt-0.5 text-[10px] text-indigo-200 flex-wrap">
-                <span id="thisMonthSavingsText" class="font-semibold text-emerald-300">+₹0 this month</span>
-                <span id="openingBalanceCarryoverText" class="font-medium text-indigo-300 hidden">• ₹0 carried over</span>
-              </div>
+          <!-- Master Balance Header: Clean Title, Local Sync Indicator & Savings Rate Badge -->
+          <div class="flex items-center justify-between pb-1.5 border-b border-white/10">
+            <div class="flex items-center gap-1.5 min-w-0">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
+              <span class="text-xs font-bold uppercase tracking-wider text-indigo-200 truncate">Monthly Net Balance</span>
             </div>
-            <div class="flex items-center gap-2">
-              <button
-                id="openTransferModalHeaderBtn"
-                type="button"
-                class="text-[11px] font-bold px-2.5 py-1 rounded-xl bg-emerald-500/25 hover:bg-emerald-500/40 text-emerald-200 border border-emerald-400/30 transition flex items-center gap-1 cursor-pointer"
-                title="Transfer funds from Regular Expense to Personal Account"
-              >
-                <span>⇄</span>
-                <span>Transfer</span>
-              </button>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <span id="offlineSyncStatusIndicator" class="inline-flex items-center gap-1 text-[9px] font-semibold text-emerald-300 bg-emerald-400/15 px-2 py-0.5 rounded-full border border-emerald-400/30 transition-all duration-300" title="Your data is saved 100% privately in device local storage">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Saved Offline</span>
+              </span>
               <span id="savingsRateBadge" class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 shrink-0">
                 0% Saved
               </span>
+            </div>
+          </div>
+
+          <!-- Master Balance Big Amount & Monthly Trend -->
+          <div class="flex items-baseline justify-between gap-2 flex-wrap pt-0.5">
+            <p id="netBalanceDisplay" class="text-3xl font-black tracking-tight text-white whitespace-nowrap">₹0</p>
+            <div id="carryoverBalanceSubtext" class="flex items-center gap-1.5 text-xs text-indigo-200 flex-wrap">
+              <span id="thisMonthSavingsText" class="font-bold text-emerald-300 whitespace-nowrap">+₹0 this month</span>
+              <span id="openingBalanceCarryoverText" class="font-medium text-indigo-300 hidden">• ₹0 carried</span>
             </div>
           </div>
 
@@ -401,8 +414,9 @@
               <div id="budgetProgressBar" class="h-full bg-emerald-400 rounded-full transition-all duration-300" style="width: 0%"></div>
             </div>
 
-            <div class="flex items-center justify-end text-[10px] text-indigo-200">
-              <span id="remainingBalanceText" class="font-medium text-emerald-200">₹25,000 remaining to spend</span>
+            <div class="flex items-center justify-between text-[11px] text-indigo-200 font-medium">
+              <span>Spent: <strong id="spentUnderProgressBar" class="text-white font-bold">₹0</strong></span>
+              <span id="remainingBalanceText" class="font-bold text-emerald-300">₹25,000 remaining to spend</span>
             </div>
 
             <!-- Safe Daily Spend Allowance Indicator -->
@@ -412,42 +426,39 @@
           </div>
 
         </section>
-
-        
-        <!-- Period Switcher: Current Month vs 3M, 6M, 1 Year Reports -->
-        <div class="bg-slate-100 p-1 rounded-xl flex items-center gap-1 overflow-x-auto no-scrollbar">
+        <!-- HOME SUB-TABS NAVIGATION: Overview | Bills & Splits | Reports & Trends -->
+        <div class="bg-slate-100 dark:bg-slate-800/80 p-1 rounded-2xl flex items-center gap-1 shadow-2xs">
           <button
-            id="periodCurrentBtn"
+            id="homeTabOverviewBtn"
             type="button"
-            class="flex-1 py-1.5 px-2.5 rounded-lg text-xs font-semibold whitespace-nowrap transition bg-white text-indigo-700 shadow-sm"
+            onclick="switchHomeSubTab('overview')"
+            class="flex-1 py-2 px-2 rounded-xl text-xs font-bold whitespace-nowrap transition bg-white dark:bg-slate-900 text-indigo-700 dark:text-indigo-400 shadow-sm text-center flex items-center justify-center gap-1 cursor-pointer"
           >
-            Current Month
+            <span>📊</span>
+            <span>Overview</span>
           </button>
           <button
-            id="period3MBtn"
+            id="homeTabBillsBtn"
             type="button"
-            class="flex-1 py-1.5 px-2.5 rounded-lg text-xs font-semibold whitespace-nowrap transition text-slate-600 hover:text-slate-800"
+            onclick="switchHomeSubTab('bills')"
+            class="flex-1 py-2 px-2 rounded-xl text-xs font-semibold whitespace-nowrap transition text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white text-center flex items-center justify-center gap-1 cursor-pointer"
           >
-            3M Compare
+            <span>📅</span>
+            <span>Bills & Dues</span>
           </button>
           <button
-            id="period6MBtn"
+            id="homeTabReportsBtn"
             type="button"
-            class="flex-1 py-1.5 px-2.5 rounded-lg text-xs font-semibold whitespace-nowrap transition text-slate-600 hover:text-slate-800"
+            onclick="switchHomeSubTab('reports')"
+            class="flex-1 py-2 px-2 rounded-xl text-xs font-semibold whitespace-nowrap transition text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white text-center flex items-center justify-center gap-1 cursor-pointer"
           >
-            6M Compare
-          </button>
-          <button
-            id="period1YBtn"
-            type="button"
-            class="flex-1 py-1.5 px-2.5 rounded-lg text-xs font-semibold whitespace-nowrap transition text-slate-600 hover:text-slate-800"
-          >
-            1 Year Report
+            <span>📈</span>
+            <span>Reports & Trends</span>
           </button>
         </div>
 
-        <!-- SUB-PANEL A: CURRENT MONTH BREAKDOWN (Doughnut Chart, Inflow Highlights & Bills) -->
-        <div id="currentMonthDashboardPanel" class="space-y-4">
+        <!-- SUB-PANEL 1: OVERVIEW (Alerts & Category Breakdown) -->
+        <div id="homeSubTab-overview" class="space-y-4">
           <!-- Category Budget Warning & Overspending Alerts (80% & 100%) -->
           <div id="categoryBudgetAlertBanner" class="hidden rounded-2xl p-3 border transition shadow-sm space-y-2">
             <!-- Populated dynamically by updateBudgetWarningAlerts() in JS -->
@@ -467,16 +478,24 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
-              <!-- Fixed-height container for Chart.js Doughnut Chart -->
-              <div class="relative h-44 w-full flex items-center justify-center">
-                <canvas id="categoryChart"></canvas>
-                <div id="emptyChartMessage" class="hidden absolute inset-0 flex items-center justify-center text-xs text-slate-400 text-center px-4">
-                  Add an expense to see your chart breakdown
+              <!-- Centered Doughnut Chart with Rich Center Metrics -->
+              <div class="relative w-44 h-44 mx-auto flex items-center justify-center">
+                <canvas id="categoryChart" width="176" height="176" class="mx-auto block"></canvas>
+                <!-- Dynamic Center Metric Badge inside Doughnut Ring -->
+                <div id="chartCenterBadge" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
+                  <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Total Spent</span>
+                  <span id="chartCenterAmount" class="text-base font-black text-slate-800 dark:text-white leading-tight">₹0</span>
+                  <span id="chartCenterSubtext" class="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">0% used</span>
+                </div>
+                <!-- Empty Chart Fallback -->
+                <div id="emptyChartMessage" class="hidden absolute inset-0 flex flex-col items-center justify-center text-xs text-slate-400 text-center px-3 bg-white/95 dark:bg-slate-900/95 rounded-full">
+                  <span class="text-xl mb-0.5">📊</span>
+                  <span class="font-medium">No expenses yet</span>
                 </div>
               </div>
 
               <!-- Category Legend & Budget Health Bars -->
-              <div id="categoryLegendList" class="space-y-2.5 text-xs">
+              <div id="categoryLegendList" class="space-y-2 text-xs">
                 <!-- Dynamically populated by JS -->
               </div>
             </div>
@@ -488,118 +507,26 @@
               </button>
             </div>
           </section>
+        </div>
 
-          <!-- PHASE 3: Smart Habit Insights & Month-over-Month Trends Drawer -->
-          <section id="habitInsightsSection" class="bg-white dark:bg-slate-900 rounded-2xl p-3.5 sm:p-4 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-3">
-            <button
-              type="button"
-              id="toggleHabitInsightsBtn"
-              onclick="window.toggleHabitInsightsDrawer && window.toggleHabitInsightsDrawer()"
-              class="w-full flex items-center justify-between text-left cursor-pointer transition group"
-            >
-              <div class="flex items-center gap-2.5 min-w-0">
-                <span class="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 text-white flex items-center justify-center text-sm font-bold shrink-0 shadow-xs group-hover:scale-105 transition">💡</span>
-                <div class="min-w-0">
-                  <div class="flex items-center gap-1.5 flex-wrap">
-                    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-100">
-                      Habit Insights & Trends
-                    </h2>
-                  </div>
-                  <p id="habitInsightSubtitle" class="text-[10px] text-slate-400 truncate">
-                    Micro-spends, weekend habits & MoM comparison
-                  </p>
-                </div>
+                <!-- SUB-PANEL 2: BILLS & DUES (Recurring Bills, Dues & Payback Tracking) -->
+        <div id="homeSubTab-bills" class="hidden space-y-4">
+          <!-- Aggregated Friends Summary Drawer ("Who Owes Me What") -->
+          <div id="aggregatedFriendsSummaryCard" class="hidden p-3 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/20 border border-amber-200/90 dark:border-amber-800/60 shadow-2xs space-y-2">
+            <!-- Dynamically populated by JS renderAggregatedFriendsSummary() -->
+          </div>
+
+          <!-- Pending Reimbursements & Friend Returns Summary Banner -->
+          <div id="pendingReturnsBanner" class="hidden p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-2">
+              <span class="text-base">⏳</span>
+              <div>
+                <p id="pendingReturnsTitle" class="font-bold text-amber-900 dark:text-amber-200 text-[11px]">Pending Money to Receive</p>
+                <p class="text-[10px] text-amber-700 dark:text-amber-400">Tap any pending badge below when office or friend pays back</p>
               </div>
-              <div class="flex items-center gap-1 shrink-0 ml-1">
-                <span id="habitDrawerArrow" class="text-xs font-bold text-slate-400 group-hover:text-indigo-600 transition-transform">▼</span>
-              </div>
-            </button>
-
-            <!-- Expandable Insights Body -->
-            <div id="habitInsightsDrawerBody" class="hidden pt-2 border-t border-slate-100 dark:border-slate-800 space-y-3 text-xs">
-              
-              <!-- 1. Money Leakage & Routine Habit Cards (2-Grid) -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                
-                <!-- Micro-Spend Tracker Card -->
-                <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-1.5">
-                  <div class="flex items-center justify-between">
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                      <span>☕</span>
-                      <span>Micro-Spend Leakage</span>
-                    </span>
-                    <span id="microSpendCountBadge" class="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300">
-                      0 payments
-                    </span>
-                  </div>
-                  <div class="flex items-baseline gap-1.5">
-                    <span id="microSpendTotalDisplay" class="text-base font-extrabold text-slate-800 dark:text-slate-100">₹0</span>
-                    <span id="microSpendAvgDisplay" class="text-[10px] text-slate-400">(₹0 / day)</span>
-                  </div>
-                  <p id="microSpendDescText" class="text-[10px] text-slate-500 dark:text-slate-400 leading-tight">
-                    Small routine spends under ₹150 (chai, auto, snacks) across active days.
-                  </p>
-                </div>
-
-                <!-- Weekend vs Weekday Pattern Card -->
-                <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-1.5">
-                  <div class="flex items-center justify-between">
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                      <span>🗓️</span>
-                      <span>Weekend vs Weekday</span>
-                    </span>
-                    <span id="weekendShareBadge" class="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">
-                      0% Weekend
-                    </span>
-                  </div>
-                  <div class="flex items-baseline gap-1.5">
-                    <span id="weekendTotalDisplay" class="text-base font-extrabold text-slate-800 dark:text-slate-100">₹0</span>
-                    <span id="weekdayTotalDisplay" class="text-[10px] text-slate-400">(vs ₹0 weekdays)</span>
-                  </div>
-                  <p id="weekendDescText" class="text-[10px] text-slate-500 dark:text-slate-400 leading-tight">
-                    Track discretionary spikes and leisure spending on Sat & Sun.
-                  </p>
-                </div>
-
-              </div>
-
-              <!-- Top Payee / Merchant Highlight Strip -->
-              <div id="topPayeeInsightStrip" class="p-2.5 rounded-xl bg-indigo-50/60 dark:bg-slate-800/80 border border-indigo-100 dark:border-slate-700 flex items-center justify-between gap-2 text-xs">
-                <div class="flex items-center gap-2 min-w-0">
-                  <span class="text-base shrink-0">👑</span>
-                  <div class="min-w-0">
-                    <span class="text-[10px] text-slate-500 dark:text-slate-400 block">Top Payee This Month:</span>
-                    <span id="topPayeeName" class="font-bold text-slate-800 dark:text-slate-100 truncate block">No transactions yet</span>
-                  </div>
-                </div>
-                <div class="text-right shrink-0">
-                  <span id="topPayeeAmount" class="font-extrabold text-indigo-700 dark:text-indigo-300 block">₹0</span>
-                  <span id="topPayeeCount" class="text-[9px] text-slate-400 block">0 visits</span>
-                </div>
-              </div>
-
-              <!-- 2. Month-over-Month Trend Intelligence (e.g. Nov vs. Oct) -->
-              <div class="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-1.5">
-                    <span class="text-xs">📊</span>
-                    <span id="momComparisonHeading" class="text-xs font-bold text-slate-700 dark:text-slate-200">
-                      Nov vs. Oct Comparison
-                    </span>
-                  </div>
-                  <span id="momNetChangeBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-                    ₹0 net change
-                  </span>
-                </div>
-
-                <!-- MoM Category Shift List -->
-                <div id="momCategoryShiftList" class="space-y-1.5 pt-1">
-                  <!-- Populated dynamically by JS -->
-                </div>
-              </div>
-
             </div>
-          </section>
+            <span id="pendingReturnsAmount" class="font-extrabold text-amber-900 dark:text-amber-200 text-xs bg-white dark:bg-slate-900 px-2.5 py-1 rounded-lg border border-amber-200 dark:border-amber-700 shrink-0">₹0</span>
+          </div>
 
           <!-- Recurring & Multi-Month Bills Manager -->
           <section class="bg-indigo-50/60 dark:bg-slate-900 rounded-2xl p-4 border border-indigo-100 dark:border-slate-800 space-y-3">
@@ -726,11 +653,43 @@
               <!-- Dynamically populated by JS -->
             </div>
           </section>
-
-          <!-- Clearance buffer so last entry is never hidden by fixed bottom nav bar -->
-          <div class="h-28 w-full shrink-0" aria-hidden="true"></div>
         </div>
 
+        <!-- SUB-PANEL 3: REPORTS & TRENDS (Analytics, Comparisons & Habit Insights) -->
+        <div id="homeSubTab-reports" class="hidden space-y-4">
+        <!-- Period Switcher: Current Month vs 3M, 6M, 1 Year Reports -->
+        <div class="bg-slate-100 dark:bg-slate-800/80 p-1 rounded-xl flex items-center gap-1 overflow-x-auto no-scrollbar">
+          <button
+            id="periodCurrentBtn"
+            type="button"
+            class="flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold whitespace-nowrap transition bg-white dark:bg-slate-900 text-indigo-700 dark:text-indigo-400 shadow-sm text-center"
+          >
+            Current
+          </button>
+          <button
+            id="period3MBtn"
+            type="button"
+            class="flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold whitespace-nowrap transition text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white text-center"
+          >
+            3 Months
+          </button>
+          <button
+            id="period6MBtn"
+            type="button"
+            class="flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold whitespace-nowrap transition text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white text-center"
+          >
+            6 Months
+          </button>
+          <button
+            id="period1YBtn"
+            type="button"
+            class="flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold whitespace-nowrap transition text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white text-center"
+          >
+            1 Year
+          </button>
+        </div>
+
+          <div id="currentMonthDashboardPanel" class="hidden"></div>
         <!-- SUB-PANEL B: MULTI-MONTH COMPARISON & 1-YEAR REPORT (Revealed on 3M, 6M, 1Y) -->
         <div id="comparisonReportPanel" class="hidden space-y-4">
           
@@ -815,37 +774,156 @@
 
         </div>
 
+          <!-- PHASE 3: Smart Habit Insights & Month-over-Month Trends Drawer -->
+          <section id="habitInsightsSection" class="bg-white dark:bg-slate-900 rounded-2xl p-3.5 sm:p-4 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-3">
+            <button
+              type="button"
+              id="toggleHabitInsightsBtn"
+              onclick="window.toggleHabitInsightsDrawer && window.toggleHabitInsightsDrawer()"
+              class="w-full flex items-center justify-between text-left cursor-pointer transition group"
+            >
+              <div class="flex items-center gap-2.5 min-w-0">
+                <span class="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 text-white flex items-center justify-center text-sm font-bold shrink-0 shadow-xs group-hover:scale-105 transition">💡</span>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-100">
+                      Habit Insights & Trends
+                    </h2>
+                  </div>
+                  <p id="habitInsightSubtitle" class="text-[10px] text-slate-400 truncate">
+                    Micro-spends, weekend habits & MoM comparison
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center gap-1 shrink-0 ml-1">
+                <span id="habitDrawerArrow" class="text-xs font-bold text-slate-400 group-hover:text-indigo-600 transition-transform">▼</span>
+              </div>
+            </button>
+
+            <!-- Expandable Insights Body -->
+            <div id="habitInsightsDrawerBody" class="hidden pt-2 border-t border-slate-100 dark:border-slate-800 space-y-3 text-xs">
+              
+              <!-- 1. Money Leakage & Routine Habit Cards (2-Grid) -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                
+                <!-- Micro-Spend Tracker Card -->
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-1.5">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                      <span>☕</span>
+                      <span>Micro-Spend Leakage</span>
+                    </span>
+                    <span id="microSpendCountBadge" class="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300">
+                      0 payments
+                    </span>
+                  </div>
+                  <div class="flex items-baseline gap-1.5">
+                    <span id="microSpendTotalDisplay" class="text-base font-extrabold text-slate-800 dark:text-slate-100">₹0</span>
+                    <span id="microSpendAvgDisplay" class="text-[10px] text-slate-400">(₹0 / day)</span>
+                  </div>
+                  <p id="microSpendDescText" class="text-[10px] text-slate-500 dark:text-slate-400 leading-tight">
+                    Small routine spends under ₹150 (chai, auto, snacks) across active days.
+                  </p>
+                </div>
+
+                <!-- Weekend vs Weekday Pattern Card -->
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-1.5">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                      <span>🗓️</span>
+                      <span>Weekend vs Weekday</span>
+                    </span>
+                    <span id="weekendShareBadge" class="text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">
+                      0% Weekend
+                    </span>
+                  </div>
+                  <div class="flex items-baseline gap-1.5">
+                    <span id="weekendTotalDisplay" class="text-base font-extrabold text-slate-800 dark:text-slate-100">₹0</span>
+                    <span id="weekdayTotalDisplay" class="text-[10px] text-slate-400">(vs ₹0 weekdays)</span>
+                  </div>
+                  <p id="weekendDescText" class="text-[10px] text-slate-500 dark:text-slate-400 leading-tight">
+                    Track discretionary spikes and leisure spending on Sat & Sun.
+                  </p>
+                </div>
+
+              </div>
+
+              <!-- Top Payee / Merchant Highlight Strip -->
+              <div id="topPayeeInsightStrip" class="p-2.5 rounded-xl bg-indigo-50/60 dark:bg-slate-800/80 border border-indigo-100 dark:border-slate-700 flex items-center justify-between gap-2 text-xs">
+                <div class="flex items-center gap-2 min-w-0">
+                  <span class="text-base shrink-0">👑</span>
+                  <div class="min-w-0">
+                    <span class="text-[10px] text-slate-500 dark:text-slate-400 block">Top Payee This Month:</span>
+                    <span id="topPayeeName" class="font-bold text-slate-800 dark:text-slate-100 truncate block">No transactions yet</span>
+                  </div>
+                </div>
+                <div class="text-right shrink-0">
+                  <span id="topPayeeAmount" class="font-extrabold text-indigo-700 dark:text-indigo-300 block">₹0</span>
+                  <span id="topPayeeCount" class="text-[9px] text-slate-400 block">0 visits</span>
+                </div>
+              </div>
+
+              <!-- 2. Month-over-Month Trend Intelligence (e.g. Nov vs. Oct) -->
+              <div class="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-xs">📊</span>
+                    <span id="momComparisonHeading" class="text-xs font-bold text-slate-700 dark:text-slate-200">
+                      Nov vs. Oct Comparison
+                    </span>
+                  </div>
+                  <span id="momNetChangeBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                    ₹0 net change
+                  </span>
+                </div>
+
+                <!-- MoM Category Shift List -->
+                <div id="momCategoryShiftList" class="space-y-1.5 pt-1">
+                  <!-- Populated dynamically by JS -->
+                </div>
+              </div>
+
+            </div>
+          </section>
+        </div>
       </div>
 
-      <!-- ==========================================
-           VIEW 2: TRANSACTIONS / EXPENSES (INCOME & EXPENSES LOG)
-           ========================================== -->
-      <div id="view-expenses" class="hidden space-y-4">
-        <!-- Quick Bank SMS & UPI Smart Parser Banner -->
-        <div class="p-3 rounded-2xl bg-gradient-to-r from-indigo-500/10 via-emerald-500/10 to-cyan-500/10 dark:from-indigo-950/40 dark:via-emerald-950/30 dark:to-cyan-950/30 border border-indigo-200/80 dark:border-indigo-800/60 flex items-center justify-between gap-3 shadow-2xs">
-          <div class="flex items-center gap-2.5 min-w-0">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-500 text-white flex items-center justify-center text-lg shrink-0 shadow-xs">
-              ⚡
-            </div>
-            <div class="min-w-0">
-              <div class="text-xs font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
-                <span>SMS & UPI Smart Logger</span>
-                <span class="text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded-md bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300">Fast Entry</span>
-              </div>
-              <p class="text-[10px] text-slate-500 dark:text-slate-400 truncate">Auto-extract amount, merchant & category in 2s</p>
-            </div>
+            <!-- VIEW 2: TRANSACTIONS / EXPENSES (ACCOUNT LEDGER) -->
+      <div id="view-expenses" class="hidden space-y-3.5">
+        
+        <!-- Compact Ledger Action Header: Title + Fast Entry + Add Button -->
+        <div class="flex items-center justify-between gap-2 bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xs">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-100">Account Ledger</span>
+            <span id="itemCountBadge" class="text-[10px] font-bold bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded-full">0 entries</span>
           </div>
-          <button
-            type="button"
-            onclick="window.openSmsParserModal && window.openSmsParserModal()"
-            class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold text-xs shadow-sm flex items-center gap-1 shrink-0 transition cursor-pointer"
-          >
-            <span>📋 Paste SMS</span>
-          </button>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button
+              type="button"
+              onclick="window.openSmsParserModal && window.openSmsParserModal()"
+              class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center gap-1 transition cursor-pointer"
+              title="Paste bank SMS or UPI notification"
+            >
+              <span>📋</span>
+              <span>Paste SMS</span>
+            </button>
+            <button
+              type="button"
+              id="toggleExpenseFormBtn"
+              onclick="window.toggleExpenseForm && window.toggleExpenseForm()"
+              class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition cursor-pointer"
+            >
+              <span id="toggleExpenseFormIcon">+</span>
+              <span id="toggleExpenseFormText">Add Entry</span>
+            </button>
+          </div>
         </div>
 
-        
-        <!-- User-Friendly Transaction Logger: Toggle between Expense and Income -->
+        <!-- Collapsible Full Transaction Logger (Collapsed by default so Ledger is immediately visible) -->
+        <div id="collapsibleExpenseFormWrap" class="hidden transition-all duration-300 space-y-3">
+          
+          <!-- User-Friendly Transaction Logger: Toggle between Expense and Income -->
         <section class="bg-slate-50 rounded-2xl p-4 border border-slate-200/80 space-y-3">
           <div class="flex items-center justify-between">
             <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-500">
@@ -1004,112 +1082,109 @@
             </button>
 
           </form>
+
+        <!-- Account Ledger (Filters & Daily Grouped Entries Start Immediately Here) -->
         </section>
+        </div>
 
-        <!-- Transaction Filter Pills: All / Income Only / Expenses Only -->
-        <section class="flex-1 flex flex-col">
-          <div class="flex items-center justify-between mb-2.5">
-            <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-500">
-              Account Ledger
-            </h2>
-            <span id="itemCountBadge" class="text-xs bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-full font-medium">
-              0 items
-            </span>
-          </div>
-
-          <!-- Quick Regular ➔ Personal Funds Transfer Banner -->
-          <div id="transferFundsBanner" class="mb-2.5 p-2.5 rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/30 border border-emerald-200/80 dark:border-emerald-800/60 flex items-center justify-between text-xs">
-            <div class="flex items-center gap-2">
-              <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white flex items-center justify-center font-bold text-xs">⇄</span>
-              <div>
-                <p class="font-bold text-emerald-950 dark:text-emerald-300 text-[11px]">Funds Transfer</p>
-                <p class="text-[10px] text-emerald-700 dark:text-emerald-400">Move money from Regular to Personal Account</p>
-              </div>
-            </div>
-            <button
-              id="openTransferModalLedgerBtn"
-              type="button"
-              class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-[11px] shadow-2xs transition cursor-pointer"
-            >
-              Transfer ➔
-            </button>
-          </div>
-
-          <!-- Split Bill & Group Expense Calculator Banner -->
-          <div id="splitBillBanner" class="mb-2.5 p-2.5 rounded-xl bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-950/50 dark:to-blue-950/40 border border-indigo-200/80 dark:border-indigo-800/60 flex items-center justify-between text-xs">
-            <div class="flex items-center gap-2">
-              <span class="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-xs">👥</span>
-              <div>
-                <p class="font-bold text-indigo-950 dark:text-white text-[11px]">Split Bill & Group Expense</p>
-                <p class="text-[10px] text-indigo-700 dark:text-indigo-300">Calculate per-person shares & log friend returns</p>
+        <!-- Quick Action Hub: Split Bill & Account Transfer (Side-by-side, compact & uncluttered) -->
+        <div id="quickToolsGrid" class="flex items-center gap-2">
+          
+          <!-- Split Bill Action Card (Regular Expense only) -->
+          <div id="splitBillBanner" class="flex-1 min-w-0 p-2.5 rounded-2xl bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-950/40 dark:to-blue-950/30 border border-indigo-200/80 dark:border-indigo-800/60 flex items-center justify-between gap-1.5 shadow-2xs">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="w-7 h-7 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">👥</span>
+              <div class="min-w-0">
+                <p class="font-bold text-indigo-950 dark:text-white text-xs truncate">Split Bill</p>
+                <p class="text-[10px] text-indigo-700 dark:text-indigo-300 truncate">Group split</p>
               </div>
             </div>
             <button
               id="openSplitBillModalBtn"
               type="button"
               onclick="window.openSplitBillModal && window.openSplitBillModal()"
-              class="px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[11px] shadow-2xs transition cursor-pointer"
+              class="px-2.5 py-1 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-[11px] font-bold shadow-2xs transition shrink-0 cursor-pointer"
             >
-              Split Bill ➔
+              Split ➔
             </button>
           </div>
 
-          <!-- Aggregated Friends Summary Drawer ("Who Owes Me What") -->
-          <div id="aggregatedFriendsSummaryCard" class="hidden mb-2.5 p-3 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200/90 shadow-2xs space-y-2">
-            <!-- Dynamically populated by JS -->
-          </div>
-
-          <!-- Pending Reimbursements & Friend Returns Summary Banner -->
-          <div id="pendingReturnsBanner" class="hidden mb-2.5 p-2.5 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-between text-xs">
-            <div class="flex items-center gap-2">
-              <span class="text-base">⏳</span>
-              <div>
-                <p id="pendingReturnsTitle" class="font-bold text-amber-900 text-[11px]">Pending Money to Receive</p>
-                <p id="pendingReturnsSub" class="text-[10px] text-amber-700">Tap any pending badge below when office or friend pays back</p>
+          <!-- Transfer Action Card -->
+          <div id="transferFundsBanner" class="flex-1 min-w-0 p-2.5 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/30 border border-emerald-200/80 dark:border-emerald-800/60 flex items-center justify-between gap-1.5 shadow-2xs">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="w-7 h-7 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">⇄</span>
+              <div class="min-w-0">
+                <p class="font-bold text-emerald-950 dark:text-emerald-100 text-xs truncate">Transfer</p>
+                <p class="text-[10px] text-emerald-700 dark:text-emerald-300 truncate">Move funds</p>
               </div>
             </div>
-            <span id="pendingReturnsAmount" class="font-extrabold text-amber-900 text-xs bg-white px-2.5 py-1 rounded-lg border border-amber-200 shrink-0">₹0</span>
+            <button
+              id="openTransferModalLedgerBtn"
+              type="button"
+              class="px-2.5 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white text-[11px] font-bold shadow-2xs transition shrink-0 cursor-pointer"
+            >
+              Move ➔
+            </button>
           </div>
+        </div>
 
-          <!-- Type Filters (All, Income, Expenses, Pending) -->
-          <div class="flex items-center gap-1.5 mb-2.5 overflow-x-auto no-scrollbar">
-            <button id="filterTypeAllBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-600 text-white shadow-sm shrink-0">
+        <div id="categoryFilterBar" class="hidden"></div>
+
+        <!-- Unified Ledger Control Panel: Cleanly integrates Type Tabs, Date, Category, Search & Exports -->
+        <div class="bg-slate-50 dark:bg-slate-900/90 p-3 rounded-2xl border border-slate-200/90 dark:border-slate-800 space-y-2.5 shadow-2xs">
+          
+          <!-- Row 1: Transaction Type Segmented Switcher (Well-padded, never clipped) -->
+          <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 px-0.5 pr-2.5">
+            <button
+              id="filterTypeAllBtn"
+              type="button"
+              class="px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 bg-indigo-600 text-white shadow-2xs"
+            >
               All Activity
             </button>
-            <button id="filterTypeIncomeBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold bg-white text-emerald-700 border border-emerald-200 hover:border-emerald-400 shrink-0">
-              ↓ Income Only
+            <button
+              id="filterTypeIncomeBtn"
+              type="button"
+              class="px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 bg-white dark:bg-slate-800 text-emerald-700 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800 hover:bg-emerald-50"
+            >
+              ↓ Income
             </button>
-            <button id="filterTypeExpenseBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold bg-white text-rose-700 border border-rose-200 hover:border-rose-400 shrink-0">
-              ↑ Expenses Only
+            <button
+              id="filterTypeExpenseBtn"
+              type="button"
+              class="px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 bg-white dark:bg-slate-800 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-800 hover:bg-rose-50"
+            >
+              ↑ Expenses
             </button>
-            <button id="filterTypePendingBtn" type="button" class="px-3 py-1 rounded-full text-xs font-semibold bg-white text-amber-800 border border-amber-300 hover:border-amber-500 shrink-0 flex items-center gap-1 cursor-pointer">
+            <button
+              id="filterTypePendingBtn"
+              type="button"
+              class="px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 bg-white dark:bg-slate-800 text-amber-800 dark:text-amber-300 border border-amber-300/80 dark:border-amber-700 hover:bg-amber-50 flex items-center gap-1 cursor-pointer"
+            >
               <span>⏳</span>
               <span id="filterTypePendingText">Pending (0)</span>
             </button>
           </div>
 
-          <!-- Hidden container to preserve categoryFilterBar ID for scripts/checks -->
-          <div id="categoryFilterBar" class="hidden"></div>
-
-          <!-- Streamlined Mobile Filter Toolbar (Date, Category, Sort & Export) -->
-          <div class="bg-slate-50 p-2.5 rounded-2xl border border-slate-200/90 mb-2.5 space-y-2 text-xs shadow-2xs">
-            <!-- Row 1: Date Filter Controls -->
-            <div class="flex items-center gap-1.5">
+          <!-- Row 2: Date Picker & Category Dropdown (Side-by-side) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <!-- Date Filter Controls -->
+            <div class="flex items-center gap-1.5 min-w-0">
               <button
                 id="dateFilterAllBtn"
                 type="button"
                 onclick="window.clearDateFilter && window.clearDateFilter()"
-                class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-white shadow-2xs shrink-0 transition cursor-pointer"
+                class="px-3 py-2 rounded-xl text-xs font-bold bg-slate-800 text-white dark:bg-slate-700 shadow-2xs shrink-0 transition cursor-pointer active:scale-95"
               >
                 All Days
               </button>
-              <div id="customDateFilterBox" class="flex items-center gap-1.5 flex-1 bg-white border border-slate-200 rounded-xl px-2.5 py-1 shadow-2xs transition">
-                <span class="text-[11px] text-indigo-600 font-bold shrink-0">📅 Custom:</span>
+              <div id="customDateFilterBox" class="flex items-center gap-1.5 flex-1 min-w-0 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-2.5 py-1.5 shadow-2xs transition">
+                <span class="text-[11px] text-indigo-600 dark:text-indigo-400 font-bold shrink-0">📅</span>
                 <input
                   type="date"
                   id="customDateFilterInput"
                   aria-label="Filter by custom date"
-                  class="w-full text-xs font-semibold text-slate-700 bg-transparent focus:outline-none cursor-pointer"
+                  class="w-full text-xs font-semibold text-slate-700 dark:text-slate-200 bg-transparent focus:outline-none cursor-pointer"
                 />
                 <button
                   id="clearCustomDateBtn"
@@ -1121,67 +1196,72 @@
               </div>
             </div>
 
-            <!-- Row 2: Category, Sorting & Export Actions -->
-            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+            <!-- Category Dropdown Filter -->
+            <div class="min-w-0">
               <select
                 id="ledgerCategorySelect"
                 aria-label="Filter by category"
-                class="flex-1 min-w-[120px] px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 shrink-0"
+                class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer shadow-2xs truncate"
               >
                 <option value="All">All Categories</option>
               </select>
-
-              <!-- PDF Statement Download / Print Button -->
-              <button
-                id="printPdfStatementBtn"
-                type="button"
-                onclick="window.printPdfMonthlyStatement && window.printPdfMonthlyStatement()"
-                class="px-2.5 py-1.5 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 text-xs font-bold transition shrink-0 flex items-center gap-1 shadow-2xs cursor-pointer active:scale-95"
-                title="Print or Save Monthly Statement as PDF"
-              >
-                <span>📄 PDF</span>
-              </button>
-
-              <!-- CSV Statement Download Button -->
-              <button
-                id="exportMonthlyCsvBtn"
-                type="button"
-                onclick="window.exportMonthlyStatementCsv && window.exportMonthlyStatementCsv()"
-                class="px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition shrink-0 flex items-center gap-1 shadow-2xs cursor-pointer active:scale-95"
-                title="Download Statement as CSV for Excel"
-              >
-                <span>📊 CSV</span>
-              </button>
-
-              <!-- List Density Toggle Button -->
-              <button
-                id="toggleLedgerDensityBtn"
-                type="button"
-                onclick="window.toggleLedgerDensity && window.toggleLedgerDensity()"
-                class="px-2.5 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 bg-white hover:bg-slate-100 transition shrink-0 flex items-center gap-1 cursor-pointer ml-auto"
-                title="Toggle Compact / Detailed List Density"
-              >
-                <span id="densityToggleIcon">≡</span>
-                <span id="densityToggleText">Compact</span>
-              </button>
             </div>
           </div>
 
-          <!-- One Full-Width Search Bar Underneath All Categories -->
-          <div class="relative w-full mb-3">
+          <!-- Row 3: Full-Width Search Input (Never Crammed) -->
+          <div class="relative w-full">
             <input
               id="searchExpenseInput"
               type="text"
-              placeholder="Search by title, category, notes, or ₹ amount..."
-              class="w-full pl-8 pr-3 py-2 text-xs rounded-xl border border-slate-200 bg-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-2xs transition"
+              placeholder="Search description, ₹ amount, category..."
+              class="w-full pl-8 pr-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-2xs transition"
             />
             <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs">🔍</span>
           </div>
 
-          <!-- Unified Transaction History List -->
-          
+          <!-- Row 4: View & Export Action Grid (3-Column Symmetrical Layout: Compact, PDF, CSV Fit 100%) -->
+          <div class="grid grid-cols-3 gap-2">
+            <!-- List Density Toggle Button -->
+            <button
+              id="toggleLedgerDensityBtn"
+              type="button"
+              onclick="window.toggleLedgerDensity && window.toggleLedgerDensity()"
+              class="w-full py-2 px-1 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center justify-center gap-1 cursor-pointer shadow-2xs active:scale-95"
+              title="Toggle Compact / Detailed List Density"
+            >
+              <span id="densityToggleIcon">≡</span>
+              <span id="densityToggleText" class="text-xs">Compact</span>
+            </button>
 
-          <div id="expenseList" class="space-y-2.5 flex-1">
+            <!-- PDF Statement Button -->
+            <button
+              id="printPdfStatementBtn"
+              type="button"
+              onclick="window.printPdfMonthlyStatement && window.printPdfMonthlyStatement()"
+              class="w-full py-2 px-1 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 text-xs font-bold transition flex items-center justify-center gap-1 shadow-2xs cursor-pointer active:scale-95"
+              title="Print or Save Monthly Statement as PDF"
+            >
+              <span>📄</span>
+              <span class="text-xs">PDF</span>
+            </button>
+
+            <!-- CSV Statement Button -->
+            <button
+              id="exportMonthlyCsvBtn"
+              type="button"
+              onclick="window.exportMonthlyStatementCsv && window.exportMonthlyStatementCsv()"
+              class="w-full py-2 px-1 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition flex items-center justify-center gap-1 shadow-2xs cursor-pointer active:scale-95"
+              title="Download Statement as CSV for Excel"
+            >
+              <span>📊</span>
+              <span class="text-xs">CSV</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Unified Transaction History List -->
+        <div id="expenseList" class="space-y-2.5 flex-1">
             <!-- Dynamically populated by JavaScript -->
           </div>
         </section>
@@ -1192,7 +1272,7 @@
       </div>
 
       <!-- ==========================================
-           VIEW 3: CATEGORIES & BUDGETS (TAP TO EDIT)
+           VIEW 3: CATEGORIES & BUDGETS
            ========================================== -->
       <div id="view-categories" class="hidden space-y-4">
         
@@ -1375,7 +1455,7 @@
       id="globalFabQuickLogBtn"
       type="button"
       onclick="window.openQuickLogBottomSheet && window.openQuickLogBottomSheet()"
-      class="fixed bottom-24 right-4 sm:right-6 z-40 w-14 h-14 rounded-full bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 hover:from-indigo-700 hover:to-cyan-500 text-white flex items-center justify-center text-3xl font-bold shadow-2xl shadow-indigo-600/50 hover:scale-105 active:scale-95 transition cursor-pointer"
+      class="absolute bottom-20 right-4 z-40 w-12 h-12 rounded-full bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 hover:from-indigo-700 hover:to-cyan-500 text-white flex items-center justify-center text-2xl font-bold shadow-xl shadow-indigo-600/40 hover:scale-105 active:scale-95 transition-all cursor-pointer"
       title="Quick 1-Tap Log (+)"
       aria-label="Quick 1-Tap Log"
     >
@@ -1515,6 +1595,10 @@
               <button type="button" onclick="window.loadSmsSample('chai')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-[10px] font-bold text-slate-700 dark:text-slate-200 shrink-0 border border-slate-200/60 dark:border-slate-700 transition cursor-pointer">☕ Chai UPI (₹40)</button>
               <button type="button" onclick="window.loadSmsSample('sbi_tailor')" class="px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 hover:bg-indigo-100 text-[10px] font-bold text-indigo-700 dark:text-indigo-300 shrink-0 border border-indigo-200 dark:border-indigo-800 transition cursor-pointer">✂️ Tailor (₹1,050)</button>
               <button type="button" onclick="window.loadSmsSample('electricity')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-[10px] font-bold text-slate-700 dark:text-slate-200 shrink-0 border border-slate-200/60 dark:border-slate-700 transition cursor-pointer">⚡ Power (₹1.2k)</button>
+              <button type="button" onclick="window.loadSmsSample('kotak')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-[10px] font-bold text-slate-700 dark:text-slate-200 shrink-0 border border-slate-200/60 dark:border-slate-700 transition cursor-pointer">🏦 Kotak Kirana (₹650)</button>
+              <button type="button" onclick="window.loadSmsSample('pnb')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-[10px] font-bold text-slate-700 dark:text-slate-200 shrink-0 border border-slate-200/60 dark:border-slate-700 transition cursor-pointer">🍚 PNB Biriyani (₹420)</button>
+              <button type="button" onclick="window.loadSmsSample('bob')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-[10px] font-bold text-slate-700 dark:text-slate-200 shrink-0 border border-slate-200/60 dark:border-slate-700 transition cursor-pointer">🍬 BOB Sweets (₹350)</button>
+              <button type="button" onclick="window.loadSmsSample('canara')" class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-[10px] font-bold text-slate-700 dark:text-slate-200 shrink-0 border border-slate-200/60 dark:border-slate-700 transition cursor-pointer">🍕 Canara Dominos (₹280)</button>
             </div>
           </div>
 
@@ -2422,6 +2506,7 @@
     const filterTypeExpenseBtn = document.getElementById('filterTypeExpenseBtn');
     const categoryFilterBar = document.getElementById('categoryFilterBar');
     const searchExpenseInput = document.getElementById('searchExpenseInput');
+    const ledgerCategorySelect = document.getElementById('ledgerCategorySelect');
     const sortExpenseSelect = null;
     const expenseList = document.getElementById('expenseList');
     const itemCountBadge = document.getElementById('itemCountBadge');
@@ -2710,98 +2795,138 @@
     function updateCategoryBreakdown(totalSpent, totalsByCategory) {
       const currentCats = getActiveCategories();
       const activeCats = currentCats.filter((c) => (totalsByCategory[c.id] || 0) > 0);
+      const overallBudget = getOverallBudget();
 
+      const chartCenterBadge = document.getElementById('chartCenterBadge');
+      const chartCenterAmount = document.getElementById('chartCenterAmount');
+      const chartCenterSubtext = document.getElementById('chartCenterSubtext');
+      const emptyChartMessage = document.getElementById('emptyChartMessage');
+      const chartCanvas = document.getElementById('categoryChart');
+
+      // Update Top Category Badge
       if (activeCats.length === 0) {
-        topCategoryBadge.textContent = 'No data yet';
-        emptyChartMessage.classList.remove('hidden');
-        chartCanvas.classList.add('opacity-0');
+        if (topCategoryBadge) topCategoryBadge.textContent = 'No data yet';
+        if (emptyChartMessage) emptyChartMessage.classList.remove('hidden');
+        if (chartCenterBadge) chartCenterBadge.classList.add('hidden');
+        if (chartCanvas) chartCanvas.classList.add('opacity-0');
       } else {
-        emptyChartMessage.classList.add('hidden');
-        chartCanvas.classList.remove('opacity-0');
+        if (emptyChartMessage) emptyChartMessage.classList.add('hidden');
+        if (chartCenterBadge) chartCenterBadge.classList.remove('hidden');
+        if (chartCanvas) chartCanvas.classList.remove('opacity-0');
+
         const topCat = activeCats.reduce((a, b) =>
-          totalsByCategory[a.id] >= totalsByCategory[b.id] ? a : b
+          (totalsByCategory[a.id] || 0) >= (totalsByCategory[b.id] || 0) ? a : b
         );
-        topCategoryBadge.textContent = `Top: ${topCat.icon} ${topCat.name}`;
+        if (topCategoryBadge) {
+          topCategoryBadge.textContent = `Top: ${topCat.icon} ${topCat.name}`;
+        }
+
+        // Update Center Metrics
+        const budgetPct = overallBudget > 0 ? Math.round((totalSpent / overallBudget) * 100) : 0;
+        if (chartCenterAmount) chartCenterAmount.textContent = formatCurrency(totalSpent);
+        if (chartCenterSubtext) chartCenterSubtext.textContent = `${budgetPct}% used`;
       }
 
-      const labels = activeCats.map((c) => c.name);
-      const dataValues = activeCats.map((c) => totalsByCategory[c.id]);
-      const bgColors = activeCats.map((c) => c.color);
+      // Always destroy existing chart instance before creating a new one to prevent canvas desync
+      if (doughnutChartInstance) {
+        try {
+          doughnutChartInstance.destroy();
+        } catch (e) {
+          console.warn('Chart destroy error:', e);
+        }
+        doughnutChartInstance = null;
+      }
 
-      if (!doughnutChartInstance) {
-        doughnutChartInstance = new Chart(chartCanvas, {
-          type: 'doughnut',
-          data: {
-            labels,
-            datasets: [{
-              data: dataValues,
-              backgroundColor: bgColors,
-              borderWidth: 2,
-              borderColor: '#ffffff',
-              hoverOffset: 4
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: '66%',
-            plugins: {
-              legend: { display: false },
-              tooltip: {
-                callbacks: {
-                  label: function(context) {
-                    const value = context.raw || 0;
-                    const pct = totalSpent > 0 ? Math.round((value / totalSpent) * 100) : 0;
-                    return ` ${formatCurrency(value)} (${pct}%)`;
+      // Render Chart.js Doughnut Chart if Chart.js is loaded and there is active spending
+      if (typeof Chart !== 'undefined' && chartCanvas && activeCats.length > 0) {
+        const labels = activeCats.map((c) => c.name);
+        const dataValues = activeCats.map((c) => totalsByCategory[c.id]);
+        const bgColors = activeCats.map((c) => c.color);
+        const isDark = document.documentElement.classList.contains('dark');
+
+        try {
+          doughnutChartInstance = new Chart(chartCanvas, {
+            type: 'doughnut',
+            data: {
+              labels,
+              datasets: [{
+                data: dataValues,
+                backgroundColor: bgColors,
+                borderWidth: 2,
+                borderColor: isDark ? '#0f172a' : '#ffffff',
+                hoverOffset: 6
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: true,
+              aspectRatio: 1,
+              cutout: '72%',
+              layout: {
+                padding: 4
+              },
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  enabled: true,
+                  callbacks: {
+                    label: function(context) {
+                      const val = context.raw || 0;
+                      const pct = totalSpent > 0 ? Math.round((val / totalSpent) * 100) : 0;
+                      return ` ${context.label}: ${formatCurrency(val)} (${pct}%)`;
+                    }
                   }
                 }
               }
             }
-          }
-        });
-      } else {
-        doughnutChartInstance.data.labels = labels;
-        doughnutChartInstance.data.datasets[0].data = dataValues;
-        doughnutChartInstance.data.datasets[0].backgroundColor = bgColors;
-        doughnutChartInstance.update();
+          });
+        } catch (err) {
+          console.error('Error initializing doughnut chart:', err);
+        }
       }
 
-      categoryLegendList.innerHTML = '';
-      getActiveCategories().forEach((cat) => {
-        const catTotal = totalsByCategory[cat.id] || 0;
-        const catBudget = cat.budget || 1;
-        const rawPct = Math.round((catTotal / catBudget) * 100);
-        const budgetPct = Math.min(rawPct, 100);
-        const isOver = catTotal > catBudget;
-        const isNear = !isOver && rawPct >= 80;
-        const barColor = isOver ? '#ef4444' : isNear ? '#f59e0b' : cat.color;
+      // Populate Category Legend List with Progress Health Bars
+      if (categoryLegendList) {
+        categoryLegendList.innerHTML = '';
+        getActiveCategories().forEach((cat) => {
+          const catTotal = totalsByCategory[cat.id] || 0;
+          const catBudget = cat.budget || 1;
+          const rawPct = Math.round((catTotal / catBudget) * 100);
+          const budgetPct = Math.min(rawPct, 100);
+          const isOver = catTotal > catBudget;
+          const isNear = !isOver && rawPct >= 80;
+          const barColor = isOver ? '#ef4444' : isNear ? '#f59e0b' : cat.color;
 
-        const itemEl = document.createElement('button');
-        itemEl.type = 'button';
-        itemEl.className = 'w-full p-1.5 rounded-lg text-left hover:bg-slate-50 transition block';
-        itemEl.innerHTML = `
-          <div class="flex items-center justify-between mb-1">
-            <div class="flex items-center gap-1.5 min-w-0">
-              <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${cat.color}"></span>
-              <span class="font-medium text-slate-700 truncate">${cat.name}</span>
+          const itemEl = document.createElement('button');
+          itemEl.type = 'button';
+          itemEl.className = 'w-full p-2 rounded-xl text-left hover:bg-slate-50 dark:hover:bg-slate-800/60 transition block border border-transparent hover:border-slate-200 dark:hover:border-slate-700 cursor-pointer';
+          itemEl.innerHTML = `
+            <div class="flex items-center justify-between mb-1.5 pr-12 sm:pr-0">
+              <div class="flex items-center gap-2 min-w-0">
+                <span class="w-3 h-3 rounded-full shrink-0" style="background-color: ${cat.color}"></span>
+                <span class="font-bold text-slate-800 dark:text-slate-100 text-xs truncate">${cat.name}</span>
+              </div>
+              <div class="text-right shrink-0 whitespace-nowrap">
+                <span class="font-extrabold ${isOver ? 'text-rose-600 dark:text-rose-400' : 'text-slate-800 dark:text-white'} text-xs">
+                  ${formatCurrency(catTotal)}
+                </span>
+                <span class="text-[10px] font-normal text-slate-400 ml-1">/ ${formatCurrency(cat.budget)}</span>
+                <span class="text-[10px] font-bold ${isOver ? 'text-rose-600' : (isNear ? 'text-amber-600' : 'text-slate-500')} ml-1">(${rawPct}%)</span>
+              </div>
             </div>
-            <span class="font-semibold ${isOver ? 'text-rose-600' : 'text-slate-800'} shrink-0 ml-1">
-              ${formatCurrency(catTotal)} <span class="text-[10px] font-normal text-slate-400">/ ${formatCurrency(cat.budget)}</span>
-            </span>
-          </div>
-          <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-            <div class="h-full rounded-full transition-all duration-300" style="width: ${budgetPct}%; background-color: ${barColor}"></div>
-          </div>
-        `;
-        itemEl.addEventListener('click', () => {
-          selectedCategory = cat.id;
-          filterLedgerType = 'expense';
-          switchTab('expenses');
+            <div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden mr-12 sm:mr-0">
+              <div class="h-full rounded-full transition-all duration-300" style="width: ${budgetPct}%; background-color: ${barColor}"></div>
+            </div>
+          `;
+          itemEl.addEventListener('click', () => {
+            selectedCategory = cat.id;
+            filterLedgerType = 'expense';
+            switchTab('expenses');
+          });
+          categoryLegendList.appendChild(itemEl);
         });
-        categoryLegendList.appendChild(itemEl);
-      });
+      }
     }
-
     // --- 5. RENDER 3 MONTHS, 6 MONTHS & 1 YEAR CATEGORY-WISE COMPARISONS ---
     function renderComparisonReports(currentMonthSpent, currentMonthIncome) {
       if (activePeriod === 'current') return;
@@ -3168,8 +3293,13 @@
       recurringBillsList.innerHTML = '';
       if (activeBills.length === 0) {
         recurringBillsList.innerHTML = `
-          <div class="text-center py-4 px-3 rounded-xl border border-dashed border-indigo-200 text-slate-400 text-xs">
-            ${isPersonal ? 'No commitments added yet for Personal Account. Tap "+ Add Commitment" to set up your 1-click monthly SIP or investment!' : 'No recurring bills added yet. Tap "+ Custom Bill" to add one!'}
+          <div class="text-center py-6 px-4 rounded-2xl border-2 border-dashed border-indigo-200 dark:border-indigo-800/60 bg-white/70 dark:bg-slate-800/40 space-y-2">
+            <div class="w-10 h-10 mx-auto rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-lg font-bold">📅</div>
+            <p class="font-bold text-slate-800 dark:text-slate-100 text-xs">${isPersonal ? 'No personal commitments yet' : 'No recurring bills added yet'}</p>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 max-w-xs mx-auto">${isPersonal ? 'Add recurring SIPs, insurance, or personal savings commitments for 1-click monthly tracking.' : 'Add rent, electricity, Wi-Fi, or maintenance to track due dates and log them with 1 click each month.'}</p>
+            <button type="button" onclick="const b = document.getElementById('toggleAddBillFormBtn'); if (b) b.click();" class="mt-2 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold text-xs shadow-sm cursor-pointer transition">
+              ${isPersonal ? '+ Add Commitment' : '+ Add First Bill'}
+            </button>
           </div>
         `;
         return;
@@ -3388,46 +3518,47 @@
         const isEditingThis = editingCategoryId === cat.id;
 
         const budgetWarningPill = isOver
-          ? `<span class="inline-flex items-center gap-1 text-[10px] font-bold text-rose-700 bg-rose-100 border border-rose-300 px-2 py-0.5 rounded-full">🚨 Over Budget (${rawPct}%)</span>`
+          ? `<span class="inline-flex items-center text-[10px] font-bold text-rose-700 bg-rose-50 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-200 dark:border-rose-800 px-1.5 py-0.5 rounded-md whitespace-nowrap">🚨 ${rawPct}%</span>`
           : isNear
-          ? `<span class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-800 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-full">⚠️ Near Limit (${rawPct}%)</span>`
+          ? `<span class="inline-flex items-center text-[10px] font-bold text-amber-800 bg-amber-50 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-200 dark:border-amber-800 px-1.5 py-0.5 rounded-md whitespace-nowrap">⚠️ ${rawPct}%</span>`
           : '';
 
         const card = document.createElement('button');
         card.type = 'button';
-        card.className = `w-full text-left p-4 rounded-2xl bg-white border transition shadow-sm hover:border-indigo-300 block ${
-          isEditingThis ? 'border-indigo-500 ring-2 ring-indigo-100' : 'border-slate-200/80'
+        card.className = `w-full text-left p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border transition shadow-sm hover:border-indigo-300 block ${
+          isEditingThis ? 'border-indigo-500 ring-2 ring-indigo-100' : 'border-slate-200/80 dark:border-slate-800'
         }`;
 
         card.innerHTML = `
-          <div class="flex items-center justify-between mb-2.5">
-            <div class="flex items-center gap-3 min-w-0">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2.5 min-w-0">
               <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0 text-white shadow-sm" style="background-color: ${cat.color}">
                 ${cat.icon}
               </div>
               <div class="min-w-0">
-                <div class="flex items-center gap-1.5">
-                  <p class="text-sm font-bold text-slate-800 truncate">${cat.name}</p>
-                  <span class="text-[10px] font-medium text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">Tap to edit</span> ${budgetWarningPill}
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="text-sm font-bold text-slate-800 dark:text-white truncate">${cat.name}</span>
+                  ${budgetWarningPill}
                 </div>
-                <p class="text-xs text-slate-400 mt-0.5">
-                  Monthly Budget: <span class="font-semibold text-slate-600">${formatCurrency(limit)}</span>
+                <p class="text-[11px] text-slate-400 mt-0.5 flex items-center gap-1.5">
+                  <span>Budget: <strong class="font-semibold text-slate-600 dark:text-slate-300">${formatCurrency(limit)}</strong></span>
+                  <span class="text-indigo-500 font-medium hover:underline text-[10px]">• Tap to edit</span>
                 </p>
               </div>
             </div>
             <div class="text-right shrink-0 ml-2">
-              <p class="text-sm font-bold ${spent > limit ? 'text-rose-600' : 'text-slate-800'}">${formatCurrency(spent)}</p>
-              <p class="text-[11px] font-medium ${remaining >= 0 ? 'text-emerald-600' : 'text-rose-500'}">
-                ${remaining >= 0 ? formatCurrency(remaining) + ' left' : formatCurrency(Math.abs(remaining)) + ' over'}
+              <p class="text-sm font-bold ${spent > limit ? 'text-rose-600' : 'text-slate-800 dark:text-white'} whitespace-nowrap">${formatCurrency(spent)}</p>
+              <p class="text-[11px] font-semibold ${remaining >= 0 ? 'text-emerald-600' : 'text-rose-500'} whitespace-nowrap">
+                ${remaining > 0 ? formatCurrency(remaining) + ' left' : (remaining === 0 ? 'Limit met' : '+' + formatCurrency(Math.abs(remaining)) + ' over')}
               </p>
             </div>
           </div>
 
-          <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+          <div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
             <div class="h-full rounded-full transition-all duration-300" style="width: ${barWidth}%; background-color: ${barColor}"></div>
           </div>
           <div class="flex justify-between text-[10px] text-slate-400 mt-1 font-medium">
-            <span>${rawPct}% of category budget</span>
+            <span>${rawPct}% of budget</span>
             <span>Limit: ${formatCurrency(limit)}</span>
           </div>
         `;
@@ -3816,32 +3947,40 @@
 
       let html = '';
 
-      // Red Alert: 100%+ Breached
+      // Red/Amber Alert: 100%+ Limit Crossed
       if (over100.length > 0) {
+        const strictlyExceeded = over100.filter(item => item.overAmount > 0);
+        const atExactLimit = over100.filter(item => item.overAmount === 0);
+        const alertTitle = strictlyExceeded.length > 0
+          ? `${strictlyExceeded.length} Over Budget${atExactLimit.length > 0 ? ` • ${atExactLimit.length} at Limit` : ''}`
+          : `${atExactLimit.length} Category at Limit (100%)`;
+
         html += `
-          <div class="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 space-y-2">
+          <div class="p-3 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-rose-900 dark:text-rose-200 space-y-2">
             <div class="flex items-center justify-between">
-              <div class="flex items-center gap-1.5 font-bold text-xs text-rose-800">
+              <div class="flex items-center gap-1.5 font-bold text-xs text-rose-800 dark:text-rose-300">
                 <span class="text-base">🚨</span>
-                <span>Budget Exceeded (${over100.length} Categor${over100.length > 1 ? 'ies' : 'y'})</span>
+                <span>${alertTitle}</span>
               </div>
-              <span class="text-[10px] font-bold bg-rose-200/80 text-rose-800 px-2 py-0.5 rounded-full">100%+ Limit Crossed</span>
+              <span class="text-[10px] font-bold bg-rose-200/80 dark:bg-rose-900/60 text-rose-800 dark:text-rose-200 px-2 py-0.5 rounded-full whitespace-nowrap">
+                ${strictlyExceeded.length > 0 ? 'Limit Crossed' : '100% Met'}
+              </span>
             </div>
             <div class="space-y-1.5">
               ${over100.map(item => `
-                <div class="flex items-center justify-between bg-white/95 p-2 rounded-lg border border-rose-100 text-xs">
+                <div class="flex items-center justify-between bg-white/95 dark:bg-slate-900/90 p-2 rounded-xl border border-rose-100 dark:border-rose-900/60 text-xs">
                   <div class="flex items-center gap-2 min-w-0">
-                    <span class="text-sm shrink-0">${item.cat.icon}</span>
+                    <span class="text-base shrink-0">${item.cat.icon}</span>
                     <div class="min-w-0">
-                      <p class="font-bold text-slate-800 truncate">${item.cat.name}</p>
-                      <p class="text-[10px] text-rose-600 font-medium">
+                      <p class="font-bold text-slate-800 dark:text-white truncate">${item.cat.name}</p>
+                      <p class="text-[10px] text-rose-600 dark:text-rose-400 font-medium whitespace-nowrap">
                         ${formatCurrency(item.spent)} of ${formatCurrency(item.budget)} (${item.pct}%)
                       </p>
                     </div>
                   </div>
                   <div class="text-right shrink-0 ml-2">
-                    <span class="text-[10px] font-bold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-md inline-block">
-                      +${formatCurrency(item.overAmount)} Over
+                    <span class="text-[10px] font-bold ${item.overAmount > 0 ? 'text-rose-700 bg-rose-100 border border-rose-300' : 'text-amber-800 bg-amber-100 border border-amber-300'} px-2 py-0.5 rounded-md inline-block whitespace-nowrap">
+                      ${item.overAmount > 0 ? '+' + formatCurrency(item.overAmount) + ' Over' : 'Limit Reached (100%)'}
                     </span>
                   </div>
                 </div>
@@ -4172,8 +4311,31 @@
       if (!container) return;
 
       if (pendingClaims.length === 0 || activeAccount === 'personal') {
-        container.classList.add('hidden');
-        container.innerHTML = '';
+        if (activeAccount === 'personal') {
+          container.classList.add('hidden');
+          container.innerHTML = '';
+          return;
+        }
+        container.classList.remove('hidden');
+        container.innerHTML = `
+          <div class="p-3.5 rounded-xl bg-white/80 dark:bg-slate-800/80 border border-emerald-200/80 dark:border-emerald-800/40 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold shrink-0 text-sm">✓</div>
+              <div>
+                <p class="font-bold text-slate-800 dark:text-slate-100 text-[11px]">No Pending Friend Dues</p>
+                <p class="text-[10px] text-slate-500 dark:text-slate-400">All split bills and office claims are settled</p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onclick="window.switchTab && window.switchTab('expenses'); setTimeout(() => { const el = document.getElementById('splitBillBanner'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 150);"
+              class="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] shadow-2xs transition cursor-pointer shrink-0"
+              title="Split a new bill with friends"
+            >
+              + Split Bill
+            </button>
+          </div>
+        `;
         return;
       }
 
@@ -4307,6 +4469,27 @@
       if (quickLogTitle) quickLogTitle.value = '';
       const qReimb = document.getElementById('quickLogIsReimbursable');
       if (qReimb) qReimb.checked = false;
+
+      // Smart Auto-Category: Pre-select most frequently logged category in current month
+      if (quickLogType === 'expense' && quickLogCategory) {
+        const monthExp = getMonthExpenses();
+        if (monthExp.length > 0) {
+          const counts = {};
+          const spend = {};
+          monthExp.forEach(e => {
+            const catId = e.category;
+            counts[catId] = (counts[catId] || 0) + 1;
+            spend[catId] = (spend[catId] || 0) + (Number(e.amount) || 0);
+          });
+          const sorted = Object.keys(counts).sort((a, b) => counts[b] - counts[a] || spend[b] - spend[a]);
+          if (sorted.length > 0 && sorted[0]) {
+            const exists = Array.from(quickLogCategory.options).some(o => o.value === sorted[0]);
+            if (exists) {
+              quickLogCategory.value = sorted[0];
+            }
+          }
+        }
+      }
 
       renderPredictiveSuggestions(quickLogTitle, 'quickLogPredictiveChips', (m) => {
         quickLogTitle.value = m.title;
@@ -4514,6 +4697,65 @@
       return carryover;
     }
 
+    
+    // ==========================================
+    // HOME SUB-TABS CONTROLLER (Overview, Bills, Reports)
+    // ==========================================
+    let activeHomeSubTab = 'overview';
+
+    window.switchHomeSubTab = function(tabName) {
+      activeHomeSubTab = tabName;
+      const overviewBtn = document.getElementById('homeTabOverviewBtn');
+      const billsBtn = document.getElementById('homeTabBillsBtn');
+      const reportsBtn = document.getElementById('homeTabReportsBtn');
+
+      const overviewPanel = document.getElementById('homeSubTab-overview');
+      const billsPanel = document.getElementById('homeSubTab-bills');
+      const reportsPanel = document.getElementById('homeSubTab-reports');
+
+      const activeClass = 'flex-1 py-2 px-2 rounded-xl text-xs font-bold whitespace-nowrap transition bg-white dark:bg-slate-900 text-indigo-700 dark:text-indigo-400 shadow-sm text-center flex items-center justify-center gap-1 cursor-pointer';
+      const inactiveClass = 'flex-1 py-2 px-2 rounded-xl text-xs font-semibold whitespace-nowrap transition text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white text-center flex items-center justify-center gap-1 cursor-pointer';
+
+      if (overviewBtn) overviewBtn.className = tabName === 'overview' ? activeClass : inactiveClass;
+      if (billsBtn) billsBtn.className = tabName === 'bills' ? activeClass : inactiveClass;
+      if (reportsBtn) reportsBtn.className = tabName === 'reports' ? activeClass : inactiveClass;
+
+      if (overviewPanel) overviewPanel.classList.toggle('hidden', tabName !== 'overview');
+      if (billsPanel) billsPanel.classList.toggle('hidden', tabName !== 'bills');
+      if (reportsPanel) reportsPanel.classList.toggle('hidden', tabName !== 'reports');
+
+      if (tabName === 'reports') {
+        const curExp = typeof getMonthExpenses === 'function' ? getMonthExpenses() : 0;
+        const curInc = typeof getMonthIncome === 'function' ? getMonthIncome() : 0;
+        renderComparisonReports(curExp, curInc);
+      }
+    };
+
+    // ==========================================
+    // EXPENSE FORM COLLAPSE / EXPAND TOGGLE
+    // ==========================================
+    window.toggleExpenseForm = function(forceOpen = false) {
+      const wrap = document.getElementById('collapsibleExpenseFormWrap');
+      const btnText = document.getElementById('toggleExpenseFormText');
+      const btnIcon = document.getElementById('toggleExpenseFormIcon');
+      if (!wrap) return;
+
+      const shouldOpen = forceOpen || wrap.classList.contains('hidden');
+      if (shouldOpen) {
+        wrap.classList.remove('hidden');
+        if (btnText) btnText.textContent = 'Close Form';
+        if (btnIcon) btnIcon.textContent = '✕';
+        setTimeout(() => {
+          const titleInput = document.getElementById('expenseTitle');
+          if (titleInput && typeof titleInput.focus === "function") titleInput.focus();
+        }, 80);
+      } else {
+        wrap.classList.add('hidden');
+        if (btnText) btnText.textContent = 'Add Entry';
+        if (btnIcon) btnIcon.textContent = '+';
+      }
+    };
+
     function renderDashboard() {
       populateCategorySelects();
       if (typeof renderQuickShortcutChips === 'function') renderQuickShortcutChips();
@@ -4581,6 +4823,11 @@
       budgetPercentageText.textContent = `${budgetUsedPct}% used`;
       updateSafeDailyAllowance(totalExpenses, syncedOverallBudget);
       updateHabitInsightsAndMoM(totalExpenses, totalIncome);
+      const spentUnderProgressBar = document.getElementById('spentUnderProgressBar');
+      if (spentUnderProgressBar) {
+        spentUnderProgressBar.textContent = formatCurrency(totalExpenses);
+      }
+
       if (budgetRemaining >= 0) {
         remainingBalanceText.textContent = `${formatCurrency(budgetRemaining)} remaining to spend`;
       } else {
@@ -4953,6 +5200,9 @@
           if (reimbSrc && tx.reimbursableSource) reimbSrc.value = tx.reimbursableSource;
 
           const formEl = document.getElementById('expenseForm');
+          if (window.toggleExpenseForm) {
+            window.toggleExpenseForm(true);
+          }
           if (formEl) {
             formEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }
@@ -5034,17 +5284,17 @@
 
     function syncTypeFilterButtons() {
       const allClass = filterLedgerType === 'all'
-        ? 'px-3 py-1 rounded-full text-xs font-semibold bg-indigo-600 text-white shadow-sm shrink-0'
-        : 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-slate-700 border border-slate-200 hover:border-slate-400 shrink-0';
+        ? 'px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-2xs shrink-0 transition'
+        : 'px-3 py-1.5 rounded-xl text-xs font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 shrink-0 transition';
       const incClass = filterLedgerType === 'income'
-        ? 'px-3 py-1 rounded-full text-xs font-semibold bg-emerald-600 text-white shadow-sm shrink-0'
-        : 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-emerald-700 border border-emerald-200 hover:border-emerald-400 shrink-0';
+        ? 'px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-2xs shrink-0 transition'
+        : 'px-3 py-1.5 rounded-xl text-xs font-bold bg-white dark:bg-slate-800 text-emerald-700 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800 hover:bg-emerald-50 dark:hover:bg-slate-700 shrink-0 transition';
       const expClass = filterLedgerType === 'expense'
-        ? 'px-3 py-1 rounded-full text-xs font-semibold bg-rose-600 text-white shadow-sm shrink-0'
-        : 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-rose-700 border border-rose-200 hover:border-rose-400 shrink-0';
+        ? 'px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-600 text-white shadow-2xs shrink-0 transition'
+        : 'px-3 py-1.5 rounded-xl text-xs font-bold bg-white dark:bg-slate-800 text-rose-700 dark:text-rose-400 border border-rose-200/80 dark:border-rose-800 hover:bg-rose-50 dark:hover:bg-slate-700 shrink-0 transition';
       const pendClass = filterLedgerType === 'pending'
-        ? 'px-3 py-1 rounded-full text-xs font-semibold bg-amber-600 text-white shadow-sm border border-amber-600 shrink-0 flex items-center gap-1 cursor-pointer'
-        : 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-amber-800 border border-amber-300 hover:border-amber-500 shrink-0 flex items-center gap-1 cursor-pointer';
+        ? 'px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-600 text-white shadow-2xs border border-amber-600 shrink-0 flex items-center gap-1 cursor-pointer transition'
+        : 'px-3 py-1.5 rounded-xl text-xs font-bold bg-white dark:bg-slate-800 text-amber-800 dark:text-amber-300 border border-amber-300/80 dark:border-amber-700 hover:bg-amber-50 dark:hover:bg-slate-700 shrink-0 flex items-center gap-1 cursor-pointer transition';
 
       if (filterTypeAllBtn) filterTypeAllBtn.className = allClass;
       if (filterTypeIncomeBtn) filterTypeIncomeBtn.className = incClass;
@@ -5199,6 +5449,12 @@
       }
       saveToLocalStorage();
       renderDashboard();
+      if (window.toggleExpenseForm) {
+        const wrap = document.getElementById('collapsibleExpenseFormWrap');
+        if (wrap && !wrap.classList.contains('hidden')) {
+          window.toggleExpenseForm(false);
+        }
+      }
     });
 
     searchExpenseInput.addEventListener('input', (e) => {
@@ -5615,11 +5871,7 @@
 
       selectedCategory = 'All';
       filterLedgerType = 'all';
-      if (filterTypeAllBtn && filterTypeIncomeBtn && filterTypeExpenseBtn) {
-        filterTypeAllBtn.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-indigo-600 text-white shadow-sm shrink-0';
-        filterTypeIncomeBtn.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-emerald-700 border border-emerald-200 hover:border-emerald-400 shrink-0';
-        filterTypeExpenseBtn.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-white text-rose-700 border border-rose-200 hover:border-rose-400 shrink-0';
-      }
+      syncTypeFilterButtons();
       populateCategorySelects();
       updateReimbursementVisibility();
       renderDashboard();
@@ -5650,8 +5902,7 @@
     // ==========================================
     // FUNDS TRANSFER LOGIC: Regular ➔ Personal
     // ==========================================
-    const openTransferModalHeaderBtn = document.getElementById('openTransferModalHeaderBtn');
-    const openTransferModalLedgerBtn = document.getElementById('openTransferModalLedgerBtn');
+        const openTransferModalLedgerBtn = document.getElementById('openTransferModalLedgerBtn');
     const closeTransferModalBtn = document.getElementById('closeTransferModalBtn');
     const transferFundsModal = document.getElementById('transferFundsModal');
     const transferFundsForm = document.getElementById('transferFundsForm');
@@ -5721,8 +5972,7 @@
       transferFundsModal.classList.add('hidden');
     }
 
-    if (openTransferModalHeaderBtn) openTransferModalHeaderBtn.addEventListener('click', openTransferModal);
-    if (openTransferModalLedgerBtn) openTransferModalLedgerBtn.addEventListener('click', openTransferModal);
+        if (openTransferModalLedgerBtn) openTransferModalLedgerBtn.addEventListener('click', openTransferModal);
     if (closeTransferModalBtn) closeTransferModalBtn.addEventListener('click', closeTransferModal);
     if (transferFundsModal) {
       transferFundsModal.addEventListener('click', (e) => {
@@ -5927,6 +6177,24 @@ function showToast(message) {
     const initialTransactionsSeed = JSON.parse(JSON.stringify(transactions));
     const initialRecurringBillsSeed = JSON.parse(JSON.stringify(recurringBills));
 
+    function triggerSyncStatusBadge(isSaved = true) {
+      const badge = document.getElementById('offlineSyncStatusIndicator');
+      if (!badge) return;
+      if (isSaved) {
+        badge.innerHTML = `
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          <span class="text-emerald-200 font-bold">Saved ✓</span>
+        `;
+        clearTimeout(badge._syncTimer);
+        badge._syncTimer = setTimeout(() => {
+          badge.innerHTML = `
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Saved Offline</span>
+          `;
+        }, 1800);
+      }
+    }
+
     function saveToLocalStorage() {
       try {
         const payload = {
@@ -5938,6 +6206,7 @@ function showToast(message) {
           timestamp: Date.now()
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        triggerSyncStatusBadge(true);
       } catch (err) {
         console.warn('LocalStorage save failed:', err);
       }
@@ -5945,7 +6214,25 @@ function showToast(message) {
 
     function loadFromLocalStorage() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
+        let raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          // Backward-compatibility: Check previous version keys so user data is never lost across updates
+          const legacyKeys = [
+            'mysmartplan_multi_account_data_v4',
+            'mysmartplan_multi_account_data_v3',
+            'mysmartplan_multi_account_data_v2',
+            'mysmartplan_multi_account_data',
+            'mysmartplan_data'
+          ];
+          for (const k of legacyKeys) {
+            const legacyRaw = localStorage.getItem(k);
+            if (legacyRaw) {
+              raw = legacyRaw;
+              localStorage.setItem(STORAGE_KEY, legacyRaw);
+              break;
+            }
+          }
+        }
         if (raw) {
           const parsed = JSON.parse(raw);
           if (Array.isArray(parsed.categories) && parsed.categories.length > 0) {
@@ -6674,7 +6961,12 @@ function showToast(message) {
       chai: 'Sent Rs. 40 to Ramesh Tea Stall via PhonePe UPI Ref 9988',
       electricity: 'Axis Bank: INR 1,250.00 debited from A/c XX4321 on 03-Nov-26 at TNEB Electricity Bill',
       sbi_deepa: 'Dear UPI user A/C X9137 debited by 120.00 on date 25Sep26 trf to DEEPA W/O VIJAYA Refno 626849374840 If not u? call-1800111109 for other services-18001234-SBI',
-      sbi_tailor: 'Dear UPI user A/C X9137 debited by 1050.00 on date 03Nov26 trf to RV LADIES TAILOR Refno 630784624015 If not u? call-1800111109 for other services-18001234-SBI'
+      sbi_tailor: 'Dear UPI user A/C X9137 debited by 1050.00 on date 03Nov26 trf to RV LADIES TAILOR Refno 630784624015 If not u? call-1800111109 for other services-18001234-SBI',
+      kotak: 'Sent Rs. 650.00 from Kotak Bank AC X1234 to Sharma Kirana on 05-Nov-26 via UPI Ref 849302',
+      bob: 'Your A/c *4321 debited by INR 350.00 on 05/11/2026 towards UPI/P2A/Anand Sweets Ref 1234',
+      pnb: 'Dear Customer, A/c *1234 is debited by Rs 420.00 on 05-Nov-26 by UPI: A K Biriyani Ref 5678',
+      canara: 'Canara Bank: A/c *5678 debited by Rs. 280.00 on 04-11-2026. Info: UPI/51234/Dominos',
+      indian_bank: 'Indian Bank: Your A/c XXXX1234 debited for Rs.180.00 on 05-11-2026 by UPI to CHAI POINT'
     };
 
     function parseBankSmsText(text) {
@@ -6687,24 +6979,24 @@ function showToast(message) {
                        !(/\b(debited|spent|paid|purchase|sent)\b/i.test(clean));
       const txType = isCredit ? 'income' : 'expense';
 
-      // 2. Extract Amount
+      // 2. Extract Amount (Supports Rs., INR, ₹ symbol and bank debit prefixes)
       let amount = 0;
-      const amtMatch1 = clean.match(/(?:rs\.?|inr)\s*([0-9,]+(?:\.[0-9]{1,2})?)/i);
+      const amtMatch1 = clean.match(/(?:rs\.?|inr|₹)\s*([0-9,]+(?:\.[0-9]{1,2})?)/i);
       if (amtMatch1 && amtMatch1[1]) {
         amount = parseFloat(amtMatch1[1].replace(/,/g, ''));
       } else {
-        const amtMatch2 = clean.match(/(?:debited\s+by|credited\s+by|debited\s+with|credited\s+with|paid|spent|sent)\s+(?:rs\.?|inr)?\s*([0-9,]+(?:\.[0-9]{1,2})?)/i);
+        const amtMatch2 = clean.match(/(?:debited\s+by|debited\s+for|debited\s+with|debited\s+of|credited\s+by|credited\s+with|credited\s+for|paid|spent|sent)\s+(?:rs\.?|inr|₹)?\s*([0-9,]+(?:\.[0-9]{1,2})?)/i);
         if (amtMatch2 && amtMatch2[1]) {
           amount = parseFloat(amtMatch2[1].replace(/,/g, ''));
         }
       }
 
-      // 3. Extract Transaction Date (e.g. 'on 03-11-26', 'on 02-11-2026', 'on 04-Nov-26')
+      // 3. Extract Transaction Date (Supports DD-MM-YYYY, DD/MM/YYYY, DD-Mmm-YY, DDMMM26, on date X)
       let detectedIsoDate = null;
       let detectedDisplayDate = null;
-      const dateNumMatch = clean.match(/\bon\s+(?:date\s+)?([0-3]?[0-9])-([0-1]?[0-9])-([0-9]{2,4})\b/i);
       const monthsArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+      const dateNumMatch = clean.match(/\bon\s+(?:date\s+)?([0-3]?[0-9])[\/\-]([0-1]?[0-9])[\/\-]([0-9]{2,4})\b/i);
       if (dateNumMatch) {
         let d = dateNumMatch[1].padStart(2, '0');
         let m = dateNumMatch[2].padStart(2, '0');
@@ -6716,7 +7008,7 @@ function showToast(message) {
           detectedDisplayDate = `${monthsArr[mIdx]} ${d}`;
         }
       } else {
-        const dateStrMatch = clean.match(/\bon\s+(?:date\s+)?([0-3]?[0-9])(?:st|nd|rd|th)?-?([A-Za-z]{3})-?([0-9]{2,4})\b/i);
+        const dateStrMatch = clean.match(/\b(?:on\s+(?:date\s+)?)?([0-3]?[0-9])(?:st|nd|rd|th)?[\-\s]?([A-Za-z]{3})[\-\s]?([0-9]{2,4})\b/i);
         if (dateStrMatch) {
           let d = dateStrMatch[1].padStart(2, '0');
           let mStr = dateStrMatch[2].charAt(0).toUpperCase() + dateStrMatch[2].slice(1).toLowerCase();
@@ -6731,7 +7023,7 @@ function showToast(message) {
         }
       }
 
-      // 4. Extract Merchant / Payee (Accurate Indian Bank, SBI, HDFC, PhonePe, GPay extraction)
+      // 4. Extract Merchant / Payee (SBI, HDFC, ICICI, Axis, Kotak, PNB, BOB, Canara, Indian Bank)
       let merchant = '';
 
       // Pattern A: VPA (e.g. to VPA swiggy@icici)
@@ -6741,17 +7033,39 @@ function showToast(message) {
         merchant = raw.charAt(0).toUpperCase() + raw.slice(1);
       }
 
-      // Pattern B: 'to (Mr/Mrs/Dr)? <Name>.RRN' or 'to <Name>'
+      // Pattern B: 'by upi to <Name>', 'trf to <Name>', 'towards UPI/.../<Name>', 'by upi: <Name>'
       if (!merchant) {
-        const toMatch = clean.match(/\b(?:to|at|for|paid to|sent to)\s+(?:mr\.?|mrs\.?|ms\.?|dr\.?|shri|smt\.?)?\s*([A-Za-z0-9\s&'\-_/]{2,45}?)(?:\.rrn|\.ref|\.avl|\.bal|\s+rrn|\s+ref|\s+on|\s+via|\s+using|\s+upi|\.|\band\b|$)/i);
-        if (toMatch && toMatch[1]) {
-          merchant = toMatch[1].trim();
+        const trfMatch = clean.match(/(?:trf\s+to|transfer\s+to|towards\s+(?:upi\/[a-z0-9]+\/|upi\/)?|by\s+upi(?:\s+to|:)?\s*)\s*([A-Za-z0-9\s&'\-_/]{2,45}?)(?:\.rrn|\.ref|\.refno|\.avl|\.bal|\s+rrn|\s+ref|\s+refno|\s+on|\s+via|\s+using|\s+if\s+not|\.|\band\b|$)/i);
+        if (trfMatch && trfMatch[1]) {
+          const candidate = trfMatch[1].trim();
+          if (!/^(?:rs\.?|inr|₹|[0-9,\.]+)$/i.test(candidate)) {
+            merchant = candidate;
+          }
         }
       }
 
-      // Pattern C: Info / transfer to / by NEFT
+      // Pattern C: Info: UPI/<rrn>/<Name> (Canara Bank / IndusInd)
       if (!merchant) {
-        const infoMatch = clean.match(/(?:info:|transfer to|by\s+neft-|by\s+imps-|by|from)\s+([A-Za-z0-9\s&'\-_/]{2,35}?)(?:\.|\s+available|\s+on|$)/i);
+        const infoUpiMatch = clean.match(/info:\s*(?:upi\/[0-9a-z]+\/)([a-z0-9\s&'\-_]+)/i);
+        if (infoUpiMatch && infoUpiMatch[1]) {
+          merchant = infoUpiMatch[1].trim();
+        }
+      }
+
+      // Pattern D: 'at <Name>' or 'paid to <Name>' or 'sent to <Name>' or 'to <Name>'
+      if (!merchant) {
+        const toMatch = clean.match(/\b(?:paid\s+to|sent\s+to|to|at)\s+(?:mr\.?|mrs\.?|ms\.?|dr\.?|shri|smt\.?)?\s*([A-Za-z0-9\s&'\-_/]{2,45}?)(?:\.rrn|\.ref|\.refno|\.avl|\.bal|\s+rrn|\s+ref|\s+refno|\s+on|\s+via|\s+using|\s+upi|\.|\band\b|$)/i);
+        if (toMatch && toMatch[1]) {
+          const candidate = toMatch[1].trim();
+          if (!/^(?:rs\.?|inr|₹|[0-9,\.]+)$/i.test(candidate)) {
+            merchant = candidate;
+          }
+        }
+      }
+
+      // Pattern E: Info / by NEFT / IMPS
+      if (!merchant) {
+        const infoMatch = clean.match(/(?:info:|by\s+neft-|by\s+imps-|by|from)\s+([A-Za-z0-9\s&'\-_/]{2,35}?)(?:\.|\s+available|\s+on|$)/i);
         if (infoMatch && infoMatch[1]) {
           merchant = infoMatch[1].trim();
         }
@@ -7247,6 +7561,9 @@ function showToast(message) {
       }
 
       const formEl = document.getElementById('expenseForm');
+      if (window.toggleExpenseForm) {
+        window.toggleExpenseForm(true);
+      }
       if (formEl) {
         formEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
@@ -7278,6 +7595,25 @@ function showToast(message) {
     loadFromLocalStorage();
 
     currentMonthYearBadge.textContent = availableMonths[currentMonthIndex];
+
+    // Guarantee window scroll is always pinned at top (0,0) to prevent top logo band cut-off on mobile
+    window.addEventListener('scroll', () => {
+      if (window.scrollY !== 0 || window.scrollX !== 0) {
+        window.scrollTo(0, 0);
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      window.scrollTo(0, 0);
+    });
+
+    document.addEventListener('focusout', (e) => {
+      if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA')) {
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+        }, 50);
+      }
+    });
 
     // Initial render
     renderDashboard();
