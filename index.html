@@ -2385,39 +2385,32 @@
     // November 2026 has active details; December 2026 starts clean & empty; October 2026 retains archived records!
     let transactions = [];
 
-    // Dedicated Historical Months for Personal Account
-    const personalHistoricalMonths = [
-      { monthKey: 'Nov 2025', label: 'Nov 25', income: 25000, totalSpent: 19500, varianceNote: 'Good personal savings' },
-      { monthKey: 'Dec 2025', label: 'Dec 25', income: 28000, totalSpent: 21800, varianceNote: 'Year-end bonus allocation' },
-      { monthKey: 'Jan 2026', label: 'Jan 26', income: 25000, totalSpent: 19800, varianceNote: 'SIP & Emergency on track' },
-      { monthKey: 'Feb 2026', label: 'Feb 26', income: 25000, totalSpent: 18200, varianceNote: 'High savings month' },
-      { monthKey: 'Mar 2026', label: 'Mar 26', income: 27000, totalSpent: 20100, varianceNote: 'Surplus invested' },
-      { monthKey: 'Apr 2026', label: 'Apr 26', income: 25000, totalSpent: 19600, varianceNote: 'Steady allocations' },
-      { monthKey: 'May 2026', label: 'May 26', income: 25000, totalSpent: 19900, varianceNote: 'Consistent wealth fund' },
-      { monthKey: 'Jun 2026', label: 'Jun 26', income: 26000, totalSpent: 19200, varianceNote: 'Quarterly yield received' },
-      { monthKey: 'Jul 2026', label: 'Jul 26', income: 25000, totalSpent: 20400, varianceNote: 'Personal gadgets outlay' },
-      { monthKey: 'Aug 2026', label: 'Aug 26', income: 25000, totalSpent: 19500, varianceNote: 'Steady monthly SIP' },
-      { monthKey: 'Sep 2026', label: 'Sep 26', income: 25000, totalSpent: 19800, varianceNote: 'Surplus intact' },
-      { monthKey: 'Oct 2026', label: 'Oct 26', income: 65000, totalSpent: 11100, varianceNote: 'Completed Month' },
-      { monthKey: 'Nov 2026', label: 'Nov 26', income: null,  totalSpent: null,  varianceNote: 'Current Live Month' }
-    ];
+    // Historical comparison month generator - strictly computes from real user transactions
+    function getComparisonMonthsList(sliceCount) {
+      const months = [];
+      const curMonthStr = availableMonths[currentMonthIndex] || 'Nov 2026';
+      const [curMonthName, curYearStr] = curMonthStr.split(' ');
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const curMonthNum = monthNames.indexOf(curMonthName);
+      const curYearNum = parseInt(curYearStr, 10);
 
-    // Historical Monthly Accounts Data for Regular Expense Account
-    const historicalMonths = [
-      { monthKey: 'Nov 2025', label: 'Nov 25', income: 65000, totalSpent: 21200, varianceNote: 'Good balance' },
-      { monthKey: 'Dec 2025', label: 'Dec 25', income: 68000, totalSpent: 24800, varianceNote: 'Year-end bonus & upkeep' },
-      { monthKey: 'Jan 2026', label: 'Jan 26', income: 65000, totalSpent: 22400, varianceNote: 'Steady balance' },
-      { monthKey: 'Feb 2026', label: 'Feb 26', income: 65000, totalSpent: 19800, varianceNote: 'High savings month' },
-      { monthKey: 'Mar 2026', label: 'Mar 26', income: 67000, totalSpent: 23100, varianceNote: 'Tax refund + consulting' },
-      { monthKey: 'Apr 2026', label: 'Apr 26', income: 65000, totalSpent: 24200, varianceNote: 'Summer AC usage' },
-      { monthKey: 'May 2026', label: 'May 26', income: 65000, totalSpent: 22600, varianceNote: 'Consistent surplus' },
-      { monthKey: 'Jun 2026', label: 'Jun 26', income: 66000, totalSpent: 21900, varianceNote: 'Dividends received' },
-      { monthKey: 'Jul 2026', label: 'Jul 26', income: 65000, totalSpent: 25800, varianceNote: 'Home repair outlay' },
-      { monthKey: 'Aug 2026', label: 'Aug 26', income: 65000, totalSpent: 21500, varianceNote: 'Steady surplus' },
-      { monthKey: 'Sep 2026', label: 'Sep 26', income: 65000, totalSpent: 23800, varianceNote: 'Festival savings' },
-      { monthKey: 'Oct 2026', label: 'Oct 26', income: 65000, totalSpent: 11100, varianceNote: 'Completed Month' },
-      { monthKey: 'Nov 2026', label: 'Nov 26', income: null,  totalSpent: null,  varianceNote: 'Current Live Month' }
-    ];
+      for (let i = sliceCount - 1; i >= 0; i--) {
+        let mIdx = curMonthNum - i;
+        let y = curYearNum;
+        while (mIdx < 0) {
+          mIdx += 12;
+          y -= 1;
+        }
+        const key = `${monthNames[mIdx]} ${y}`;
+        const shortYear = String(y).slice(-2);
+        const shortLabel = `${monthNames[mIdx]} '${shortYear}`;
+        months.push({ monthKey: key, label: shortLabel });
+      }
+      return months;
+    }
+
+    const personalHistoricalMonths = [];
+    const historicalMonths = [];
 
     const cycleBadges = {
       1:  { label: 'Monthly',   short: '1M',  color: 'bg-slate-100 text-slate-600' },
@@ -2933,69 +2926,60 @@
 
       let sliceCount = 3;
       let title = '3 Months Category Comparison';
-      let sub = 'August 2026 – October 2026';
 
       if (activePeriod === '6m') {
         sliceCount = 6;
         title = '6 Months Category Comparison';
-        sub = 'May 2026 – October 2026';
       } else if (activePeriod === '1y') {
         sliceCount = 12;
         title = '1 Year Annual Category Report';
-        sub = 'November 2025 – October 2026 (Category-Wise Breakdown)';
       }
+
+      const monthsList = getComparisonMonthsList(sliceCount);
+      const firstMonth = monthsList[0];
+      const lastMonth = monthsList[monthsList.length - 1];
+      const sub = `${firstMonth.monthKey} – ${lastMonth.monthKey}`;
 
       comparisonReportHeading.textContent = title;
       comparisonReportSubheading.textContent = sub;
 
-      // Real live category totals for October 2026
-      const liveOctCategoryTotals = getCategorySpentMap();
+      const currentLiveMonth = availableMonths[currentMonthIndex] || 'Nov 2026';
 
-      // Total category budget benchmark
-      const totalBudget = getOverallBudget() || 1;
-
-      // Construct category breakdown for each month in the selected horizon
-      const activeHistSource = activeAccount === 'personal' ? personalHistoricalMonths : historicalMonths;
-      const isFreshClearedMode = window._isFreshClearedMode === true || transactions.length === 0;
-      const selectedMonths = activeHistSource.slice(-sliceCount).map((m) => {
-        // Compute actual transactions logged for this month & account
-        const monthTxs = transactions.filter((t) => t.accountId === activeAccount && getTxMonthYear(t) === m.monthKey);
+      // Construct category breakdown strictly from real user transactions
+      const selectedMonths = monthsList.map((m) => {
+        // Filter actual user transactions for this month and account
+        const monthTxs = transactions.filter((t) => 
+          (activeAccount === 'both' || !t.accountId || t.accountId === activeAccount) && 
+          (t.monthYear || getTxMonthYear(t)) === m.monthKey
+        );
         const realMonthIncome = monthTxs.filter((t) => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
         const realMonthSpent = monthTxs.filter((t) => t.type === 'expense' && !(t.isReimbursable && t.reimbursementStatus === 'settled')).reduce((sum, t) => sum + t.amount, 0);
 
-        const hasRealData = monthTxs.length > 0 || m.monthKey === 'Oct 2026' || m.monthKey === 'Nov 2026' || isFreshClearedMode;
-        const inc = hasRealData ? realMonthIncome : (m.income || 0);
-        const sp = hasRealData ? realMonthSpent : (m.totalSpent || 0);
-
-        // Calculate category breakdown for this month
+        // Build exact category breakdown map from real logged expenses
         const catMap = {};
-        if (hasRealData) {
-          categories.forEach((c) => { catMap[c.id] = 0; });
-          monthTxs.filter((t) => t.type === 'expense' && !(t.isReimbursable && t.reimbursementStatus === 'settled')).forEach((t) => {
-            if (catMap[t.categoryId] !== undefined) {
-              catMap[t.categoryId] += t.amount;
-            }
-          });
-        } else {
-          categories.forEach((c) => {
-            const share = (c.budget || 0) / totalBudget;
-            catMap[c.id] = Math.round(sp * share);
-          });
-        }
+        categories.forEach((c) => { catMap[c.id] = 0; });
+        monthTxs.filter((t) => t.type === 'expense' && !(t.isReimbursable && t.reimbursementStatus === 'settled')).forEach((t) => {
+          if (catMap[t.categoryId] !== undefined) {
+            catMap[t.categoryId] += t.amount;
+          }
+        });
 
         return {
-          ...m,
-          income: inc,
-          spent: sp,
-          balance: inc - sp,
-          catMap
+          monthKey: m.monthKey,
+          label: m.label,
+          income: realMonthIncome,
+          spent: realMonthSpent,
+          balance: realMonthIncome - realMonthSpent,
+          catMap,
+          hasActivity: monthTxs.length > 0
         };
       });
 
-      // KPI Totals (Remain intact and accurate as requested)
+      // KPI Totals strictly calculated from actual user data
       const totalPeriodIncome = selectedMonths.reduce((sum, m) => sum + m.income, 0);
       const totalPeriodSpent = selectedMonths.reduce((sum, m) => sum + m.spent, 0);
-      const avgMonthlySpent = Math.round(totalPeriodSpent / selectedMonths.length);
+      const activeMonthsCount = selectedMonths.filter(m => m.hasActivity).length || 1;
+      const avgMonthlySpent = Math.round(totalPeriodSpent / activeMonthsCount);
       const netPeriodBalance = totalPeriodIncome - totalPeriodSpent;
 
       kpiTotalIncome.textContent = formatCurrency(totalPeriodIncome);
@@ -3111,7 +3095,7 @@
         let monthChipsHtml = '';
         selectedMonths.forEach((m) => {
           const monthAmt = m.catMap[cat.id] || 0;
-          const isLive = m.monthKey === 'Oct 2026';
+          const isLive = m.monthKey === currentLiveMonth;
           monthChipsHtml += `
             <div class="bg-white border ${isLive ? 'border-indigo-400 ring-1 ring-indigo-200' : 'border-slate-200'} rounded-lg px-2 py-1 text-center shrink-0 min-w-[64px] shadow-2xs">
               <div class="flex items-center justify-center gap-1">
@@ -3169,6 +3153,7 @@
       reportMonthlyTable.innerHTML = '';
       [...selectedMonths].reverse().forEach((m) => {
         const isSurplus = m.balance >= 0;
+        const isCurrentMonth = m.monthKey === currentLiveMonth;
         
         // Find top category for this specific month
         let topMonthCatName = 'None';
@@ -3185,19 +3170,27 @@
         row.innerHTML = `
           <div class="min-w-0">
             <div class="flex items-center gap-1.5">
-              <p class="font-semibold text-slate-800">${m.monthKey}</p>
-              ${m.monthKey === 'Oct 2026' ? '<span class="text-[9px] bg-indigo-100 text-indigo-700 font-bold px-1.5 py-0.2 rounded">Live</span>' : ''}
+              <p class="font-semibold text-slate-800 dark:text-slate-100">${m.monthKey}</p>
+              ${isCurrentMonth ? '<span class="text-[9px] bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-bold px-1.5 py-0.2 rounded">Current</span>' : ''}
+              ${!m.hasActivity && !isCurrentMonth ? '<span class="text-[9px] bg-slate-100 dark:bg-slate-800 text-slate-400 font-medium px-1.5 py-0.2 rounded">No activity</span>' : ''}
             </div>
             <p class="text-[10px] text-slate-400 mt-0.5">
-              Spent: <span class="font-semibold text-slate-700">${formatCurrency(m.spent)}</span> • Top: <span class="text-slate-600 font-medium">${topMonthCatName} (${formatCurrency(topMonthCatAmt)})</span>
+              ${m.hasActivity 
+                ? `Spent: <span class="font-semibold text-slate-700 dark:text-slate-300">${formatCurrency(m.spent)}</span> • Top: <span class="text-slate-600 dark:text-slate-300 font-medium">${topMonthCatName} (${formatCurrency(topMonthCatAmt)})</span>`
+                : 'No transactions recorded for this month'
+              }
             </p>
           </div>
           <div class="text-right shrink-0">
-            <p class="font-bold ${isSurplus ? 'text-indigo-900' : 'text-rose-600'}">
-              ${isSurplus ? '+' : ''}${formatCurrency(m.balance)}
+            <p class="font-bold ${m.hasActivity ? (isSurplus ? 'text-indigo-900 dark:text-indigo-200' : 'text-rose-600') : 'text-slate-400'}">
+              ${m.hasActivity ? (isSurplus ? '+' : '') + formatCurrency(m.balance) : '₹0'}
             </p>
-            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full ${isSurplus ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}">
-              ${isSurplus ? 'Surplus' : 'Deficit'}
+            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+              m.hasActivity 
+                ? (isSurplus ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300' : 'bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300')
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-400'
+            }">
+              ${m.hasActivity ? (isSurplus ? 'Surplus' : 'Deficit') : 'Baseline'}
             </span>
           </div>
         `;
@@ -3205,30 +3198,32 @@
       });
     }
 
-    // Export CSV of the comparison report with Category-Wise Breakdown
+    // Export CSV of the comparison report strictly from real transactions
     function exportReportCSV() {
       let sliceCount = activePeriod === '6m' ? 6 : (activePeriod === '1y' ? 12 : 3);
-      const activeHistSource = activeAccount === 'personal' ? personalHistoricalMonths : historicalMonths;
-      const selected = activeHistSource.slice(-sliceCount);
-      const currentMonthSpent = getMonthExpenses();
-      const currentMonthIncome = getMonthIncome();
-      const liveOctCategoryTotals = getCategorySpentMap();
-      const totalBudget = getOverallBudget() || 1;
+      const monthsList = getComparisonMonthsList(sliceCount);
+      const currentLiveMonth = availableMonths[currentMonthIndex] || 'Nov 2026';
 
-      // Header row with category names
       const catHeaders = categories.map((c) => `"${c.name} (INR)"`).join(',');
       let csv = `Month,Total Income (INR),Total Spent (INR),${catHeaders},Net Balance (INR),Status\n`;
 
-      selected.forEach((m) => {
-        const inc = m.monthKey === 'Oct 2026' ? currentMonthIncome : m.income;
-        const spent = m.monthKey === 'Oct 2026' ? currentMonthSpent : m.totalSpent;
+      monthsList.forEach((m) => {
+        const monthTxs = transactions.filter((t) => 
+          (activeAccount === 'both' || !t.accountId || t.accountId === activeAccount) && 
+          (t.monthYear || getTxMonthYear(t)) === m.monthKey
+        );
+        const inc = monthTxs.filter((t) => t.type === 'income').reduce((s, t) => s + t.amount, 0);
+        const spent = monthTxs.filter((t) => t.type === 'expense' && !(t.isReimbursable && t.reimbursementStatus === 'settled')).reduce((s, t) => s + t.amount, 0);
         const bal = inc - spent;
-        const status = bal >= 0 ? 'Surplus' : 'Deficit';
+        const status = monthTxs.length === 0 ? 'No Activity' : (bal >= 0 ? 'Surplus' : 'Deficit');
 
-        const catValues = categories.map((c) => {
-          if (m.monthKey === 'Oct 2026') return liveOctCategoryTotals[c.id] || 0;
-          return Math.round(spent * ((c.budget || 0) / totalBudget));
-        }).join(',');
+        const catMap = {};
+        categories.forEach((c) => { catMap[c.id] = 0; });
+        monthTxs.filter((t) => t.type === 'expense' && !(t.isReimbursable && t.reimbursementStatus === 'settled')).forEach((t) => {
+          if (catMap[t.categoryId] !== undefined) catMap[t.categoryId] += t.amount;
+        });
+
+        const catValues = categories.map((c) => catMap[c.id] || 0).join(',');
 
         csv += `"${m.monthKey}",${inc},${spent},${catValues},${bal},"${status}"\n`;
       });
@@ -3237,7 +3232,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `MySmartPlan_Report_${activePeriod.toUpperCase()}_Oct2026.csv`;
+      a.download = `MySmartPlan_Report_${activePeriod.toUpperCase()}_${currentLiveMonth.replace(' ', '_')}.csv`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -6846,10 +6841,8 @@ function showToast(message) {
       }
 
       const prevMonthName = availableMonths[currentMonthIndex - 1];
-      const prevMonthShort = prevMonthName.split(' ')[0];
+      const prevMonthShort = prevMonthName ? prevMonthName.split(' ')[0] : 'Prior';
       const curMonthShort = curMonthName.split(' ')[0];
-
-      if (momHeading) momHeading.textContent = `${curMonthShort} vs. ${prevMonthShort} Scorecard`;
 
       // Previous month expenses
       const prevMonthTxs = transactions.filter(t => 
@@ -6860,22 +6853,34 @@ function showToast(message) {
       );
       const prevSpent = prevMonthTxs.reduce((sum, t) => sum + t.amount, 0);
 
-      const netDiff = curSpent - prevSpent;
-      const netPct = prevSpent > 0 ? Math.round((Math.abs(netDiff) / prevSpent) * 100) : 0;
+      if (momHeading) {
+        if (prevSpent === 0 && curSpent > 0) {
+          momHeading.textContent = `${curMonthShort} Scorecard (Starting Month)`;
+        } else {
+          momHeading.textContent = `${curMonthShort} vs. ${prevMonthShort} Scorecard`;
+        }
+      }
 
       if (momNetBadge) {
         if (prevSpent === 0 && curSpent === 0) {
           momNetBadge.textContent = 'No spend recorded';
           momNetBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300';
-        } else if (netDiff < 0) {
-          momNetBadge.textContent = `-${formatCurrency(Math.abs(netDiff))} (-${netPct}%) 🟢`;
-          momNetBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800';
-        } else if (netDiff > 0) {
-          momNetBadge.textContent = `+${formatCurrency(netDiff)} (+${netPct}%) 🔴`;
-          momNetBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800';
+        } else if (prevSpent === 0 && curSpent > 0) {
+          momNetBadge.textContent = `${curMonthShort} (First Month) 🚀`;
+          momNetBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800';
         } else {
-          momNetBadge.textContent = `Equal to ${prevMonthShort}`;
-          momNetBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800';
+          const netDiff = curSpent - prevSpent;
+          const netPct = prevSpent > 0 ? Math.round((Math.abs(netDiff) / prevSpent) * 100) : 0;
+          if (netDiff < 0) {
+            momNetBadge.textContent = `-${formatCurrency(Math.abs(netDiff))} (-${netPct}%) 🟢`;
+            momNetBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800';
+          } else if (netDiff > 0) {
+            momNetBadge.textContent = `+${formatCurrency(netDiff)} (+${netPct}%) 🔴`;
+            momNetBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800';
+          } else {
+            momNetBadge.textContent = `Equal to ${prevMonthShort}`;
+            momNetBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800';
+          }
         }
       }
 
