@@ -530,17 +530,7 @@
             <!-- Dynamically populated by JS renderAggregatedFriendsSummary() -->
           </div>
 
-          <!-- Pending Reimbursements & Friend Returns Summary Banner -->
-          <div id="pendingReturnsBanner" class="hidden p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 flex items-center justify-between text-xs">
-            <div class="flex items-center gap-2">
-              <span class="text-base">⏳</span>
-              <div>
-                <p id="pendingReturnsTitle" class="font-bold text-amber-900 dark:text-amber-200 text-[11px]">Pending Money to Receive</p>
-                <p class="text-[10px] text-amber-700 dark:text-amber-400">Tap any pending badge below when office or friend pays back</p>
-              </div>
-            </div>
-            <span id="pendingReturnsAmount" class="font-extrabold text-amber-900 dark:text-amber-200 text-xs bg-white dark:bg-slate-900 px-2.5 py-1 rounded-lg border border-amber-200 dark:border-amber-700 shrink-0">₹0</span>
-          </div>
+
 
           <!-- Recurring & Multi-Month Bills Manager -->
           <section class="bg-indigo-50/60 dark:bg-slate-900 rounded-2xl p-4 border border-indigo-100 dark:border-slate-800 space-y-3">
@@ -4911,58 +4901,46 @@
       renderCategoriesManager(totalsByCategory);
       renderComparisonReports(totalExpenses, totalIncome);
 
-      // Update Pending Returns (Office + Friends) Summary Banner: ONLY shown on Regular Expense account!
-      const pendingReturnsBanner = document.getElementById('pendingReturnsBanner');
-      const pendingReturnsTitle = document.getElementById('pendingReturnsTitle');
-      const pendingReturnsAmount = document.getElementById('pendingReturnsAmount');
-      if (pendingReturnsBanner) {
-        if (activeAccount === 'personal') {
-          // Strictly disable/hide office reimbursement details when viewing Personal Account
-          pendingReturnsBanner.classList.add('hidden');
-          const aggCard = document.getElementById('aggregatedFriendsSummaryCard');
-          if (aggCard) aggCard.classList.add('hidden');
-          const headerPendingBanner = document.getElementById('headerPendingBanner');
-          if (headerPendingBanner) headerPendingBanner.classList.add('hidden');
-        } else {
-          // Filter pending claims for Regular Expense account
-          const pendingClaims = transactions.filter((t) => t.accountId === 'regular' && t.type === 'expense' && t.isReimbursable && t.reimbursementStatus === 'pending');
-          const pendingTotal = pendingClaims.reduce((sum, t) => sum + t.amount, 0);
-          renderAggregatedFriendsSummary(pendingClaims);
+      // Update Pending Returns (Office + Friends) Claims (Consolidated into Who Owes Me What card)
+      if (activeAccount === 'personal') {
+        // Strictly disable/hide office reimbursement details when viewing Personal Account
+        const aggCard = document.getElementById('aggregatedFriendsSummaryCard');
+        if (aggCard) aggCard.classList.add('hidden');
+        const headerPendingBanner = document.getElementById('headerPendingBanner');
+        if (headerPendingBanner) headerPendingBanner.classList.add('hidden');
+      } else {
+        // Filter pending claims for Regular Expense account
+        const pendingClaims = transactions.filter((t) => t.accountId === 'regular' && t.type === 'expense' && t.isReimbursable && t.reimbursementStatus === 'pending');
+        const pendingTotal = pendingClaims.reduce((sum, t) => sum + t.amount, 0);
+        renderAggregatedFriendsSummary(pendingClaims);
+
+        // Update Filter Pill Count
+        if (filterTypePendingText) {
+          filterTypePendingText.textContent = `Pending (${pendingClaims.length})`;
+        }
+
+        // Update Top Header Pending to Receive Banner
+        const headerPendingBanner = document.getElementById('headerPendingBanner');
+        const headerPendingAmount = document.getElementById('headerPendingAmount');
+        if (headerPendingBanner && headerPendingAmount) {
           if (pendingClaims.length > 0) {
-            pendingReturnsBanner.classList.remove('hidden');
-            pendingReturnsTitle.textContent = `${pendingClaims.length} Pending Return${pendingClaims.length > 1 ? 's' : ''} (Office / Friends)`;
-            pendingReturnsAmount.textContent = `${formatCurrency(pendingTotal)} Due`;
+            headerPendingBanner.classList.remove('hidden');
+            headerPendingAmount.textContent = `${formatCurrency(pendingTotal)} Due`;
+            headerPendingBanner.onclick = () => {
+              switchTab('expenses');
+              if (filterTypePendingBtn) filterTypePendingBtn.click();
+            };
           } else {
-            pendingReturnsBanner.classList.add('hidden');
-          }
-
-          // Update Filter Pill Count
-          if (filterTypePendingText) {
-            filterTypePendingText.textContent = `Pending (${pendingClaims.length})`;
-          }
-
-          // Update Top Header Pending to Receive Banner
-          const headerPendingBanner = document.getElementById('headerPendingBanner');
-          const headerPendingAmount = document.getElementById('headerPendingAmount');
-          if (headerPendingBanner && headerPendingAmount) {
-            if (pendingClaims.length > 0) {
-              headerPendingBanner.classList.remove('hidden');
-              headerPendingAmount.textContent = `${formatCurrency(pendingTotal)} Due`;
-              headerPendingBanner.onclick = () => {
-                switchTab('expenses');
-                if (filterTypePendingBtn) filterTypePendingBtn.click();
-              };
-            } else {
-              headerPendingBanner.classList.add('hidden');
-            }
+            headerPendingBanner.classList.add('hidden');
           }
         }
       }
 
       // Filter & Sort Transactions Ledger (Partitioned by Account & Date Range)
       let visibleTransactions = getActiveTransactions().filter((item) => {
-        const cat = getAnyCategoryById(item.categoryId);
-        const matchesCategory = selectedCategory === 'All' || item.categoryId === selectedCategory;
+        const itemCatId = item.categoryId || item.category;
+        const cat = getAnyCategoryById(itemCatId);
+        const matchesCategory = selectedCategory === 'All' || itemCatId === selectedCategory;
         const matchesType = filterLedgerType === 'all'
           ? true
           : (filterLedgerType === 'pending'
@@ -5005,10 +4983,29 @@
       expenseList.innerHTML = '';
       if (visibleTransactions.length === 0) {
         const curM = getSelectedMonthName();
+        if (selectedCategory !== 'All') {
+          const chosenCat = getAnyCategoryById(selectedCategory);
+          const catTitle = chosenCat ? `${chosenCat.icon || ''} ${chosenCat.name}` : 'this category';
+          expenseList.innerHTML = `
+            <div class="text-center py-8 px-4 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700 text-slate-400 text-xs space-y-2">
+              <span class="text-xl block">🏷️</span>
+              <p class="font-semibold text-slate-700 dark:text-slate-200">No entries for ${catTitle} in ${curM}</p>
+              <p class="text-[11px] text-slate-400">You haven't logged any transactions under this category yet.</p>
+              <button
+                type="button"
+                onclick="selectedCategory = 'All'; if (ledgerCategorySelect) ledgerCategorySelect.value = 'All'; renderDashboard();"
+                class="mt-2 inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-bold text-xs border border-indigo-200 dark:border-indigo-800 shadow-2xs hover:bg-indigo-100 transition cursor-pointer"
+              >
+                Clear Category Filter ✕
+              </button>
+            </div>
+          `;
+          return;
+        }
         expenseList.innerHTML = `
-          <div class="text-center py-8 px-4 rounded-2xl border border-dashed border-slate-200 text-slate-400 text-xs space-y-1">
+          <div class="text-center py-8 px-4 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700 text-slate-400 text-xs space-y-1">
             <span class="text-xl block">📅</span>
-            <p class="font-semibold text-slate-600">No transactions for ${curM} yet</p>
+            <p class="font-semibold text-slate-600 dark:text-slate-300">No transactions for ${curM} yet</p>
             <p class="text-[11px] text-slate-400">This month is clean and ready. Your ₹${getOverallBudget().toLocaleString('en-IN')} budget is set!</p>
           </div>
         `;
@@ -5392,6 +5389,14 @@
         filterLedgerType = 'pending';
         selectedCategory = 'All';
         syncTypeFilterButtons();
+        renderDashboard();
+      });
+    }
+
+    // Category Filter Dropdown Listener (All Categories Filter)
+    if (ledgerCategorySelect) {
+      ledgerCategorySelect.addEventListener('change', (e) => {
+        selectedCategory = e.target.value;
         renderDashboard();
       });
     }
@@ -6202,21 +6207,25 @@
       let catList = [];
       if (filterLedgerType === 'income') {
         catList = incomeSources;
-      } else {
+      } else if (filterLedgerType === 'expense' || filterLedgerType === 'pending') {
         catList = getActiveCategories();
+      } else {
+        // 'all' activity: show all active categories plus income sources
+        catList = [...getActiveCategories(), ...incomeSources];
       }
 
       catList.forEach((cat) => {
         const opt = document.createElement('option');
         opt.value = cat.id;
-        opt.textContent = `${cat.icon} ${cat.name}`;
+        opt.textContent = `${cat.icon || '🏷️'} ${cat.name}`;
         ledgerCategorySelect.appendChild(opt);
       });
 
-      if (catList.some((c) => c.id === currentSelected)) {
+      if (currentSelected !== 'All' && catList.some((c) => c.id === currentSelected)) {
         ledgerCategorySelect.value = currentSelected;
       } else {
         ledgerCategorySelect.value = 'All';
+        selectedCategory = 'All';
       }
     }
 
